@@ -1,6 +1,6 @@
 package com.example.Projeto_Oficina_Mecanica.dto.response;
 
-import com.example.Projeto_Oficina_Mecanica.model.EspecialidadeMecanico;
+import com.example.Projeto_Oficina_Mecanica.entity.EspecialidadeMecanico;
 import lombok.Data;
 
 import java.time.LocalDateTime;

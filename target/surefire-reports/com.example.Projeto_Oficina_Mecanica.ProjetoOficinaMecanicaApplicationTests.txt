@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.example.Projeto_Oficina_Mecanica.ProjetoOficinaMecanicaApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 24.42 s -- in com.example.Projeto_Oficina_Mecanica.ProjetoOficinaMecanicaApplicationTests

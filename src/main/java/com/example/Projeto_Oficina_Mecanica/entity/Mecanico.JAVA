@@ -1,4 +1,4 @@
-package com.example.Projeto_Oficina_Mecanica.model;
+package com.example.Projeto_Oficina_Mecanica.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
