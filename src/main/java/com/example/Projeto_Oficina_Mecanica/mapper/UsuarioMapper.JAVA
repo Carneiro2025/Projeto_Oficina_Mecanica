@@ -1,8 +1,8 @@
 package com.example.Projeto_Oficina_Mecanica.mapper;
 
-import com.oficina.dto.request.CriarUsuarioRequestDTO;
-import com.oficina.dto.response.UsuarioResponseDTO;
-import com.oficina.model.Usuario;
+import com.example.Projeto_Oficina_Mecanica.dto.request.CriarUsuarioRequestDTO;
+import com.example.Projeto_Oficina_Mecanica.dto.response.UsuarioResponseDTO;
+import com.example.Projeto_Oficina_Mecanica.entity.Usuario;
 import org.mapstruct.*;
 
 /**

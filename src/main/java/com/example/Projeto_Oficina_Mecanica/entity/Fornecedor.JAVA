@@ -1,4 +1,4 @@
-package com.example.Projeto_Oficina_Mecanica.model;
+package com.example.Projeto_Oficina_Mecanica.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -7,18 +7,9 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Entidade Fornecedor.
- *
- * Regras de Negócio:
- *  - CNPJ deve ser único no sistema
- *  - Fornecedor inativo não pode receber novas NF de entrada
- *  - Soft-delete: ativo = false
- */
+
 @Entity
-@Table(name = "fornecedores", indexes = {
-        @Index(name = "idx_fornecedor_cnpj", columnList = "cnpj", unique = true)
-})
+@Table(name = "fornecedores", indexes = {@Index(name = "idx_fornecedor_cnpj", columnList = "cnpj", unique = true)})
 @Getter
 @Setter
 @NoArgsConstructor

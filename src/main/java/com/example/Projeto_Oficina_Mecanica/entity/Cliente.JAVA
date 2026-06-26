@@ -7,6 +7,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.Projeto_Oficina_Mecanica.enums.TipoPessoa;
+
 /**
  * Entidade Cliente — suporta Pessoa Física (CPF) e Pessoa Jurídica (CNPJ).
  *

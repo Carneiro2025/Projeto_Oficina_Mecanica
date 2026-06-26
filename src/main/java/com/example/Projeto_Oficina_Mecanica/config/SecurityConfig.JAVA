@@ -36,6 +36,7 @@ public class SecurityConfig {
             "/swagger-ui.html"
     };
 
+    @SuppressWarnings("null")
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
@@ -62,14 +63,20 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/usuarios/**")
                         .hasAnyRole("ADMIN", "GERENTE")
 
+                        .requestMatchers(HttpMethod.GET, "/api/ordens-servico/**")
+                        .hasAnyRole("ADMIN","GERENTE","MECANICO")
+
+                        .requestMatchers(HttpMethod.POST, "/api/ordens-servico/**")
+                        .hasAnyRole("ADMIN","GERENTE","ATENDENTE")
+
                         // Demais endpoints
                         .anyRequest()
                         .authenticated()
                 )
 
-                .authenticationProvider(authenticationProvider())
+                        .authenticationProvider(authenticationProvider())
 
-                .addFilterBefore(
+                        .addFilterBefore(
                         jwtAuthFilter,
                         UsernamePasswordAuthenticationFilter.class
                 );

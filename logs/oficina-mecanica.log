@@ -1,0 +1,705 @@
+2026-06-25 21:25:57 [main] INFO  c.e.P.ProjetoOficinaMecanicaApplication - Starting ProjetoOficinaMecanicaApplication using Java 17.0.19 with PID 1688 (C:\Users\Carneiro\Documents\Projeto da Faculdade\Projeto_Oficina_Mecanica\target\classes started by Carneiro in C:\Users\Carneiro\Documents\Projeto da Faculdade\Projeto_Oficina_Mecanica)
+2026-06-25 21:25:57 [main] DEBUG c.e.P.ProjetoOficinaMecanicaApplication - Running with Spring Boot v3.2.0, Spring v6.1.1
+2026-06-25 21:25:57 [main] INFO  c.e.P.ProjetoOficinaMecanicaApplication - No active profile set, falling back to 1 default profile: "default"
+2026-06-25 21:26:00 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-06-25 21:26:00 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 200 ms. Found 16 JPA repository interfaces.
+2026-06-25 21:26:01 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-06-25 21:26:01 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-06-25 21:26:01 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.16]
+2026-06-25 21:26:01 [main] INFO  o.a.c.c.C.[.[localhost].[/api] - Initializing Spring embedded WebApplicationContext
+2026-06-25 21:26:01 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 4041 ms
+2026-06-25 21:26:02 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-06-25 21:26:02 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.3.1.Final
+2026-06-25 21:26:02 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2026-06-25 21:26:03 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-06-25 21:26:03 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-06-25 21:26:04 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@284c4f02
+2026-06-25 21:26:04 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-06-25 21:26:04 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-06-25 21:26:04 [main] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2026-06-25 21:26:08 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-06-25 21:26:08 [main] ERROR o.s.o.j.LocalContainerEntityManagerFactoryBean - Failed to initialize JPA EntityManagerFactory: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.tool.schema.spi.SchemaManagementException: Schema-validation: missing table [clientes]
+2026-06-25 21:26:08 [main] ERROR o.s.b.w.e.tomcat.TomcatStarter - Error starting Tomcat context. Exception: org.springframework.beans.factory.UnsatisfiedDependencyException. Message: Error creating bean with name 'jwtAuthFilter' defined in file [C:\Users\Carneiro\Documents\Projeto da Faculdade\Projeto_Oficina_Mecanica\target\classes\com\example\Projeto_Oficina_Mecanica\security\JwtAuthFilter.class]: Unsatisfied dependency expressed through constructor parameter 1: Error creating bean with name 'userDetailsServiceImpl' defined in file [C:\Users\Carneiro\Documents\Projeto da Faculdade\Projeto_Oficina_Mecanica\target\classes\com\example\Projeto_Oficina_Mecanica\security\UserDetailsServiceImpl.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'usuarioRepository' defined in com.example.Projeto_Oficina_Mecanica.repository.UsuarioRepository defined in @EnableJpaRepositories declared on JpaRepositoriesRegistrar.EnableJpaRepositoriesConfiguration: Cannot resolve reference to bean 'jpaSharedEM_entityManagerFactory' while setting bean property 'entityManager'
+2026-06-25 21:26:08 [main] INFO  o.a.catalina.core.StandardService - Stopping service [Tomcat]
+2026-06-25 21:26:08 [main] WARN  o.a.c.loader.WebappClassLoaderBase - The web application [api] appears to have started a thread named [HikariPool-1 housekeeper] but has failed to stop it. This is very likely to create a memory leak. Stack trace of thread:
+ java.base@17.0.19/jdk.internal.misc.Unsafe.park(Native Method)
+ java.base@17.0.19/java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:252)
+ java.base@17.0.19/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:1672)
+ java.base@17.0.19/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1182)
+ java.base@17.0.19/java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:899)
+ java.base@17.0.19/java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1062)
+ java.base@17.0.19/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1122)
+ java.base@17.0.19/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+ java.base@17.0.19/java.lang.Thread.run(Thread.java:842)
+2026-06-25 21:26:08 [main] WARN  o.a.c.loader.WebappClassLoaderBase - The web application [api] appears to have started a thread named [HikariPool-1 connection adder] but has failed to stop it. This is very likely to create a memory leak. Stack trace of thread:
+ java.base@17.0.19/jdk.internal.misc.Unsafe.park(Native Method)
+ java.base@17.0.19/java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:252)
+ java.base@17.0.19/java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:1672)
+ java.base@17.0.19/java.util.concurrent.LinkedBlockingQueue.poll(LinkedBlockingQueue.java:460)
+ java.base@17.0.19/java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1061)
+ java.base@17.0.19/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1122)
+ java.base@17.0.19/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+ java.base@17.0.19/java.lang.Thread.run(Thread.java:842)
+2026-06-25 21:26:08 [main] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Unable to start web server
+2026-06-25 21:26:08 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2026-06-25 21:26:08 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2026-06-25 21:26:08 [main] INFO  o.s.b.a.l.ConditionEvaluationReportLogger - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2026-06-25 21:26:08 [main] ERROR o.s.boot.SpringApplication - Application run failed
+org.springframework.context.ApplicationContextException: Unable to start web server
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.onRefresh(ServletWebServerApplicationContext.java:165)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:610)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:753)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:455)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:323)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1342)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1331)
+	at com.example.Projeto_Oficina_Mecanica.ProjetoOficinaMecanicaApplication.main(ProjetoOficinaMecanicaApplication.java:10)
+Caused by: org.springframework.boot.web.server.WebServerException: Unable to start embedded Tomcat
+	at org.springframework.boot.web.embedded.tomcat.TomcatWebServer.initialize(TomcatWebServer.java:142)
+	at org.springframework.boot.web.embedded.tomcat.TomcatWebServer.<init>(TomcatWebServer.java:104)
+	at org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory.getTomcatWebServer(TomcatServletWebServerFactory.java:501)
+	at org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory.getWebServer(TomcatServletWebServerFactory.java:218)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.createWebServer(ServletWebServerApplicationContext.java:188)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.onRefresh(ServletWebServerApplicationContext.java:162)
+	... 8 common frames omitted
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'jwtAuthFilter' defined in file [C:\Users\Carneiro\Documents\Projeto da Faculdade\Projeto_Oficina_Mecanica\target\classes\com\example\Projeto_Oficina_Mecanica\security\JwtAuthFilter.class]: Unsatisfied dependency expressed through constructor parameter 1: Error creating bean with name 'userDetailsServiceImpl' defined in file [C:\Users\Carneiro\Documents\Projeto da Faculdade\Projeto_Oficina_Mecanica\target\classes\com\example\Projeto_Oficina_Mecanica\security\UserDetailsServiceImpl.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'usuarioRepository' defined in com.example.Projeto_Oficina_Mecanica.repository.UsuarioRepository defined in @EnableJpaRepositories declared on JpaRepositoriesRegistrar.EnableJpaRepositoriesConfiguration: Cannot resolve reference to bean 'jpaSharedEM_entityManagerFactory' while setting bean property 'entityManager'
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:802)
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:241)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1356)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1193)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:563)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:523)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:325)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:323)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:204)
+	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.getOrderedBeansOfType(ServletContextInitializerBeans.java:210)
+	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.addAsRegistrationBean(ServletContextInitializerBeans.java:173)
+	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.addAsRegistrationBean(ServletContextInitializerBeans.java:168)
+	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.addAdaptableBeans(ServletContextInitializerBeans.java:153)
+	at org.springframework.boot.web.servlet.ServletContextInitializerBeans.<init>(ServletContextInitializerBeans.java:86)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.getServletContextInitializerBeans(ServletWebServerApplicationContext.java:266)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.selfInitialize(ServletWebServerApplicationContext.java:240)
+	at org.springframework.boot.web.embedded.tomcat.TomcatStarter.onStartup(TomcatStarter.java:52)
+	at org.apache.catalina.core.StandardContext.startInternal(StandardContext.java:4850)
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:171)
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1332)
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1322)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:75)
+	at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:145)
+	at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:866)
+	at org.apache.catalina.core.StandardHost.startInternal(StandardHost.java:845)
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:171)
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1332)
+	at org.apache.catalina.core.ContainerBase$StartChild.call(ContainerBase.java:1322)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at org.apache.tomcat.util.threads.InlineExecutorService.execute(InlineExecutorService.java:75)
+	at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:145)
+	at org.apache.catalina.core.ContainerBase.startInternal(ContainerBase.java:866)
+	at org.apache.catalina.core.StandardEngine.startInternal(StandardEngine.java:240)
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:171)
+	at org.apache.catalina.core.StandardService.startInternal(StandardService.java:433)
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:171)
+	at org.apache.catalina.core.StandardServer.startInternal(StandardServer.java:917)
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:171)
+	at org.apache.catalina.startup.Tomcat.start(Tomcat.java:488)
+	at org.springframework.boot.web.embedded.tomcat.TomcatWebServer.initialize(TomcatWebServer.java:123)
+	... 13 common frames omitted
+Caused by: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'userDetailsServiceImpl' defined in file [C:\Users\Carneiro\Documents\Projeto da Faculdade\Projeto_Oficina_Mecanica\target\classes\com\example\Projeto_Oficina_Mecanica\security\UserDetailsServiceImpl.class]: Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'usuarioRepository' defined in com.example.Projeto_Oficina_Mecanica.repository.UsuarioRepository defined in @EnableJpaRepositories declared on JpaRepositoriesRegistrar.EnableJpaRepositoriesConfiguration: Cannot resolve reference to bean 'jpaSharedEM_entityManagerFactory' while setting bean property 'entityManager'
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:802)
+	at org.springframework.beans.factory.support.ConstructorResolver.autowireConstructor(ConstructorResolver.java:241)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.autowireConstructor(AbstractAutowireCapableBeanFactory.java:1356)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1193)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:563)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:523)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:325)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:323)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199)
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1441)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1348)
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:911)
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:789)
+	... 54 common frames omitted
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'usuarioRepository' defined in com.example.Projeto_Oficina_Mecanica.repository.UsuarioRepository defined in @EnableJpaRepositories declared on JpaRepositoriesRegistrar.EnableJpaRepositoriesConfiguration: Cannot resolve reference to bean 'jpaSharedEM_entityManagerFactory' while setting bean property 'entityManager'
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:377)
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:135)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyPropertyValues(AbstractAutowireCapableBeanFactory.java:1686)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1435)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:600)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:523)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:325)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:323)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199)
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:254)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1441)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1348)
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:911)
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:789)
+	... 68 common frames omitted
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'jpaSharedEM_entityManagerFactory': Cannot resolve reference to bean 'entityManagerFactory' while setting constructor argument
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:377)
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:135)
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveConstructorArguments(ConstructorResolver.java:689)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:513)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1336)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1166)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:563)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:523)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:325)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:323)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199)
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:365)
+	... 82 common frames omitted
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.tool.schema.spi.SchemaManagementException: Schema-validation: missing table [clientes]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1775)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:601)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:523)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:325)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:323)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199)
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:365)
+	... 94 common frames omitted
+Caused by: jakarta.persistence.PersistenceException: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.tool.schema.spi.SchemaManagementException: Schema-validation: missing table [clientes]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:421)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:396)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:352)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1822)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1771)
+	... 101 common frames omitted
+Caused by: org.hibernate.tool.schema.spi.SchemaManagementException: Schema-validation: missing table [clientes]
+	at org.hibernate.tool.schema.internal.AbstractSchemaValidator.validateTable(AbstractSchemaValidator.java:134)
+	at org.hibernate.tool.schema.internal.GroupedSchemaValidatorImpl.validateTables(GroupedSchemaValidatorImpl.java:46)
+	at org.hibernate.tool.schema.internal.AbstractSchemaValidator.performValidation(AbstractSchemaValidator.java:97)
+	at org.hibernate.tool.schema.internal.AbstractSchemaValidator.doValidation(AbstractSchemaValidator.java:75)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.performDatabaseAction(SchemaManagementToolCoordinator.java:295)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.lambda$process$5(SchemaManagementToolCoordinator.java:145)
+	at java.base/java.util.HashMap.forEach(HashMap.java:1421)
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.process(SchemaManagementToolCoordinator.java:142)
+	at org.hibernate.boot.internal.SessionFactoryObserverForSchemaExport.sessionFactoryCreated(SessionFactoryObserverForSchemaExport.java:37)
+	at org.hibernate.internal.SessionFactoryObserverChain.sessionFactoryCreated(SessionFactoryObserverChain.java:35)
+	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:295)
+	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:450)
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1507)
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:75)
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:376)
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:409)
+	... 105 common frames omitted
+2026-06-25 21:31:25 [main] INFO  c.e.P.ProjetoOficinaMecanicaApplication - Starting ProjetoOficinaMecanicaApplication using Java 17.0.19 with PID 13656 (C:\Users\Carneiro\Documents\Projeto da Faculdade\Projeto_Oficina_Mecanica\target\classes started by Carneiro in C:\Users\Carneiro\Documents\Projeto da Faculdade\Projeto_Oficina_Mecanica)
+2026-06-25 21:31:25 [main] DEBUG c.e.P.ProjetoOficinaMecanicaApplication - Running with Spring Boot v3.2.0, Spring v6.1.1
+2026-06-25 21:31:25 [main] INFO  c.e.P.ProjetoOficinaMecanicaApplication - No active profile set, falling back to 1 default profile: "default"
+2026-06-25 21:31:27 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-06-25 21:31:27 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 204 ms. Found 16 JPA repository interfaces.
+2026-06-25 21:31:28 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-06-25 21:31:28 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-06-25 21:31:28 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.16]
+2026-06-25 21:31:28 [main] INFO  o.a.c.c.C.[.[localhost].[/api] - Initializing Spring embedded WebApplicationContext
+2026-06-25 21:31:28 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 3396 ms
+2026-06-25 21:31:29 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-06-25 21:31:29 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.3.1.Final
+2026-06-25 21:31:29 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2026-06-25 21:31:29 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-06-25 21:31:29 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-06-25 21:31:30 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@2f9addd4
+2026-06-25 21:31:30 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-06-25 21:31:30 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-06-25 21:31:30 [main] WARN  org.hibernate.orm.deprecation - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2026-06-25 21:31:32 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-06-25 21:31:32 [main] DEBUG org.hibernate.SQL - 
+    create table clientes (
+        id bigint not null auto_increment,
+        ativo bit not null,
+        celular varchar(20),
+        cpf_cnpj varchar(18) not null,
+        created_at datetime(6),
+        email varchar(100),
+        bairro varchar(100),
+        cep varchar(9),
+        cidade varchar(100),
+        complemento varchar(50),
+        logradouro varchar(200),
+        numero varchar(10),
+        uf varchar(2),
+        nome varchar(150) not null,
+        observacoes varchar(500),
+        razao_social varchar(200),
+        telefone varchar(20),
+        tipo enum ('PF','PJ') not null,
+        updated_at datetime(6),
+        primary key (id)
+    ) engine=InnoDB
+2026-06-25 21:31:33 [main] DEBUG org.hibernate.SQL - 
+    create table contas_pagar (
+        id bigint not null auto_increment,
+        created_at datetime(6),
+        data_pagamento date,
+        data_vencimento date not null,
+        descricao varchar(200) not null,
+        forma_pagamento enum ('DINHEIRO','PIX','CARTAO_DEBITO','CARTAO_CREDITO','BOLETO','TRANSFERENCIA'),
+        observacao varchar(500),
+        status enum ('PENDENTE','PAGO','ATRASADO','CANCELADO') not null,
+        valor decimal(12,2) not null,
+        fornecedor_id bigint,
+        primary key (id)
+    ) engine=InnoDB
+2026-06-25 21:31:33 [main] DEBUG org.hibernate.SQL - 
+    create table contas_receber (
+        id bigint not null auto_increment,
+        created_at datetime(6),
+        data_pagamento date,
+        data_vencimento date not null,
+        forma_pagamento enum ('DINHEIRO','PIX','CARTAO_DEBITO','CARTAO_CREDITO','BOLETO','TRANSFERENCIA'),
+        observacao varchar(500),
+        status enum ('PENDENTE','PAGO','ATRASADO','CANCELADO') not null,
+        valor decimal(12,2) not null,
+        cliente_id bigint not null,
+        ordem_servico_id bigint,
+        primary key (id)
+    ) engine=InnoDB
+2026-06-25 21:31:33 [main] DEBUG org.hibernate.SQL - 
+    create table fornecedores (
+        id bigint not null auto_increment,
+        ativo bit not null,
+        celular varchar(20),
+        cnpj varchar(18) not null,
+        created_at datetime(6),
+        email varchar(100),
+        bairro varchar(100),
+        cep varchar(9),
+        cidade varchar(100),
+        complemento varchar(50),
+        logradouro varchar(200),
+        numero varchar(10),
+        uf varchar(2),
+        inscricao_estadual varchar(20),
+        nome_contato varchar(100),
+        nome_fantasia varchar(150),
+        observacoes varchar(500),
+        razao_social varchar(200) not null,
+        site varchar(100),
+        telefone varchar(20),
+        updated_at datetime(6),
+        primary key (id)
+    ) engine=InnoDB
+2026-06-25 21:31:33 [main] DEBUG org.hibernate.SQL - 
+    create table itens_nf_entrada (
+        id bigint not null auto_increment,
+        quantidade integer not null,
+        subtotal decimal(12,2) not null,
+        valor_unitario decimal(10,2) not null,
+        nota_fiscal_id bigint not null,
+        produto_id bigint not null,
+        primary key (id)
+    ) engine=InnoDB
+2026-06-25 21:31:33 [main] DEBUG org.hibernate.SQL - 
+    create table itens_ordem_servico (
+        id bigint not null auto_increment,
+        quantidade integer,
+        subtotal decimal(12,2),
+        valor_unitario decimal(10,2),
+        ordem_servico_id bigint not null,
+        produto_id bigint,
+        servico_id bigint,
+        primary key (id)
+    ) engine=InnoDB
+2026-06-25 21:31:33 [main] DEBUG org.hibernate.SQL - 
+    create table itens_servico_os (
+        id bigint not null auto_increment,
+        observacao varchar(500),
+        valor_cobrado decimal(10,2) not null,
+        ordem_servico_id bigint not null,
+        servico_id bigint not null,
+        primary key (id)
+    ) engine=InnoDB
+2026-06-25 21:31:33 [main] DEBUG org.hibernate.SQL - 
+    create table mecanico_especialidades (
+        mecanico_id bigint not null,
+        especialidade enum ('MOTOR','ELETRICA','SUSPENSAO','FREIOS','TRANSMISSAO','FUNILARIA','PINTURA','AR_CONDICIONADO','INJECAO_ELETRONICA','GERAL')
+    ) engine=InnoDB
+2026-06-25 21:31:33 [main] DEBUG org.hibernate.SQL - 
+    create table mecanicos (
+        id bigint not null auto_increment,
+        ativo bit not null,
+        celular varchar(20),
+        cpf varchar(14) not null,
+        crea varchar(20),
+        created_at datetime(6),
+        email varchar(100),
+        nome varchar(150) not null,
+        observacoes varchar(500),
+        telefone varchar(20),
+        updated_at datetime(6),
+        usuario_id bigint,
+        primary key (id)
+    ) engine=InnoDB
+2026-06-25 21:31:33 [main] DEBUG org.hibernate.SQL - 
+    create table movimentacoes_estoque (
+        id bigint not null auto_increment,
+        data_movimentacao datetime(6) not null,
+        observacao varchar(500),
+        quantidade integer not null,
+        tipo enum ('ENTRADA','SAIDA','DEVOLUCAO','AJUSTE') not null,
+        produto_id bigint not null,
+        primary key (id)
+    ) engine=InnoDB
+2026-06-25 21:31:33 [main] DEBUG org.hibernate.SQL - 
+    create table nf_entradas (
+        id bigint not null auto_increment,
+        created_at datetime(6),
+        data_emissao date not null,
+        data_entrada date not null,
+        numero varchar(30) not null,
+        observacoes varchar(500),
+        valor_total decimal(12,2),
+        fornecedor_id bigint not null,
+        primary key (id)
+    ) engine=InnoDB
+2026-06-25 21:31:33 [main] DEBUG org.hibernate.SQL - 
+    create table ordens_servico (
+        id bigint not null auto_increment,
+        data_abertura datetime(6),
+        data_fechamento datetime(6),
+        diagnostico varchar(1000),
+        numero bigint not null,
+        observacoes varchar(1000),
+        problema_relatado varchar(1000),
+        status enum ('ABERTA','EM_ANALISE','AGUARDANDO_APROVACAO','APROVADA','EM_EXECUCAO','FINALIZADA','ENTREGUE','CANCELADA'),
+        valor_total decimal(12,2),
+        cliente_id bigint not null,
+        mecanico_id bigint,
+        veiculo_id bigint not null,
+        primary key (id)
+    ) engine=InnoDB
+2026-06-25 21:31:33 [main] DEBUG org.hibernate.SQL - 
+    create table produtos (
+        id bigint not null auto_increment,
+        ativo bit not null,
+        categoria enum ('OLEO_LUBRIFICANTE','FILTRO','PECA_MOTOR','PECA_FREIO','PECA_SUSPENSAO','PECA_ELETRICA','PECA_TRANSMISSAO','PNEU','BATERIA','FLUIDO','ACESSORIO','FERRAMENTA','OUTROS') not null,
+        codigo varchar(30) not null,
+        created_at datetime(6),
+        descricao varchar(200) not null,
+        estoque_atual integer not null,
+        estoque_maximo integer,
+        estoque_minimo integer not null,
+        localizacao varchar(100),
+        marca varchar(50),
+        observacoes varchar(500),
+        preco_custo decimal(10,2) not null,
+        preco_venda decimal(10,2) not null,
+        unidade varchar(50),
+        updated_at datetime(6),
+        fornecedor_id bigint,
+        primary key (id)
+    ) engine=InnoDB
+2026-06-25 21:31:33 [main] DEBUG org.hibernate.SQL - 
+    create table servicos (
+        id bigint not null auto_increment,
+        ativo bit not null,
+        codigo varchar(30) not null,
+        created_at datetime(6),
+        descricao varchar(200) not null,
+        observacoes varchar(500),
+        tempo_estimado_minutos integer,
+        updated_at datetime(6),
+        valor_padrao decimal(10,2) not null,
+        detalhes varchar(1000),
+        primary key (id)
+    ) engine=InnoDB
+2026-06-25 21:31:33 [main] DEBUG org.hibernate.SQL - 
+    create table usuarios (
+        id bigint not null auto_increment,
+        ativo bit not null,
+        created_at datetime(6),
+        email varchar(100) not null,
+        nome varchar(100) not null,
+        perfil enum ('ADMIN','GERENTE','ATENDENTE','MECANICO') not null,
+        senha varchar(255) not null,
+        updated_at datetime(6),
+        primary key (id)
+    ) engine=InnoDB
+2026-06-25 21:31:33 [main] DEBUG org.hibernate.SQL - 
+    create table veiculos (
+        id bigint not null auto_increment,
+        ano_fabricacao integer not null,
+        ano_modelo integer not null,
+        ativo bit not null,
+        chassi varchar(30),
+        combustivel enum ('GASOLINA','ETANOL','FLEX','DIESEL','GNV','ELETRICO','HIBRIDO'),
+        cor varchar(50),
+        created_at datetime(6),
+        marca varchar(100) not null,
+        modelo varchar(100) not null,
+        observacoes varchar(500),
+        placa varchar(10) not null,
+        quilometragem integer,
+        renavam varchar(20),
+        updated_at datetime(6),
+        cliente_id bigint not null,
+        primary key (id)
+    ) engine=InnoDB
+2026-06-25 21:31:33 [main] DEBUG org.hibernate.SQL - 
+    create index idx_cliente_email 
+       on clientes (email)
+2026-06-25 21:31:33 [main] DEBUG org.hibernate.SQL - 
+    alter table clientes 
+       drop index UK_kj1lobq4gilfyyf3h8k512cyj
+2026-06-25 21:31:33 [main] DEBUG org.hibernate.SQL - 
+    alter table clientes 
+       add constraint UK_kj1lobq4gilfyyf3h8k512cyj unique (cpf_cnpj)
+2026-06-25 21:31:34 [main] DEBUG org.hibernate.SQL - 
+    alter table contas_receber 
+       drop index UK_buxfxcsqgqme6i600pax5jiqi
+2026-06-25 21:31:34 [main] DEBUG org.hibernate.SQL - 
+    alter table contas_receber 
+       add constraint UK_buxfxcsqgqme6i600pax5jiqi unique (ordem_servico_id)
+2026-06-25 21:31:34 [main] DEBUG org.hibernate.SQL - 
+    alter table fornecedores 
+       drop index UK_tflo0rfxyagqf5aq6rvjt5ofh
+2026-06-25 21:31:34 [main] DEBUG org.hibernate.SQL - 
+    alter table fornecedores 
+       add constraint UK_tflo0rfxyagqf5aq6rvjt5ofh unique (cnpj)
+2026-06-25 21:31:34 [main] DEBUG org.hibernate.SQL - 
+    alter table mecanicos 
+       drop index UK_181ubnmglwc2ulxbct2h91cd9
+2026-06-25 21:31:34 [main] DEBUG org.hibernate.SQL - 
+    alter table mecanicos 
+       add constraint UK_181ubnmglwc2ulxbct2h91cd9 unique (cpf)
+2026-06-25 21:31:34 [main] DEBUG org.hibernate.SQL - 
+    alter table mecanicos 
+       drop index UK_jhcmqhbf6octnhqfn90b82c0i
+2026-06-25 21:31:34 [main] DEBUG org.hibernate.SQL - 
+    alter table mecanicos 
+       add constraint UK_jhcmqhbf6octnhqfn90b82c0i unique (usuario_id)
+2026-06-25 21:31:34 [main] DEBUG org.hibernate.SQL - 
+    alter table nf_entradas 
+       drop index UK_efh0rwuersfiyk54worjw1846
+2026-06-25 21:31:34 [main] DEBUG org.hibernate.SQL - 
+    alter table nf_entradas 
+       add constraint UK_efh0rwuersfiyk54worjw1846 unique (numero)
+2026-06-25 21:31:34 [main] DEBUG org.hibernate.SQL - 
+    alter table ordens_servico 
+       drop index UK_jcq7ww7fxit1d5v2ujjc4wp2i
+2026-06-25 21:31:34 [main] DEBUG org.hibernate.SQL - 
+    alter table ordens_servico 
+       add constraint UK_jcq7ww7fxit1d5v2ujjc4wp2i unique (numero)
+2026-06-25 21:31:34 [main] DEBUG org.hibernate.SQL - 
+    create index idx_produto_categoria 
+       on produtos (categoria)
+2026-06-25 21:31:34 [main] DEBUG org.hibernate.SQL - 
+    alter table produtos 
+       drop index UK_pk2k37y05kgqceufn556j55w3
+2026-06-25 21:31:34 [main] DEBUG org.hibernate.SQL - 
+    alter table produtos 
+       add constraint UK_pk2k37y05kgqceufn556j55w3 unique (codigo)
+2026-06-25 21:31:34 [main] DEBUG org.hibernate.SQL - 
+    alter table servicos 
+       drop index UK_gv10f01wy2yrqrbr2cq5jw1ae
+2026-06-25 21:31:34 [main] DEBUG org.hibernate.SQL - 
+    alter table servicos 
+       add constraint UK_gv10f01wy2yrqrbr2cq5jw1ae unique (codigo)
+2026-06-25 21:31:34 [main] DEBUG org.hibernate.SQL - 
+    alter table usuarios 
+       drop index UK_kfsp0s1tflm1cwlj8idhqsad0
+2026-06-25 21:31:34 [main] DEBUG org.hibernate.SQL - 
+    alter table usuarios 
+       add constraint UK_kfsp0s1tflm1cwlj8idhqsad0 unique (email)
+2026-06-25 21:31:34 [main] DEBUG org.hibernate.SQL - 
+    alter table usuarios 
+       drop index UK_exw5vja1pgfobcpqtldhnx6uv
+2026-06-25 21:31:34 [main] DEBUG org.hibernate.SQL - 
+    alter table usuarios 
+       add constraint UK_exw5vja1pgfobcpqtldhnx6uv unique (nome)
+2026-06-25 21:31:34 [main] DEBUG org.hibernate.SQL - 
+    alter table veiculos 
+       drop index UK_nt3pflbvtutboqsd26nynfmqr
+2026-06-25 21:31:34 [main] DEBUG org.hibernate.SQL - 
+    alter table veiculos 
+       add constraint UK_nt3pflbvtutboqsd26nynfmqr unique (chassi)
+2026-06-25 21:31:34 [main] DEBUG org.hibernate.SQL - 
+    alter table veiculos 
+       drop index UK_ti2seg7u1j0clbvwol5x11jmv
+2026-06-25 21:31:34 [main] DEBUG org.hibernate.SQL - 
+    alter table veiculos 
+       add constraint UK_ti2seg7u1j0clbvwol5x11jmv unique (placa)
+2026-06-25 21:31:34 [main] DEBUG org.hibernate.SQL - 
+    alter table veiculos 
+       drop index UK_bgvwydpa0haapxp571og84ow7
+2026-06-25 21:31:34 [main] DEBUG org.hibernate.SQL - 
+    alter table veiculos 
+       add constraint UK_bgvwydpa0haapxp571og84ow7 unique (renavam)
+2026-06-25 21:31:34 [main] DEBUG org.hibernate.SQL - 
+    alter table contas_pagar 
+       add constraint FKf61n7454tcwwqsao0qibsfvbm 
+       foreign key (fornecedor_id) 
+       references fornecedores (id)
+2026-06-25 21:31:34 [main] DEBUG org.hibernate.SQL - 
+    alter table contas_receber 
+       add constraint FKht7c0gxgvkdvhpfmvkifrk3tb 
+       foreign key (cliente_id) 
+       references clientes (id)
+2026-06-25 21:31:34 [main] DEBUG org.hibernate.SQL - 
+    alter table contas_receber 
+       add constraint FKj87uqbcevggfnjmnce72bwpc1 
+       foreign key (ordem_servico_id) 
+       references ordens_servico (id)
+2026-06-25 21:31:34 [main] DEBUG org.hibernate.SQL - 
+    alter table itens_nf_entrada 
+       add constraint FK746bx5lcvq1ou73hl41if8gfw 
+       foreign key (nota_fiscal_id) 
+       references nf_entradas (id)
+2026-06-25 21:31:34 [main] DEBUG org.hibernate.SQL - 
+    alter table itens_nf_entrada 
+       add constraint FK6o77j0agreyxy0m561np0lu9d 
+       foreign key (produto_id) 
+       references produtos (id)
+2026-06-25 21:31:35 [main] DEBUG org.hibernate.SQL - 
+    alter table itens_ordem_servico 
+       add constraint FK8uy0rrrq466fh04owl0u5pdj6 
+       foreign key (ordem_servico_id) 
+       references ordens_servico (id)
+2026-06-25 21:31:35 [main] DEBUG org.hibernate.SQL - 
+    alter table itens_ordem_servico 
+       add constraint FK4wcveyklmh7w1vxgopd4b4wlk 
+       foreign key (produto_id) 
+       references produtos (id)
+2026-06-25 21:31:35 [main] DEBUG org.hibernate.SQL - 
+    alter table itens_ordem_servico 
+       add constraint FKna405042t8c8x3hgeiskuta2y 
+       foreign key (servico_id) 
+       references servicos (id)
+2026-06-25 21:31:35 [main] DEBUG org.hibernate.SQL - 
+    alter table itens_servico_os 
+       add constraint FKtr21q2o13q4cf4dqeogqi9n9x 
+       foreign key (ordem_servico_id) 
+       references ordens_servico (id)
+2026-06-25 21:31:35 [main] DEBUG org.hibernate.SQL - 
+    alter table itens_servico_os 
+       add constraint FK50llfu3c55t0h0oapo25gqgwp 
+       foreign key (servico_id) 
+       references servicos (id)
+2026-06-25 21:31:35 [main] DEBUG org.hibernate.SQL - 
+    alter table mecanico_especialidades 
+       add constraint FKnh60gmi1fpex0abpxeqdwu4t3 
+       foreign key (mecanico_id) 
+       references mecanicos (id)
+2026-06-25 21:31:35 [main] DEBUG org.hibernate.SQL - 
+    alter table mecanicos 
+       add constraint FKngrma6avey1gbhwgb1weegbi6 
+       foreign key (usuario_id) 
+       references usuarios (id)
+2026-06-25 21:31:35 [main] DEBUG org.hibernate.SQL - 
+    alter table movimentacoes_estoque 
+       add constraint FKmdn52qx0fmc71ejys5cmetpjc 
+       foreign key (produto_id) 
+       references produtos (id)
+2026-06-25 21:31:35 [main] DEBUG org.hibernate.SQL - 
+    alter table nf_entradas 
+       add constraint FKavvh026p7g78ygxsxycicwyi7 
+       foreign key (fornecedor_id) 
+       references fornecedores (id)
+2026-06-25 21:31:36 [main] DEBUG org.hibernate.SQL - 
+    alter table ordens_servico 
+       add constraint FK3umkg4oa4r9q93q5frh5lrh0p 
+       foreign key (cliente_id) 
+       references clientes (id)
+2026-06-25 21:31:36 [main] DEBUG org.hibernate.SQL - 
+    alter table ordens_servico 
+       add constraint FKb3lodaanspaacelop6qtlmpy 
+       foreign key (mecanico_id) 
+       references mecanicos (id)
+2026-06-25 21:31:36 [main] DEBUG org.hibernate.SQL - 
+    alter table ordens_servico 
+       add constraint FKf1kufpc9s3ekh2y4nfinyn0ji 
+       foreign key (veiculo_id) 
+       references veiculos (id)
+2026-06-25 21:31:36 [main] DEBUG org.hibernate.SQL - 
+    alter table produtos 
+       add constraint FKje6bg3cu81l0e4nfprc0c7wwc 
+       foreign key (fornecedor_id) 
+       references fornecedores (id)
+2026-06-25 21:31:36 [main] DEBUG org.hibernate.SQL - 
+    alter table veiculos 
+       add constraint FKo6t7kavymtdqlsm2ytuyvhor2 
+       foreign key (cliente_id) 
+       references clientes (id)
+2026-06-25 21:31:36 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-06-25 21:31:37 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-06-25 21:31:38 [main] DEBUG c.e.P.security.JwtAuthFilter - Filter 'jwtAuthFilter' configured for use
+2026-06-25 21:31:40 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-06-25 21:31:42 [main] INFO  o.s.s.web.DefaultSecurityFilterChain - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@6d7453ad, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@295d8852, org.springframework.security.web.context.SecurityContextHolderFilter@22a52fa8, org.springframework.security.web.header.HeaderWriterFilter@70d49a95, org.springframework.web.filter.CorsFilter@3abe94d9, org.springframework.security.web.authentication.logout.LogoutFilter@315ccea2, com.example.Projeto_Oficina_Mecanica.security.JwtAuthFilter@1989e9ec, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@164c06a4, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@3f78b3b2, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@1788be37, org.springframework.security.web.session.SessionManagementFilter@19e578e9, org.springframework.security.web.access.ExceptionTranslationFilter@7dcc6b08, org.springframework.security.web.access.intercept.AuthorizationFilter@5332ebea]
+2026-06-25 21:31:43 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/api'
+2026-06-25 21:31:43 [main] INFO  c.e.P.ProjetoOficinaMecanicaApplication - Started ProjetoOficinaMecanicaApplication in 18.567 seconds (process running for 19.373)
+2026-06-25 21:38:56 [http-nio-8080-exec-9] INFO  o.a.c.c.C.[.[localhost].[/api] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-06-25 21:38:56 [http-nio-8080-exec-9] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-06-25 21:38:56 [http-nio-8080-exec-9] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 201 ms
+2026-06-25 21:38:56 [http-nio-8080-exec-9] DEBUG o.s.security.web.FilterChainProxy - Securing GET /swagger-ui.html
+2026-06-25 21:38:56 [http-nio-8080-exec-9] WARN  o.s.w.s.h.HandlerMappingIntrospector - Cache miss for REQUEST dispatch to '/api/swagger-ui.html' (previous null). Performing CorsConfiguration lookup. This is logged once only at WARN level, and every time at TRACE.
+2026-06-25 21:38:57 [http-nio-8080-exec-9] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2026-06-25 21:38:57 [http-nio-8080-exec-9] WARN  o.s.w.s.h.HandlerMappingIntrospector - Cache miss for REQUEST dispatch to '/api/swagger-ui.html' (previous null). Performing MatchableHandlerMapping lookup. This is logged once only at WARN level, and every time at TRACE.
+2026-06-25 21:38:57 [http-nio-8080-exec-9] DEBUG o.s.security.web.FilterChainProxy - Secured GET /swagger-ui.html
+2026-06-25 21:38:57 [http-nio-8080-exec-10] DEBUG o.s.security.web.FilterChainProxy - Securing GET /swagger-ui/index.html
+2026-06-25 21:38:57 [http-nio-8080-exec-10] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2026-06-25 21:38:57 [http-nio-8080-exec-10] DEBUG o.s.security.web.FilterChainProxy - Secured GET /swagger-ui/index.html
+2026-06-25 21:38:57 [http-nio-8080-exec-1] DEBUG o.s.security.web.FilterChainProxy - Securing GET /swagger-ui/swagger-ui.css
+2026-06-25 21:38:57 [http-nio-8080-exec-2] DEBUG o.s.security.web.FilterChainProxy - Securing GET /swagger-ui/index.css
+2026-06-25 21:38:57 [http-nio-8080-exec-3] DEBUG o.s.security.web.FilterChainProxy - Securing GET /swagger-ui/swagger-ui-bundle.js
+2026-06-25 21:38:57 [http-nio-8080-exec-1] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2026-06-25 21:38:57 [http-nio-8080-exec-3] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2026-06-25 21:38:57 [http-nio-8080-exec-4] DEBUG o.s.security.web.FilterChainProxy - Securing GET /swagger-ui/swagger-ui-standalone-preset.js
+2026-06-25 21:38:57 [http-nio-8080-exec-3] DEBUG o.s.security.web.FilterChainProxy - Secured GET /swagger-ui/swagger-ui-bundle.js
+2026-06-25 21:38:57 [http-nio-8080-exec-5] DEBUG o.s.security.web.FilterChainProxy - Securing GET /swagger-ui/swagger-initializer.js
+2026-06-25 21:38:57 [http-nio-8080-exec-2] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2026-06-25 21:38:57 [http-nio-8080-exec-5] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2026-06-25 21:38:57 [http-nio-8080-exec-1] DEBUG o.s.security.web.FilterChainProxy - Secured GET /swagger-ui/swagger-ui.css
+2026-06-25 21:38:57 [http-nio-8080-exec-4] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2026-06-25 21:38:57 [http-nio-8080-exec-2] DEBUG o.s.security.web.FilterChainProxy - Secured GET /swagger-ui/index.css
+2026-06-25 21:38:57 [http-nio-8080-exec-4] DEBUG o.s.security.web.FilterChainProxy - Secured GET /swagger-ui/swagger-ui-standalone-preset.js
+2026-06-25 21:38:57 [http-nio-8080-exec-5] DEBUG o.s.security.web.FilterChainProxy - Secured GET /swagger-ui/swagger-initializer.js
+2026-06-25 21:38:58 [http-nio-8080-exec-6] DEBUG o.s.security.web.FilterChainProxy - Securing GET /v3/api-docs/swagger-config
+2026-06-25 21:38:58 [http-nio-8080-exec-6] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2026-06-25 21:38:58 [http-nio-8080-exec-6] DEBUG o.s.security.web.FilterChainProxy - Secured GET /v3/api-docs/swagger-config
+2026-06-25 21:38:58 [http-nio-8080-exec-7] DEBUG o.s.security.web.FilterChainProxy - Securing GET /swagger-ui/favicon-32x32.png
+2026-06-25 21:38:58 [http-nio-8080-exec-7] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2026-06-25 21:38:58 [http-nio-8080-exec-7] DEBUG o.s.security.web.FilterChainProxy - Secured GET /swagger-ui/favicon-32x32.png
+2026-06-25 21:38:58 [http-nio-8080-exec-8] DEBUG o.s.security.web.FilterChainProxy - Securing GET /v3/api-docs
+2026-06-25 21:38:58 [http-nio-8080-exec-8] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2026-06-25 21:38:58 [http-nio-8080-exec-8] DEBUG o.s.security.web.FilterChainProxy - Secured GET /v3/api-docs
+2026-06-25 21:39:00 [http-nio-8080-exec-8] INFO  o.s.api.AbstractOpenApiResource - Init duration for springdoc-openapi is: 1826 ms
+2026-06-25 21:39:59 [http-nio-8080-exec-5] DEBUG o.s.security.web.FilterChainProxy - Securing GET /v3/api-docs
+2026-06-25 21:39:59 [http-nio-8080-exec-5] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2026-06-25 21:39:59 [http-nio-8080-exec-5] DEBUG o.s.security.web.FilterChainProxy - Secured GET /v3/api-docs
+2026-06-25 21:42:16 [http-nio-8080-exec-6] DEBUG o.s.security.web.FilterChainProxy - Securing GET /swagger-ui.html
+2026-06-25 21:42:16 [http-nio-8080-exec-6] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2026-06-25 21:42:16 [http-nio-8080-exec-6] DEBUG o.s.security.web.FilterChainProxy - Secured GET /swagger-ui.html
+2026-06-25 21:42:16 [http-nio-8080-exec-8] DEBUG o.s.security.web.FilterChainProxy - Securing GET /swagger-ui/index.html
+2026-06-25 21:42:16 [http-nio-8080-exec-8] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2026-06-25 21:42:16 [http-nio-8080-exec-8] DEBUG o.s.security.web.FilterChainProxy - Secured GET /swagger-ui/index.html
+2026-06-25 21:42:16 [http-nio-8080-exec-10] DEBUG o.s.security.web.FilterChainProxy - Securing GET /swagger-ui/swagger-ui.css
+2026-06-25 21:42:16 [http-nio-8080-exec-2] DEBUG o.s.security.web.FilterChainProxy - Securing GET /swagger-ui/swagger-ui-bundle.js
+2026-06-25 21:42:16 [http-nio-8080-exec-4] DEBUG o.s.security.web.FilterChainProxy - Securing GET /swagger-ui/swagger-initializer.js
+2026-06-25 21:42:16 [http-nio-8080-exec-4] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2026-06-25 21:42:16 [http-nio-8080-exec-4] DEBUG o.s.security.web.FilterChainProxy - Secured GET /swagger-ui/swagger-initializer.js
+2026-06-25 21:42:16 [http-nio-8080-exec-9] DEBUG o.s.security.web.FilterChainProxy - Securing GET /swagger-ui/index.css
+2026-06-25 21:42:16 [http-nio-8080-exec-9] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2026-06-25 21:42:16 [http-nio-8080-exec-10] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2026-06-25 21:42:16 [http-nio-8080-exec-1] DEBUG o.s.security.web.FilterChainProxy - Securing GET /swagger-ui/swagger-ui-standalone-preset.js
+2026-06-25 21:42:16 [http-nio-8080-exec-1] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2026-06-25 21:42:16 [http-nio-8080-exec-2] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2026-06-25 21:42:16 [http-nio-8080-exec-1] DEBUG o.s.security.web.FilterChainProxy - Secured GET /swagger-ui/swagger-ui-standalone-preset.js
+2026-06-25 21:42:16 [http-nio-8080-exec-2] DEBUG o.s.security.web.FilterChainProxy - Secured GET /swagger-ui/swagger-ui-bundle.js
+2026-06-25 21:42:16 [http-nio-8080-exec-9] DEBUG o.s.security.web.FilterChainProxy - Secured GET /swagger-ui/index.css
+2026-06-25 21:42:16 [http-nio-8080-exec-10] DEBUG o.s.security.web.FilterChainProxy - Secured GET /swagger-ui/swagger-ui.css
+2026-06-25 21:42:18 [http-nio-8080-exec-5] DEBUG o.s.security.web.FilterChainProxy - Securing GET /v3/api-docs/swagger-config
+2026-06-25 21:42:18 [http-nio-8080-exec-5] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2026-06-25 21:42:18 [http-nio-8080-exec-5] DEBUG o.s.security.web.FilterChainProxy - Secured GET /v3/api-docs/swagger-config
+2026-06-25 21:42:18 [http-nio-8080-exec-3] DEBUG o.s.security.web.FilterChainProxy - Securing GET /v3/api-docs
+2026-06-25 21:42:18 [http-nio-8080-exec-3] DEBUG o.s.s.w.a.AnonymousAuthenticationFilter - Set SecurityContextHolder to anonymous SecurityContext
+2026-06-25 21:42:18 [http-nio-8080-exec-3] DEBUG o.s.security.web.FilterChainProxy - Secured GET /v3/api-docs

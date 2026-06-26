@@ -1,4 +1,4 @@
-package com.example.Projeto_Oficina_Mecanica.model;
+package com.example.Projeto_Oficina_Mecanica.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -6,6 +6,8 @@ import lombok.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.example.Projeto_Oficina_Mecanica.enums.EspecialidadeMecanico;
 
 /**
  * Entidade Mecânico.

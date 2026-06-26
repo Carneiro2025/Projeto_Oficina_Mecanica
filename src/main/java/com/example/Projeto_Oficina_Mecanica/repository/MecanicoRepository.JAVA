@@ -1,7 +1,7 @@
 package com.example.Projeto_Oficina_Mecanica.repository;
 
-import com.example.Projeto_Oficina_Mecanica.model.EspecialidadeMecanico;
-import com.example.Projeto_Oficina_Mecanica.model.Mecanico;
+import com.example.Projeto_Oficina_Mecanica.enums.EspecialidadeMecanico;
+import com.example.Projeto_Oficina_Mecanica.entity.Mecanico;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
