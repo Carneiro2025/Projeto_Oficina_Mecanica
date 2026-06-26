@@ -1,9 +1,9 @@
 package com.example.Projeto_Oficina_Mecanica.controller;
 
-import com.oficina.dto.request.LoginRequestDTO;
-import com.oficina.dto.request.RefreshTokenRequestDTO;
-import com.oficina.dto.response.TokenResponseDTO;
-import com.oficina.service.AuthService;
+import com.example.Projeto_Oficina_Mecanica.dto.request.LoginRequestDTO;
+import com.example.Projeto_Oficina_Mecanica.dto.request.RefreshTokenRequestDTO;
+import com.example.Projeto_Oficina_Mecanica.dto.response.TokenResponseDTO;
+import com.example.Projeto_Oficina_Mecanica.service.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;

@@ -6,6 +6,7 @@ import com.example.Projeto_Oficina_Mecanica.repository.NotaFiscalEntradaReposito
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.example.Projeto_Oficina_Mecanica.enums.TipoMovimentacaoEstoque;
 
 @Service
 @RequiredArgsConstructor

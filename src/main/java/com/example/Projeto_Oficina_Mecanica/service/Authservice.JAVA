@@ -1,9 +1,9 @@
 package com.example.Projeto_Oficina_Mecanica.service;
 
-import com.oficina.dto.request.LoginRequestDTO;
-import com.oficina.dto.request.RefreshTokenRequestDTO;
-import com.oficina.dto.response.TokenResponseDTO;
-import com.oficina.security.JwtUtil;
+import com.example.Projeto_Oficina_Mecanica.dto.request.LoginRequestDTO;
+import com.example.Projeto_Oficina_Mecanica.dto.request.RefreshTokenRequestDTO;
+import com.example.Projeto_Oficina_Mecanica.dto.response.TokenResponseDTO;
+import com.example.Projeto_Oficina_Mecanica.security.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;

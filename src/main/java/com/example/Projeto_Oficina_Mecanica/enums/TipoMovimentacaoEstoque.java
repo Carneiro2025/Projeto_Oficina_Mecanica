@@ -4,5 +4,6 @@ public enum TipoMovimentacaoEstoque {
 
     ENTRADA,
     SAIDA,
+    DEVOLUCAO,
     AJUSTE
 }

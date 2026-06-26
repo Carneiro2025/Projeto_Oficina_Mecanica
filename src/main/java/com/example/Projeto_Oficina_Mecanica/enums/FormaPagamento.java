@@ -8,7 +8,8 @@ public enum FormaPagamento {
     CARTAO_CREDITO,
     BOLETO,
     TRANSFERENCIA
-
 }
+
+
 
 

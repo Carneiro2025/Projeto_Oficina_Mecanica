@@ -1,13 +1,14 @@
-package com.example.Projeto_Oficina_Mecanica.dto.response;
+package com.example.Projeto_Oficina_Mecanica.dto;
 
 import lombok.*;
 
 import java.math.BigDecimal;
 
-@Data
-@Builder
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class DashboardDTO {
 
     private Long totalClientes;
@@ -15,8 +16,6 @@ public class DashboardDTO {
     private Long totalVeiculos;
 
     private Long totalProdutos;
-
-    private Long totalMecanicos;
 
     private Long totalOrdensServico;
 
@@ -26,7 +25,7 @@ public class DashboardDTO {
 
     private BigDecimal faturamentoMes;
 
-    private BigDecimal contasReceberPendentes;
+    private Long ordensCanceladas;
 
-    private BigDecimal contasPagarPendentes;
+
 }

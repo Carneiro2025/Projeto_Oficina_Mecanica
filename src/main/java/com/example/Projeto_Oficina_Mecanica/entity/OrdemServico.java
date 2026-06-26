@@ -53,7 +53,7 @@ public class OrdemServico {
 
     private LocalDateTime dataFechamento;
 
-    @Column(precision = 12, scale = 2)
+    @Column(name = "valor_total", precision = 12, scale = 2)
     private BigDecimal valorTotal;
 
     @OneToMany(
@@ -73,4 +73,16 @@ public class OrdemServico {
             status = StatusOrdemServico.ABERTA;
         }
     }
+    
+    public void recalcularTotal() {
+
+    this.valorTotal = itens.stream()
+            .map(ItemOrdemServico::getSubtotal)
+            
+            .reduce(
+                    java.math.BigDecimal.ZERO,
+                    java.math.BigDecimal::add
+            );
+    }
+
 }

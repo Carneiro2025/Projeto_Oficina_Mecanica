@@ -31,7 +31,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
         AND (u.nome LIKE %:nome% OR u.email LIKE %:nome%)
         AND u.perfil = :perfil
     """)
-    Page<Usuario> buscarConFiltros(
+    Page<Usuario> buscarComFiltros(
             @Param("nome") String nome,
             @Param("perfil") PerfilUsuario perfil,
             Pageable pageable

@@ -1,4 +1,4 @@
-package com.example.Projeto_Oficina_Mecanica.dto.response;
+package com.example.Projeto_Oficina_Mecanica.dto;
 
 import lombok.*;
 

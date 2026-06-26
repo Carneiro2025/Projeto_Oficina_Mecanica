@@ -6,6 +6,8 @@ import lombok.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+import com.example.Projeto_Oficina_Mecanica.enums.CategoriaProduto;
+
 /**
  * Entidade Produto — catálogo com controle de estoque.
  *

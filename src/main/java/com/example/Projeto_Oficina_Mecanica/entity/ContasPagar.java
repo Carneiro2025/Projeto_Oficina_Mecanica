@@ -1,7 +1,7 @@
 package com.example.Projeto_Oficina_Mecanica.entity;
 
 import com.example.Projeto_Oficina_Mecanica.enums.FormaPagamento;
-import com.example.Projeto_Oficina_Mecanica.enums.StatusPagamento;
+import com.example.Projeto_Oficina_Mecanica.enums.StatusContaPagar;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -22,9 +22,12 @@ public class ContasPagar {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "fornecedor_id")
     private Fornecedor fornecedor;
+
+    @Column(nullable = false, length = 200)
+    private String descricao;
 
     @Column(nullable = false, precision = 12, scale = 2)
     private BigDecimal valor;
@@ -35,11 +38,11 @@ public class ContasPagar {
     private LocalDate dataPagamento;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private StatusPagamento status;
+    private FormaPagamento formaPagamento;
 
     @Enumerated(EnumType.STRING)
-    private FormaPagamento formaPagamento;
+    @Column(nullable = false)
+    private StatusContaPagar status;
 
     @Column(length = 500)
     private String observacao;
@@ -53,7 +56,7 @@ public class ContasPagar {
         createdAt = LocalDateTime.now();
 
         if (status == null) {
-            status = StatusPagamento.PENDENTE;
+            status = StatusContaPagar.PENDENTE;
         }
     }
 }

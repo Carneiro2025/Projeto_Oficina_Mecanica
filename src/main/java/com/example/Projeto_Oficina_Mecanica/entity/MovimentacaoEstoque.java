@@ -5,6 +5,8 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 
+import com.example.Projeto_Oficina_Mecanica.enums.TipoMovimentacaoEstoque;
+
 @Entity
 @Table(name = "movimentacoes_estoque")
 @Getter

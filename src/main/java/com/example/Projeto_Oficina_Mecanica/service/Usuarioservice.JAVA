@@ -1,14 +1,14 @@
 package com.example.Projeto_Oficina_Mecanica.service;
 
-import com.oficina.dto.request.AtualizarUsuarioRequestDTO;
-import com.oficina.dto.request.CriarUsuarioRequestDTO;
-import com.oficina.dto.response.UsuarioResponseDTO;
-import com.oficina.exception.BusinessException;
-import com.oficina.exception.ResourceNotFoundException;
-import com.oficina.mapper.UsuarioMapper;
-import com.oficina.model.PerfilUsuario;
-import com.oficina.model.Usuario;
-import com.oficina.repository.UsuarioRepository;
+import com.example.Projeto_Oficina_Mecanica.dto.request.AtualizarUsuarioRequestDTO;
+import com.example.Projeto_Oficina_Mecanica.dto.request.CriarUsuarioRequestDTO;
+import com.example.Projeto_Oficina_Mecanica.dto.response.UsuarioResponseDTO;
+import com.example.Projeto_Oficina_Mecanica.exception.BusinessException;
+import com.example.Projeto_Oficina_Mecanica.exception.ResourceNotFoundException;
+import com.example.Projeto_Oficina_Mecanica.mapper.UsuarioMapper;
+import com.example.Projeto_Oficina_Mecanica.enums.PerfilUsuario;
+import com.example.Projeto_Oficina_Mecanica.entity.Usuario;
+import com.example.Projeto_Oficina_Mecanica.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
