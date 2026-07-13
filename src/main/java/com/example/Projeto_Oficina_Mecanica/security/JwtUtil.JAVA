@@ -111,4 +111,18 @@ public class JwtUtil {
                 .map(a -> a.getAuthority().replace("ROLE_", ""))
                 .orElse("");
     }
+
+    public Long getRefreshExpirationEmSegundos() {
+
+    return refreshExpiration / 1000;
+    }
+
+    public String extrairPerfil(String token) {
+
+    return extrairClaim(
+            token,
+            claims -> claims.get("perfil", String.class)
+    );
+    }
+    
 }

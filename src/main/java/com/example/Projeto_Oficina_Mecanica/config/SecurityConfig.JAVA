@@ -23,12 +23,13 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
-@RequiredArgsConstructor
+@RequiredArgsConstructor // Cria automaticamente o construtor para injeção de dependência dos atributos 'final'
 public class SecurityConfig {
 
     private final JwtAuthFilter jwtAuthFilter;
     private final UserDetailsService userDetailsService;
 
+    // Lista de endpoints que não necessitam de autenticação (Acesso Público / Documentação)
     private static final String[] PUBLIC_ENDPOINTS = {
             "/api/auth/**",
             "/v3/api-docs/**",
@@ -41,42 +42,38 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http
+                // Desabilita o CSRF, pois em APIs REST baseadas em Tokens (JWT) ele não é necessário
                 .csrf(AbstractHttpConfigurer::disable)
 
+                // Define a política de sessão como STATELESS (A API não guarda estado no servidor)
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
+                // Configura as regras de autorizações de requisições HTTP
                 .authorizeHttpRequests(auth -> auth
 
+                        // Permite acesso total e irrestrito aos endpoints públicos mapeados acima
                         .requestMatchers(PUBLIC_ENDPOINTS).permitAll()
 
-                        // Usuários
-                        .requestMatchers(HttpMethod.POST, "/api/usuarios")
-                        .hasRole("ADMIN")
+                        // Regras de controle de acesso para o gerenciamento de Usuários
+                        .requestMatchers(HttpMethod.POST, "/api/usuarios").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/usuarios/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/usuarios/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/usuarios/**").hasAnyRole("ADMIN", "GERENTE")
 
-                        .requestMatchers(HttpMethod.PUT, "/api/usuarios/**")
-                        .hasRole("ADMIN")
+                        // Regras de controle de acesso para as Ordens de Serviço (OS)
+                        .requestMatchers(HttpMethod.GET, "/api/ordens-servico/**").hasAnyRole("ADMIN", "GERENTE", "MECANICO")
+                        .requestMatchers(HttpMethod.POST, "/api/ordens-servico/**").hasAnyRole("ADMIN", "GERENTE", "ATENDENTE")
 
-                        .requestMatchers(HttpMethod.DELETE, "/api/usuarios/**")
-                        .hasRole("ADMIN")
-
-                        .requestMatchers(HttpMethod.GET, "/api/usuarios/**")
-                        .hasAnyRole("ADMIN", "GERENTE")
-
-                        .requestMatchers(HttpMethod.GET, "/api/ordens-servico/**")
-                        .hasAnyRole("ADMIN","GERENTE","MECANICO")
-
-                        .requestMatchers(HttpMethod.POST, "/api/ordens-servico/**")
-                        .hasAnyRole("ADMIN","GERENTE","ATENDENTE")
-
-                        // Demais endpoints
-                        .anyRequest()
-                        .authenticated()
+                        // Qualquer outro endpoint que não foi explicitado acima exige autenticação prévia
+                        .anyRequest().authenticated()
                 )
 
-                        .authenticationProvider(authenticationProvider())
+                // Define o provedor de autenticação customizado da aplicação
+                .authenticationProvider(authenticationProvider())
 
-                        .addFilterBefore(
+                // Adiciona o filtro JWT customizado antes do filtro padrão de autenticação por Username/Password
+                .addFilterBefore(
                         jwtAuthFilter,
                         UsernamePasswordAuthenticationFilter.class
                 );
@@ -84,28 +81,64 @@ public class SecurityConfig {
         return http.build();
     }
 
+    /**
+     * Define o provedor de dados de autenticação.
+     * Configura o serviço de busca do usuário e o algoritmo de criptografia de senhas.
+     */
     @Bean
     public AuthenticationProvider authenticationProvider() {
-
-        DaoAuthenticationProvider provider =
-                new DaoAuthenticationProvider();
-
-        provider.setUserDetailsService(userDetailsService);
-        provider.setPasswordEncoder(passwordEncoder());
-
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+        provider.setUserDetailsService(userDetailsService); // Vincula o serviço que busca as credenciais no Banco de Dados
+        provider.setPasswordEncoder(passwordEncoder());     // Vincula o codificador BCrypt para checagem da senha
         return provider;
     }
 
+    /**
+     * Expõe o gerenciador de autenticação oficial do Spring Security para ser injetado nos Controllers (ex: login).
+     */
     @Bean
     public AuthenticationManager authenticationManager(
             AuthenticationConfiguration configuration
     ) throws Exception {
-
         return configuration.getAuthenticationManager();
     }
 
+    /**
+     * Define o componente responsável por criptografar e validar as senhas utilizando BCrypt.
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+    .requestMatchers(HttpMethod.GET,
+        "/api/clientes/**")
+.hasAnyRole(
+        "ADMIN",
+        "GERENTE",
+        "ATENDENTE"
+)
+
+.requestMatchers(HttpMethod.POST,
+        "/api/clientes")
+.hasAnyRole(
+        "ADMIN",
+        "GERENTE",
+        "ATENDENTE"
+)
+
+.requestMatchers(HttpMethod.PUT,
+        "/api/clientes/**")
+.hasAnyRole(
+        "ADMIN",
+        "GERENTE"
+)
+
+.requestMatchers(HttpMethod.PATCH,
+        "/api/clientes/**")
+.hasAnyRole(
+        "ADMIN",
+        "GERENTE"
+)
+
 }

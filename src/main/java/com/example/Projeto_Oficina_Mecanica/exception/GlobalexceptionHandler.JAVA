@@ -2,8 +2,11 @@ package com.example.Projeto_Oficina_Mecanica.exception;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
+
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
@@ -95,4 +98,34 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity.status(status).body(body);
     }
+
+    @ExceptionHandler(org.springframework.http.converter.HttpMessageNotReadableException.class)
+    public ResponseEntity<ApiErrorResponseDTO> handleJson(
+        HttpMessageNotReadableException ex,
+        HttpServletRequest req) {
+
+    return build(
+            HttpStatus.BAD_REQUEST,
+            "JSON inválido",
+            "Verifique o formato da requisição.",
+            req,
+            null
+    );
+    }
+
+   @ExceptionHandler(org.springframework.dao.DataIntegrityViolationException.class)
+   public ResponseEntity<ApiErrorResponseDTO> handleDataIntegrity(
+        DataIntegrityViolationException ex,
+        HttpServletRequest req) {
+
+    return build(
+            HttpStatus.CONFLICT,
+            "Violação de integridade",
+            "Operação não permitida devido às regras do banco de dados.",
+            req,
+            null
+    );
+   }
+
+
 }

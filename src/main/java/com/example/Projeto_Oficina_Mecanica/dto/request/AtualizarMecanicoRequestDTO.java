@@ -7,30 +7,42 @@ import lombok.Data;
 
 import java.util.List;
 
+/**
+ * Data Transfer Object (DTO) utilizado para a atualização dos dados cadastrais de Mecânicos.
+ * Representa uma atualização parcial ou total (PUT/PATCH), onde todos os atributos são opcionais.
+ */
 @Data
 @Schema(description = "Dados para atualização de mecânico (todos os campos opcionais)")
 public class AtualizarMecanicoRequestDTO {
 
-    @Size(min = 3, max = 150)
+    // Nome completo do profissional técnico
+    @Size(min = 3, max = 150, message = "O nome do mecânico deve conter entre {min} e {max} caracteres.")
     private String nome;
 
-    @Pattern(regexp = "^\\(?\\d{2}\\)?[\\s-]?\\d{4,5}-?\\d{4}$", message = "Telefone inválido")
+    // Telefone fixo residencial ou de recado
+    @Pattern(regexp = "^\\(?\\d{2}\\)?[\\s-]?\\d{4,5}-?\\d{4}$", message = "Telefone informado é inválido.")
     private String telefone;
 
-    @Pattern(regexp = "^\\(?\\d{2}\\)?[\\s-]?9\\d{4}-?\\d{4}$", message = "Celular inválido")
+    // Telefone móvel/celular para contato direto ou corporativo
+    @Pattern(regexp = "^\\(?\\d{2}\\)?[\\s-]?9\\d{4}-?\\d{4}$", message = "Telefone celular informado é inválido.")
     private String celular;
 
-    @Email(message = "E-mail inválido")
+    // E-mail do profissional para comunicações e acessos do sistema
+    @Email(message = "O e-mail informado é inválido.")
     private String email;
 
-    @Size(max = 20)
+    // Registro profissional (CREA), útil caso a oficina exija assinatura técnica para laudos ou modificações estruturais
+    @Size(max = 20, message = "O CREA não pode exceder {max} caracteres.")
     private String crea;
 
-    @Schema(description = "Substitui todas as especialidades existentes")
-    private List<EspecialidadeMecanico> especialidades;
+    // Lista de especialidades do mecânico (Ex: Alinhamento, Injeção Eletrônica, Câmbio)
+    @Schema(description = "Substitui integralmente a lista de especialidades atualmente vinculada ao mecânico.")
+    private List<EspecialidadeMecanico> mapEspecialidades;
 
-    @Size(max = 500)
+    // Histórico profissional, observações sobre equipamentos específicos ou restrições de horários
+    @Size(max = 500, message = "O campo observações não pode exceder {max} caracteres.")
     private String observacoes;
 
+    // Vínculo opcional com a credencial de acesso do sistema (Tabela de Usuários/Autenticação)
     private Long usuarioId;
 }

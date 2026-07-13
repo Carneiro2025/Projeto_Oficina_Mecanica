@@ -14,13 +14,24 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Schema(description = "Dados do usuário(sem senha)")
 public class UsuarioResponseDTO {
-
+    
+    @Schema(example = "1") 
     private Long id;
+
+    @Schema(example = "João Silva")
     private String nome;
+
+    @Schema(example = "joao@oficina.com")
     private String email;
+
+    @Schema(example = "ADMIN")
     private PerfilUsuario perfil;
+
+    @Schema(example = "true") 
     private Boolean ativo;
+
     private LocalDateTime createdAt;
+    
     private LocalDateTime updatedAt;
 }
 

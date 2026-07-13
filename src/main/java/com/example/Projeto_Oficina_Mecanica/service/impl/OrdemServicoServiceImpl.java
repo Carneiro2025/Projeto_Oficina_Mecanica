@@ -19,12 +19,19 @@ import com.example.Projeto_Oficina_Mecanica.repository.ServicoRealizadoRepositor
 import com.example.Projeto_Oficina_Mecanica.repository.VeiculoRepository;
 import com.example.Projeto_Oficina_Mecanica.service.OrdemServicoService;
 import com.example.Projeto_Oficina_Mecanica.repository.ProdutoRepository;
+import com.example.Projeto_Oficina_Mecanica.repository.RecebimentoRepository;
+import com.example.Projeto_Oficina_Mecanica.entity.Recebimento;
+import com.example.Projeto_Oficina_Mecanica.enums.StatusRecebimento;
+
+
+
 
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -40,6 +47,7 @@ public class OrdemServicoServiceImpl implements OrdemServicoService {
     private final ProdutoRepository produtoRepository;
     private final ServicoRealizadoRepository servicoRepository;
     private final ItemOrdemServicoRepository itemRepository;
+    private final RecebimentoRepository recebimentoRepository;
 
     @Override
     public OrdemServicoResponseDTO abrir(OrdemServicoRequestDTO dto) {
@@ -105,7 +113,15 @@ public class OrdemServicoServiceImpl implements OrdemServicoService {
         os.setDataFechamento(LocalDateTime.now());
 
         ordemServicoRepository.save(os);
+        Recebimento recebimento = Recebimento.builder()
+        .ordemServico(os)
+        .cliente(os.getCliente())
+        .valor(os.getValorTotal())
+        .status(StatusRecebimento.PENDENTE)
+        .dataVencimento(LocalDate.now())
+        .build();
 
+        recebimentoRepository.save(recebimento);
         return converter(os);
     }
 

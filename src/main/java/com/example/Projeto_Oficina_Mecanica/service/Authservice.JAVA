@@ -3,10 +3,13 @@ package com.example.Projeto_Oficina_Mecanica.service;
 import com.example.Projeto_Oficina_Mecanica.dto.request.LoginRequestDTO;
 import com.example.Projeto_Oficina_Mecanica.dto.request.RefreshTokenRequestDTO;
 import com.example.Projeto_Oficina_Mecanica.dto.response.TokenResponseDTO;
+import com.example.Projeto_Oficina_Mecanica.exception.BusinessException;
 import com.example.Projeto_Oficina_Mecanica.security.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -57,7 +60,7 @@ public class AuthService {
         UserDetails user = userDetailsService.loadUserByUsername(email);
 
         if (!jwtUtil.isTokenValido(dto.getRefreshToken(), user)) {
-            throw new IllegalArgumentException("Refresh token inválido ou expirado");
+            throw new BusinessException("Refresh Token inválido ou expirado.");
         }
 
         log.info("Token renovado para: {}", email);

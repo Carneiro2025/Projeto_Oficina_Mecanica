@@ -8,26 +8,30 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * Controller responsável por consolidar e fornecer os dados analíticos do sistema.
+ * Alimenta a interface gráfica com os principais indicadores e métricas da oficina mecânica.
+ */
 @RestController
 @RequestMapping("/api/dashboard")
 @RequiredArgsConstructor
-@Tag(
-        name = "Dashboard",
-        description = "Indicadores gerais da oficina mecânica"
-)
+@Tag(name = "Dashboard", description = "Endpoints para consulta de indicadores gerais da oficina mecânica")
 public class DashboardController {
 
     private final DashboardService dashboardService;
 
+    /**
+     * Recupera o compilado de métricas do sistema.
+     * Consolida dados de Títulos, ordens de serviço e faturamento para exibição gerencial.
+     */
     @GetMapping
     @Operation(
             summary = "Obter indicadores do Dashboard",
-            description = "Retorna os principais indicadores do sistema."
+            description = "Retorna um objeto consolidado (DTO) contendo os principais KPIs e índices financeiros do sistema."
     )
     public ResponseEntity<DashboardDTO> obterDashboard() {
-
-        return ResponseEntity.ok(
-                dashboardService.obterDashboard()
-        );
+        // Busca os dados consolidados na camada de serviço e envelopa na resposta HTTP 200 (OK)
+        DashboardDTO dadosDashboard = dashboardService.obterDashboard();
+        return ResponseEntity.ok(dadosDashboard);
     }
 }
