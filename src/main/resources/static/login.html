@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Oficina Mecânica — Acesso ao Sistema</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="fundo-grade"></div>
+
+<main class="tela">
+
+  <!-- Painel esquerdo: identidade -->
+  <section class="painel-marca">
+    <div class="marca-topo">
+      <span class="marca-selo">OS Nº 2026</span>
+    </div>
+
+    <div class="marca-conteudo">
+      <svg class="marca-icone" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M42 8c-6.6 0-12 5.4-12 12 0 1.4.2 2.7.7 4L8 46.7V56h9.3L40 33.3c1.3.5 2.6.7 4 .7 6.6 0 12-5.4 12-12S48.6 8 42 8zm0 18c-3.3 0-6-2.7-6-6s2.7-6 6-6 6 2.7 6 6-2.7 6-6 6z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+      </svg>
+      <h1 class="marca-titulo">OFICINA<br>MECÂNICA</h1>
+      <p class="marca-sub">SISTEMA&nbsp;DE&nbsp;GESTÃO&nbsp;INTERNA</p>
+
+      <ul class="marca-lista">
+        <li><span class="marca-lista-num">01</span> Controle de usuários e perfis</li>
+        <li><span class="marca-lista-num">02</span> Ordens de serviço e reativação de acesso</li>
+        <li><span class="marca-lista-num">03</span> Autenticação via JWT</li>
+      </ul>
+    </div>
+
+    <div class="marca-rodape">
+      <span class="pulso" aria-hidden="true"></span>
+      <span>API status: <b id="statusApi">verificando...</b></span>
+    </div>
+  </section>
+
+  <!-- Painel direito: formulário -->
+  <section class="painel-form">
+    <div class="ficha">
+
+      <div class="ficha-rebite ficha-rebite--tl"></div>
+      <div class="ficha-rebite ficha-rebite--tr"></div>
+      <div class="ficha-rebite ficha-rebite--bl"></div>
+      <div class="ficha-rebite ficha-rebite--br"></div>
+
+      <header class="ficha-cabecalho">
+        <span class="ficha-etiqueta">ACESSO RESTRITO</span>
+        <h2>Entrar no sistema</h2>
+        <p class="ficha-instrucao">Informe suas credenciais de usuário para abrir a ordem de serviço do dia.</p>
+      </header>
+
+      <form id="formLogin" class="ficha-form" novalidate>
+
+        <div class="campo">
+          <label for="login">Usuário / E-mail</label>
+          <input type="text" id="login" name="login" autocomplete="username" placeholder="seu.usuario" required>
+        </div>
+
+        <div class="campo">
+          <label for="senha">Senha</label>
+          <div class="campo-senha">
+            <input type="password" id="senha" name="senha" autocomplete="current-password" placeholder="••••••••" required>
+            <button type="button" id="btnMostrarSenha" class="btn-olho" aria-label="Mostrar senha">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/>
+                <circle cx="12" cy="12" r="3"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="campo-linha">
+          <label class="checkbox">
+            <input type="checkbox" id="lembrar">
+            <span>Manter sessão</span>
+          </label>
+          <a href="#" class="link-discreto">Esqueci minha senha</a>
+        </div>
+
+        <div id="mensagemErro" class="mensagem-erro" role="alert" hidden></div>
+
+        <button type="submit" id="btnEntrar" class="btn-entrar">
+          <span class="btn-entrar-texto">ENTRAR</span>
+          <span class="btn-entrar-spinner" hidden></span>
+        </button>
+
+      </form>
+
+      <footer class="ficha-rodape">
+        <span>v1.0</span>
+        <span>Projeto Oficina Mecânica</span>
+      </footer>
+    </div>
+  </section>
+
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>

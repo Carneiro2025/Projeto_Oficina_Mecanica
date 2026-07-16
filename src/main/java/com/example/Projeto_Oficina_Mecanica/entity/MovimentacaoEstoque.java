@@ -37,8 +37,12 @@ public class MovimentacaoEstoque {
     @Column(nullable = false)
     private LocalDateTime dataMovimentacao;
 
+    @Column(length = 100)
+    private String usuarioResponsavel;
+
     @PrePersist
     public void onCreate() {
         dataMovimentacao = LocalDateTime.now();
     }
+
 }

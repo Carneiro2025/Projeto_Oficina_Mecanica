@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,39 +23,56 @@ public class OrdemServico {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false)
-    private Long numero;
+    @Column(nullable = false, unique = true, length = 20)
+    private String numero;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cliente_id", nullable = false)
     private Cliente cliente;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "veiculo_id", nullable = false)
     private Veiculo veiculo;
 
-    @ManyToOne
-    @JoinColumn(name = "mecanico_id")
-    private Mecanico mecanico;
+    @Column(length = 150)
+    private String mecanicoResponsavel;
+
+    @Column(nullable = false)
+    private LocalDate dataAbertura;
+
+    private LocalDate previsaoEntrega;
+
+    private LocalDate dataConclusao;
 
     @Enumerated(EnumType.STRING)
-    private StatusOrdemServico status;
+    @Column(nullable = false)
+    @Builder.Default
+    private StatusOrdemServico status = StatusOrdemServico.ABERTA;
 
-    @Column(length = 1000)
-    private String problemaRelatado;
-
-    @Column(length = 1000)
-    private String diagnostico;
+    private Integer quilometragem;
 
     @Column(length = 1000)
     private String observacoes;
 
-    private LocalDateTime dataAbertura;
+    @Column(precision = 10, scale = 2)
+    @Builder.Default
+    private BigDecimal valorPecas = BigDecimal.ZERO;
 
-    private LocalDateTime dataFechamento;
+    @Column(precision = 10, scale = 2)
+    @Builder.Default
+    private BigDecimal valorServicos = BigDecimal.ZERO;
 
-    @Column(name = "valor_total", precision = 12, scale = 2)
-    private BigDecimal valorTotal;
+    @Column(precision = 10, scale = 2)
+    @Builder.Default
+    private BigDecimal valorDesconto = BigDecimal.ZERO;
+
+    @Column(precision = 10, scale = 2)
+    @Builder.Default
+    private BigDecimal valorTotal = BigDecimal.ZERO;
+
+    @Builder.Default
+    @Column(nullable = false)
+    private Boolean ativo = true;
 
     @OneToMany(
             mappedBy = "ordemServico",
@@ -64,25 +82,47 @@ public class OrdemServico {
     @Builder.Default
     private List<ItemOrdemServico> itens = new ArrayList<>();
 
+    @Column(updatable = false)
+    private LocalDateTime createdAt;
+
+    private LocalDateTime updatedAt;
+
     @PrePersist
-    public void onCreate() {
+    public void prePersist() {
 
-        dataAbertura = LocalDateTime.now();
+        createdAt = LocalDateTime.now();
 
-        if(status == null){
-            status = StatusOrdemServico.ABERTA;
+        updatedAt = LocalDateTime.now();
+
+        if (dataAbertura == null) {
+            dataAbertura = LocalDate.now();
         }
-    }
-    
-    public void recalcularTotal() {
 
-    this.valorTotal = itens.stream()
-            .map(ItemOrdemServico::getSubtotal)
-            
-            .reduce(
-                    java.math.BigDecimal.ZERO,
-                    java.math.BigDecimal::add
-            );
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+
+        updatedAt = LocalDateTime.now();
+
+    }
+
+    public void calcularTotal() {
+
+        valorPecas = itens.stream()
+                .filter(i -> i.getTipoItem().name().equals("PECA"))
+                .map(ItemOrdemServico::getSubtotal)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        valorServicos = itens.stream()
+                .filter(i -> i.getTipoItem().name().equals("SERVICO"))
+                .map(ItemOrdemServico::getSubtotal)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        valorTotal = valorPecas
+                .add(valorServicos)
+                .subtract(valorDesconto);
+
     }
 
 }

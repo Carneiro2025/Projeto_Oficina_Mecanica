@@ -1,5 +1,6 @@
 package com.example.Projeto_Oficina_Mecanica.entity;
 
+import com.example.Projeto_Oficina_Mecanica.enums.TipoItemOrdemServico;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,35 +19,42 @@ public class ItemOrdemServico {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "ordem_servico_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ordem_servico_id", nullable = false)
     private OrdemServico ordemServico;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "produto_id")
     private Produto produto;
 
-    @ManyToOne
-    @JoinColumn(name = "servico_id")
-    private ServicoRealizado servico;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private TipoItemOrdemServico tipoItem;
 
+    @Column(length = 250)
+    private String descricaoServico;
+
+    @Column(nullable = false)
     private Integer quantidade;
 
-    @Column(precision = 10, scale = 2)
+    @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal valorUnitario;
 
-    @Column(precision = 12, scale = 2)
+    @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal subtotal;
 
     @PrePersist
     @PreUpdate
     public void calcularSubtotal() {
 
-        if(valorUnitario != null && quantidade != null) {
+        if (valorUnitario != null && quantidade != null) {
 
             subtotal = valorUnitario.multiply(
                     BigDecimal.valueOf(quantidade)
             );
+
         }
+
     }
+
 }

@@ -1,35 +1,141 @@
 package com.example.Projeto_Oficina_Mecanica.controller;
 
-import com.example.Projeto_Oficina_Mecanica.entity.NotaFiscalEntrada;
+import com.example.Projeto_Oficina_Mecanica.dto.request.AtualizarNotaFiscalEntradaRequestDTO;
+import com.example.Projeto_Oficina_Mecanica.dto.request.CriarNotaFiscalEntradaRequestDTO;
+import com.example.Projeto_Oficina_Mecanica.dto.response.NotaFiscalEntradaResponseDTO;
 import com.example.Projeto_Oficina_Mecanica.service.NotaFiscalEntradaService;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+
+import jakarta.validation.Valid;
+
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
 import org.springframework.web.bind.annotation.*;
 
-/**
- * Controller responsável pelo recebimento e registro de Notas Fiscais de Entrada.
- * Gerencia a entrada oficial de mercadorias, peças e componentes no estoque da oficina.
- */
 @RestController
-@RequestMapping("/api/notas-entrada")
+@RequestMapping("/api/notas-fiscais")
 @RequiredArgsConstructor
+@Tag(
+        name = "Nota Fiscal de Entrada",
+        description = "Gerenciamento das Notas Fiscais de Entrada"
+)
 public class NotaFiscalEntradaController {
 
     private final NotaFiscalEntradaService service;
 
-    /**
-     * Registra uma nova Nota Fiscal de Entrada no sistema.
-     * Além de salvar o documento, este fluxo costuma alimentar o estoque e gerar os Títulos no contas a pagar.
-     *
-     * @param nota Objeto contendo os dados estruturados da nota fiscal de compra.
-     * @return Retorna a nota fiscal cadastrada com o status HTTP 201 (Created).
-     */
+    // ==========================================================
+    // CADASTRAR
+    // ==========================================================
+
     @PostMapping
-    public ResponseEntity<NotaFiscalEntrada> salvar(@RequestBody NotaFiscalEntrada nota) {
-        // Executa o processamento do documento fiscal e gera o registro no banco de dados
-        NotaFiscalEntrada novaNota = service.salvar(nota);
-        
-        return ResponseEntity.status(HttpStatus.CREATED).body(novaNota);
+    @Operation(summary = "Cadastrar Nota Fiscal de Entrada")
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", description = "Nota Fiscal cadastrada com sucesso"),
+            @ApiResponse(responseCode = "400", description = "Dados inválidos")
+    })
+    public ResponseEntity<NotaFiscalEntradaResponseDTO> criar(
+            @Valid @RequestBody CriarNotaFiscalEntradaRequestDTO dto
+    ) {
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(service.criar(dto));
+
     }
+
+    // ==========================================================
+    // BUSCAR POR ID
+    // ==========================================================
+
+    @GetMapping("/{id}")
+    @Operation(summary = "Buscar Nota Fiscal por ID")
+    public ResponseEntity<NotaFiscalEntradaResponseDTO> buscarPorId(
+
+            @Parameter(description = "ID da Nota Fiscal")
+            @PathVariable Long id
+
+    ) {
+
+        return ResponseEntity.ok(
+                service.buscarPorId(id)
+        );
+
+    }
+
+    // ==========================================================
+    // LISTAR
+    // ==========================================================
+
+    @GetMapping
+    @Operation(summary = "Listar Notas Fiscais")
+    public ResponseEntity<Page<NotaFiscalEntradaResponseDTO>> listar(
+
+            @PageableDefault(size = 10)
+            Pageable pageable
+
+    ) {
+
+        return ResponseEntity.ok(
+                service.listar(pageable)
+        );
+
+    }
+
+    // ==========================================================
+    // BUSCAR POR FORNECEDOR
+    // ==========================================================
+
+    @GetMapping("/fornecedor/{fornecedorId}")
+    @Operation(summary = "Buscar Notas por Fornecedor")
+    public ResponseEntity<Page<NotaFiscalEntradaResponseDTO>> buscarFornecedor(
+
+            @PathVariable Long fornecedorId,
+
+            @PageableDefault(size = 10)
+            Pageable pageable
+
+    ) {
+
+        return ResponseEntity.ok(
+                service.buscarPorFornecedor(
+                        fornecedorId,
+                        pageable
+                )
+        );
+
+    }
+
+    // ==========================================================
+    // ATUALIZAR
+    // ==========================================================
+
+    @PutMapping("/{id}")
+    @Operation(summary = "Atualizar Nota Fiscal")
+    public ResponseEntity<NotaFiscalEntradaResponseDTO> atualizar(
+
+            @PathVariable Long id,
+
+            @Valid
+            @RequestBody AtualizarNotaFiscalEntradaRequestDTO dto
+
+    ) {
+
+        return ResponseEntity.ok(
+                service.atualizar(id, dto)
+        );
+
+    }
+
 }

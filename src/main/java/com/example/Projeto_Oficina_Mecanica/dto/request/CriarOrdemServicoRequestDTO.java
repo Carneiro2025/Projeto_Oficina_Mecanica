@@ -1,23 +1,42 @@
 package com.example.Projeto_Oficina_Mecanica.dto.request;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.*;
 import lombok.Data;
 
-/**
- * Data Transfer Object (DTO) responsável por receber os dados necessários para a abertura de uma nova OS.
- * Concentra os IDs das entidades relacionadas e a descrição inicial do problema trazido pelo cliente.
- */
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.List;
+
 @Data
+@Schema(description = "Dados para abertura de Ordem de Serviço")
 public class CriarOrdemServicoRequestDTO {
 
-    // Identificador único do cliente proprietário ou responsável pelo veículo
+    @NotBlank
+    private String numero;
+
+    @NotNull
     private Long clienteId;
 
-    // Identificador único do veículo que passará pela manutenção/reparo
+    @NotNull
     private Long veiculoId;
 
-    // Identificador único do mecânico inicialmente responsável por avaliar ou assumir a OS
-    private Long mecanicoId;
+    @Size(max = 150)
+    private String mecanicoResponsavel;
 
-    // Descrição detalhada dos sintomas, defeitos ou revisões solicitadas pelo cliente
-    private String problemaRelatado;
+    private LocalDate previsaoEntrega;
+
+    private Integer quilometragem;
+
+    @Size(max = 1000)
+    private String observacoes;
+
+    @DecimalMin(value = "0.00")
+    private BigDecimal valorDesconto = BigDecimal.ZERO;
+
+    @Valid
+    @NotEmpty(message = "A Ordem de Serviço deve possuir pelo menos um item.")
+    private List<ItemOrdemServicoRequestDTO> itens;
+
 }

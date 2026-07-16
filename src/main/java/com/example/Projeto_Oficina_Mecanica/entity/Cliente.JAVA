@@ -52,7 +52,7 @@ public class Cliente {
     @Column(length = 20)
     private String celular;
 
-    @Column(length = 100)
+    @Column(unique = true)
     private String email;
 
     @Embedded
@@ -63,15 +63,23 @@ public class Cliente {
 
     @Column(nullable = false)
     @Builder.Default
-    private Boolean ativo = true;
+    private Boolean ativo = Boolean.TRUE;   
 
-    @Column(name = "created_at", updatable = false)
+    @Column(name = "created_at",
+        nullable = false,
+        updatable = false)
     private LocalDateTime createdAt;
 
-    @Column(name = "updated_at")
+    @Column(name = "updated_at",
+        nullable = false)
     private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+   @OneToMany(
+        mappedBy = "cliente",
+        cascade = CascadeType.ALL,
+        fetch = FetchType.LAZY,
+        orphanRemoval = true
+    )
     @Builder.Default
     private List<Veiculo> veiculos = new ArrayList<>();
 

@@ -109,9 +109,9 @@ public class SecurityConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
-    }
+    
 
-    .requestMatchers(HttpMethod.GET,
+.requestMatchers(HttpMethod.GET,
         "/api/clientes/**")
 .hasAnyRole(
         "ADMIN",
@@ -140,5 +140,7 @@ public class SecurityConfig {
         "ADMIN",
         "GERENTE"
 )
+
+}
 
 }

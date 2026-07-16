@@ -1,6 +1,8 @@
 package com.example.Projeto_Oficina_Mecanica.dto.request;
 
 import com.example.Projeto_Oficina_Mecanica.enums.CategoriaProduto;
+import com.example.Projeto_Oficina_Mecanica.enums.UnidadeMedida;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.*;
 import lombok.Data;
@@ -40,7 +42,7 @@ public class CriarProdutoRequestDTO {
     // Unidade de medida comercializada (Ex: UN, L, KG, CX, PAR, M)
     @Size(max = 50, message = "A unidade de medida não pode exceder {max} caracteres.")
     @Schema(example = "UN", description = "Unidade: UN, L, KG, CX, PAR, M...")
-    private String unidade;
+    private UnidadeMedida unidade;
 
     // Preço de custo pago ao fornecedor na nota fiscal de entrada
     @NotNull(message = "O preço de custo é obrigatório.")

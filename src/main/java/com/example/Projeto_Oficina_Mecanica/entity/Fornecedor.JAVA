@@ -30,7 +30,7 @@ public class Fornecedor {
     @Column(nullable = false, unique = true, length = 18)
     private String cnpj;
 
-    @Column(name = "inscricao_estadual", length = 20)
+    @Column(name = "inscricao_estadual", unique = true, length = 20)
     private String inscricaoEstadual;
 
     @Column(length = 20)
@@ -39,10 +39,10 @@ public class Fornecedor {
     @Column(length = 20)
     private String celular;
 
-    @Column(length = 100)
+    @Column(length = 100, unique = true)
     private String email;
 
-    @Column(length = 100)
+    @Column(length = 200)
     private String site;
 
     @Column(name = "nome_contato", length = 100)

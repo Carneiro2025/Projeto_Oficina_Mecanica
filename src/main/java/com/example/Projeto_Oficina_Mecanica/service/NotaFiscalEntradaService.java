@@ -1,48 +1,71 @@
 package com.example.Projeto_Oficina_Mecanica.service;
 
-import com.example.Projeto_Oficina_Mecanica.entity.*;
-import com.example.Projeto_Oficina_Mecanica.repository.MovimentacaoEstoqueRepository;
-import com.example.Projeto_Oficina_Mecanica.repository.NotaFiscalEntradaRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import com.example.Projeto_Oficina_Mecanica.enums.TipoMovimentacaoEstoque;
 
-@Service
-@RequiredArgsConstructor
-public class NotaFiscalEntradaService {
+import com.example.Projeto_Oficina_Mecanica.dto.request.AtualizarNotaFiscalEntradaRequestDTO;
+import com.example.Projeto_Oficina_Mecanica.dto.request.CriarNotaFiscalEntradaRequestDTO;
+import com.example.Projeto_Oficina_Mecanica.dto.response.NotaFiscalEntradaResponseDTO;
 
-    private final NotaFiscalEntradaRepository repository;
-    private final MovimentacaoEstoqueRepository movimentacaoRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
-    @Transactional
-    public NotaFiscalEntrada salvar(NotaFiscalEntrada nota) {
 
-        nota.calcularTotal();
 
-        NotaFiscalEntrada salva = repository.save(nota);
+public interface NotaFiscalEntradaService {
 
-        for (ItemNotaFiscalEntrada item : salva.getItens()) {
 
-            Produto produto = item.getProduto();
 
-            produto.setEstoqueAtual(
-                    produto.getEstoqueAtual() + item.getQuantidade()
-            );
+    /**
+     * Cadastra uma nova Nota Fiscal de Entrada.
+     *
+     * O processo irá:
+     * - validar fornecedor;
+     * - validar produtos;
+     * - salvar nota;
+     * - atualizar estoque;
+     * - registrar movimentações.
+     */
+    NotaFiscalEntradaResponseDTO criar(
+            CriarNotaFiscalEntradaRequestDTO dto
+    );
 
-            MovimentacaoEstoque movimentacao =
-                    MovimentacaoEstoque.builder()
-                            .produto(produto)
-                            .tipo(TipoMovimentacaoEstoque.ENTRADA)
-                            .quantidade(item.getQuantidade())
-                            .observacao(
-                                    "Entrada NF " + salva.getNumero()
-                            )
-                            .build();
 
-            movimentacaoRepository.save(movimentacao);
-        }
 
-        return salva;
-    }
+    /**
+     * Busca uma nota fiscal pelo ID.
+     */
+    NotaFiscalEntradaResponseDTO buscarPorId(
+            Long id
+    );
+
+
+
+    /**
+     * Lista notas fiscais paginadas.
+     */
+    Page<NotaFiscalEntradaResponseDTO> listar(
+            Pageable pageable
+    );
+
+
+
+    /**
+     * Atualiza dados administrativos da nota.
+     *
+     * Não altera itens nem movimentação de estoque.
+     */
+    NotaFiscalEntradaResponseDTO atualizar(
+            Long id,
+            AtualizarNotaFiscalEntradaRequestDTO dto
+    );
+
+
+
+    /**
+     * Busca notas de um fornecedor específico.
+     */
+    Page<NotaFiscalEntradaResponseDTO> buscarPorFornecedor(
+            Long fornecedorId,
+            Pageable pageable
+    );
+
 }

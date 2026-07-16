@@ -18,6 +18,20 @@ public interface FornecedorRepository extends JpaRepository<Fornecedor, Long> {
 
     Optional<Fornecedor> findByCnpj(String cnpj);
 
+    boolean existsByInscricaoEstadual(String ie);
+
+    boolean existsByEmail(String email);
+
+    Optional<Fornecedor> findByEmail(String email);
+
+    Optional<Fornecedor> findByInscricaoEstadual(String ie);
+
+    boolean existsByCnpjAndIdNot(String cnpj, Long id);
+
+    boolean existsByEmailAndIdNot(String email, Long id);
+
+    boolean existsByInscricaoEstadualAndIdNot(String inscricaoEstadual, Long id);
+
     @Query("""
         SELECT f FROM Fornecedor f
         WHERE f.ativo = true
