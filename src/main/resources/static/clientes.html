@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Clientes | OficinaPRO</title>
+
+    <!-- CSS -->
+
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/sidebar.css">
+    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="css/clientes.css">
+    <link rel="stylesheet" href="css/modal-cliente.css">
+    <link rel="stylesheet" href="css/loading.css">
+    <link rel="stylesheet" href="css/toast.css">
+
+    <!-- Bootstrap Icons -->
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+</head>
+
+<body>
+
+<!-- ==========================================================
+     SIDEBAR
+========================================================== -->
+
+<div id="sidebar"></div>
+
+<!-- ==========================================================
+     CONTEÚDO PRINCIPAL
+========================================================== -->
+
+<main class="main">
+
+    <!-- ======================================================
+         HEADER
+    ======================================================= -->
+
+    <header class="page-header">
+
+        <div>
+
+            <h1>
+
+                <i class="bi bi-people-fill"></i>
+
+                Cadastro de Clientes
+
+            </h1>
+
+            <p>
+
+                Gerencie todos os clientes cadastrados na oficina.
+
+            </p>
+
+        </div>
+
+        <div class="header-actions">
+
+            <button
+                    id="btnAtualizar"
+                    class="btn-secondary">
+
+                <i class="bi bi-arrow-clockwise"></i>
+
+                Atualizar
+
+            </button>
+
+            <button
+                    id="btnNovo"
+                    class="btn-primary">
+
+                <i class="bi bi-plus-circle-fill"></i>
+
+                Novo Cliente
+
+            </button>
+
+        </div>
+
+    </header>
+
+    <!-- ======================================================
+         BREADCRUMB
+    ======================================================= -->
+
+    <nav class="breadcrumb">
+
+        <span>
+
+            <i class="bi bi-house-door-fill"></i>
+
+            Dashboard
+
+        </span>
+
+        <i class="bi bi-chevron-right"></i>
+
+        <span class="active">
+
+            Clientes
+
+        </span>
+
+    </nav>
+
+    <!-- ======================================================
+         CARDS
+    ======================================================= -->
+
+    <section class="dashboard-cards">
+
+        <div class="card-info">
+
+            <div class="card-icon azul">
+
+                <i class="bi bi-people-fill"></i>
+
+            </div>
+
+            <div>
+
+                <h3 id="totalClientes">
+
+                    0
+
+                </h3>
+
+                <span>
+
+                    Total de Clientes
+
+                </span>
+
+            </div>
+
+        </div>
+
+        <div class="card-info">
+
+            <div class="card-icon verde">
+
+                <i class="bi bi-person-check-fill"></i>
+
+            </div>
+
+            <div>
+
+                <h3 id="clientesAtivos">
+
+                    0
+
+                </h3>
+
+                <span>
+
+                    Clientes Ativos
+
+                </span>
+
+            </div>
+
+        </div>
+
+        <div class="card-info">
+
+            <div class="card-icon vermelho">
+
+                <i class="bi bi-person-x-fill"></i>
+
+            </div>
+
+            <div>
+
+                <h3 id="clientesInativos">
+
+                    0
+
+                </h3>
+
+                <span>
+
+                    Clientes Inativos
+
+                </span>
+
+            </div>
+
+        </div>
+
+        <div class="card-info">
+
+            <div class="card-icon laranja">
+
+                <i class="bi bi-person-plus-fill"></i>
+
+            </div>
+
+            <div>
+
+                <h3 id="novosClientes">
+
+                    0
+
+                </h3>
+
+                <span>
+
+                    Novos Clientes
+
+                </span>
+
+            </div>
+
+        </div>
+
+    </section>
+
+        <!-- ======================================================
+         PESQUISA E FILTROS
+    ======================================================= -->
+
+    <section class="toolbar">
+
+        <div class="toolbar-left">
+
+            <div class="search-box">
+
+                <i class="bi bi-search"></i>
+
+                <input
+                        type="text"
+                        id="txtPesquisar"
+                        placeholder="Pesquisar por nome, CPF, telefone ou e-mail">
+
+            </div>
+
+            <select id="filtroSituacao">
+
+                <option value="">Todos</option>
+
+                <option value="ATIVO">Ativos</option>
+
+                <option value="INATIVO">Inativos</option>
+
+            </select>
+
+        </div>
+
+        <div class="toolbar-right">
+
+            <button
+                    id="btnPesquisar"
+                    class="btn-primary">
+
+                <i class="bi bi-search"></i>
+
+                Pesquisar
+
+            </button>
+
+            <button
+                    id="btnLimpar"
+                    class="btn-secondary">
+
+                <i class="bi bi-eraser-fill"></i>
+
+                Limpar
+
+            </button>
+
+            <button
+                    id="btnExcel"
+                    class="btn-success">
+
+                <i class="bi bi-file-earmark-excel-fill"></i>
+
+                Excel
+
+            </button>
+
+            <button
+                    id="btnPdf"
+                    class="btn-danger">
+
+                <i class="bi bi-file-earmark-pdf-fill"></i>
+
+                PDF
+
+            </button>
+
+            <button
+                    id="btnImprimir"
+                    class="btn-info">
+
+                <i class="bi bi-printer-fill"></i>
+
+                Imprimir
+
+            </button>
+
+        </div>
+
+    </section>
+
+    <!-- ======================================================
+         RESUMO
+    ======================================================= -->
+
+    <section class="table-info">
+
+        <div>
+
+            <strong id="qtdeRegistros">
+
+                0
+
+            </strong>
+
+            registro(s) encontrado(s)
+
+        </div>
+
+        <div>
+
+            Última atualização:
+
+            <span id="ultimaAtualizacao">
+
+                --
+
+            </span>
+
+        </div>
+
+    </section>
+
+    <!-- ======================================================
+         TABELA
+    ======================================================= -->
+
+    <section class="table-container">
+
+        <table class="table">
+
+            <thead>
+
+                <tr>
+
+                    <th width="70">ID</th>
+
+                    <th>Nome</th>
+
+                    <th width="150">CPF</th>
+
+                    <th width="150">Telefone</th>
+
+                    <th>E-mail</th>
+
+                    <th width="120">Situação</th>
+
+                    <th width="180" style="text-align:center">
+
+                        Ações
+
+                    </th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="tbodyClientes">
+
+                <!-- preenchido pelo JavaScript -->
+
+            </tbody>
+
+        </table>
+
+    </section>
+
+        <!-- ======================================================
+         PAGINAÇÃO
+    ======================================================= -->
+
+    <section class="pagination">
+
+        <div class="pagination-info">
+
+            Exibindo
+
+            <strong id="registroInicial">
+
+                0
+
+            </strong>
+
+            até
+
+            <strong id="registroFinal">
+
+                0
+
+            </strong>
+
+            de
+
+            <strong id="registroTotal">
+
+                0
+
+            </strong>
+
+            registros.
+
+        </div>
+
+        <div class="pagination-buttons">
+
+            <button
+                    id="btnPrimeiraPagina"
+                    class="btn-page">
+
+                <i class="bi bi-chevron-double-left"></i>
+
+            </button>
+
+            <button
+                    id="btnPaginaAnterior"
+                    class="btn-page">
+
+                <i class="bi bi-chevron-left"></i>
+
+            </button>
+
+            <span id="paginaAtual">
+
+                Página 1 de 1
+
+            </span>
+
+            <button
+                    id="btnProximaPagina"
+                    class="btn-page">
+
+                <i class="bi bi-chevron-right"></i>
+
+            </button>
+
+            <button
+                    id="btnUltimaPagina"
+                    class="btn-page">
+
+                <i class="bi bi-chevron-double-right"></i>
+
+            </button>
+
+        </div>
+
+    </section>
+
+    <!-- ======================================================
+         RODAPÉ DA PÁGINA
+    ======================================================= -->
+
+    <footer class="page-footer">
+
+        <div>
+
+            OficinaPRO © 2026
+
+        </div>
+
+        <div>
+
+            Sistema de Gestão para Oficina Mecânica
+
+        </div>
+
+    </footer>
+
+</main>
+
+<!-- ==========================================================
+     LOADING
+========================================================== -->
+
+<div id="loading" class="loading-overlay">
+
+    <div class="loading-box">
+
+        <div class="spinner"></div>
+
+        <h3>
+
+            Carregando...
+
+        </h3>
+
+        <p>
+
+            Aguarde alguns instantes.
+
+        </p>
+
+    </div>
+
+</div>
+
+<!-- ==========================================================
+     TOAST
+========================================================== -->
+
+<div id="toastContainer"></div>
+
+<!-- ==========================================================
+     MODAL CLIENTE
+========================================================== -->
+
+<div id="modalClienteContainer"></div>
+
+<!-- ==========================================================
+     SCRIPTS
+========================================================== -->
+
+<script src="js/config.js"></script>
+
+<script src="js/util.js"></script>
+
+<script src="js/api.js"></script>
+
+<script src="js/auth.js"></script>
+
+<script src="js/sidebar.js"></script>
+
+<script src="js/loading.js"></script>
+
+<script src="js/toast.js"></script>
+
+<script src="js/modal-cliente.js"></script>
+
+<script src="js/clientes.js"></script>
+
+<!-- ==========================================================
+     INICIALIZAÇÃO
+========================================================== -->
+
+<script>
+
+document.addEventListener("DOMContentLoaded", async () => {
+
+    try{
+
+        /* Sidebar */
+
+        if(typeof carregarSidebar === "function"){
+
+            carregarSidebar();
+
+        }
+
+        /* Modal Cliente */
+
+        const modal = await fetch("modal-cliente.html");
+
+        document.getElementById("modalClienteContainer").innerHTML =
+            await modal.text();
+
+        /* Carregar Clientes */
+
+        if(typeof carregarClientes==="function"){
+
+            carregarClientes();
+
+        }
+
+    }catch(error){
+
+        console.error(error);
+
+    }
+
+});
+
+</script>
+
+</body>
+
+</html>
+

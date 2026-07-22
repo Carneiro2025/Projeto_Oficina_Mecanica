@@ -1,0 +1,152 @@
+/* ==========================================================
+   Projeto.......: OficinaPRO
+   Arquivo.......: dashboard.css
+   Descrição.....: Dashboard Principal
+========================================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+
+    background:#F1F5F9;
+
+}
+
+/* ==========================================================
+   CONTEÚDO
+========================================================== */
+
+.main{
+
+    margin-left:250px;
+
+    padding:30px;
+
+}
+
+/* ==========================================================
+   CABEÇALHO
+========================================================== */
+
+.header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:40px;
+
+}
+
+.header h1{
+
+    color:#1E293B;
+
+    font-size:34px;
+
+}
+
+#usuarioLogado{
+
+    color:#475569;
+
+    font-size:16px;
+
+    font-weight:bold;
+
+}
+
+/* ==========================================================
+   CARDS
+========================================================== */
+
+.cards{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+
+    gap:25px;
+
+}
+
+/* ==========================================================
+   CARD
+========================================================== */
+
+.card{
+
+    background:#FFFFFF;
+
+    border-radius:12px;
+
+    padding:35px;
+
+    cursor:pointer;
+
+    transition:.30s;
+
+    text-align:center;
+
+    box-shadow:0 4px 15px rgba(0,0,0,.08);
+
+}
+
+.card:hover{
+
+    transform:translateY(-8px);
+
+    box-shadow:0 10px 25px rgba(0,0,0,.15);
+
+}
+
+.card i{
+
+    font-size:55px;
+
+    color:#2563EB;
+
+    margin-bottom:20px;
+
+}
+
+.card h3{
+
+    color:#1E293B;
+
+    font-size:22px;
+
+}
+
+/* ==========================================================
+   RESPONSIVO
+========================================================== */
+
+@media(max-width:900px){
+
+    .main{
+
+        margin-left:0;
+
+        padding:20px;
+
+    }
+
+}
+
+@media(max-width:600px){
+
+    .cards{
+
+        grid-template-columns:1fr;
+
+    }
+
+}

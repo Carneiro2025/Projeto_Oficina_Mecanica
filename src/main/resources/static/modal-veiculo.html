@@ -1,0 +1,219 @@
+<!-- ==========================================================
+     Projeto.......: OficinaPRO
+     Arquivo.......: modal-veiculo.html
+========================================================== -->
+
+<div id="modalVeiculo" class="modal">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+
+            <h2 id="tituloModalVeiculo">
+                Cadastro de Veículo
+            </h2>
+
+            <button
+                id="btnFecharModalVeiculo"
+                class="btn-close">
+
+                <i class="bi bi-x-lg"></i>
+
+            </button>
+
+        </div>
+
+        <div class="modal-body">
+
+            <form id="formVeiculo">
+
+                <input
+                    type="hidden"
+                    id="veiculoId">
+
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <label>Cliente *</label>
+
+                        <select id="clienteId" required>
+
+                            <option value="">
+                                Selecione...
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <label>Placa *</label>
+
+                        <input
+                            type="text"
+                            id="placa"
+                            maxlength="8">
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>Renavam</label>
+
+                        <input
+                            type="text"
+                            id="renavam">
+
+                    </div>
+
+                </div>
+
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <label>Marca *</label>
+
+                        <input
+                            type="text"
+                            id="marca">
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>Modelo *</label>
+
+                        <input
+                            type="text"
+                            id="modelo">
+
+                    </div>
+
+                </div>
+
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <label>Ano Fabricação</label>
+
+                        <input
+                            type="number"
+                            id="anoFabricacao">
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>Ano Modelo</label>
+
+                        <input
+                            type="number"
+                            id="anoModelo">
+
+                    </div>
+
+                </div>
+
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <label>Cor</label>
+
+                        <input
+                            type="text"
+                            id="cor">
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>Combustível</label>
+
+                        <select id="combustivel">
+
+                            <option>Gasolina</option>
+
+                            <option>Etanol</option>
+
+                            <option>Flex</option>
+
+                            <option>Diesel</option>
+
+                            <option>GNV</option>
+
+                            <option>Elétrico</option>
+
+                            <option>Híbrido</option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <label>Quilometragem</label>
+
+                        <input
+                            type="number"
+                            id="quilometragem">
+
+                    </div>
+
+                </div>
+
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <label>Observações</label>
+
+                        <textarea
+                            id="observacoes"
+                            rows="4"></textarea>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+
+        <div class="modal-footer">
+
+            <button
+                id="btnCancelarVeiculo"
+                class="btn btn-secondary">
+
+                Cancelar
+
+            </button>
+
+            <button
+                id="btnSalvarVeiculo"
+                class="btn btn-primary">
+
+                <i class="bi bi-check-circle"></i>
+
+                Salvar
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>

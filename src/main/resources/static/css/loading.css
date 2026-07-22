@@ -1,0 +1,100 @@
+/* ==========================================================
+   Projeto.......: OficinaPRO
+   Arquivo.......: loading.css
+========================================================== */
+
+.loading-overlay{
+
+    position:fixed;
+
+    top:0;
+
+    left:0;
+
+    width:100%;
+
+    height:100%;
+
+    background:rgba(255,255,255,.75);
+
+    display:none;
+
+    justify-content:center;
+
+    align-items:center;
+
+    z-index:99999;
+
+}
+
+.loading-overlay.show{
+
+    display:flex;
+
+}
+
+.loading-box{
+
+    background:#FFF;
+
+    padding:35px;
+
+    border-radius:12px;
+
+    box-shadow:0 10px 30px rgba(0,0,0,.20);
+
+    text-align:center;
+
+    width:260px;
+
+}
+
+.loading-box h3{
+
+    margin-top:20px;
+
+    color:#1E293B;
+
+}
+
+.loading-box p{
+
+    color:#64748B;
+
+    margin-top:8px;
+
+}
+
+.spinner{
+
+    width:60px;
+
+    height:60px;
+
+    border:6px solid #E2E8F0;
+
+    border-top:6px solid #2563EB;
+
+    border-radius:50%;
+
+    animation:girar .8s linear infinite;
+
+    margin:auto;
+
+}
+
+@keyframes girar{
+
+    from{
+
+        transform:rotate(0deg);
+
+    }
+
+    to{
+
+        transform:rotate(360deg);
+
+    }
+
+}

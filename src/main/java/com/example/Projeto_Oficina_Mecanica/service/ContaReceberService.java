@@ -1,46 +1,44 @@
 package com.example.Projeto_Oficina_Mecanica.service;
 
-import com.example.Projeto_Oficina_Mecanica.entity.ContaReceber;
+import com.example.Projeto_Oficina_Mecanica.dto.request.AtualizarContaReceberRequestDTO;
+import com.example.Projeto_Oficina_Mecanica.dto.request.CriarContaReceberRequestDTO;
+import com.example.Projeto_Oficina_Mecanica.dto.response.ContaReceberResponseDTO;
 import com.example.Projeto_Oficina_Mecanica.enums.StatusContaReceber;
-import com.example.Projeto_Oficina_Mecanica.repository.ContaReceberRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.List;
 
-@Service
-@RequiredArgsConstructor
-public class ContaReceberService {
+public interface ContaReceberService {
 
-    private final ContaReceberRepository repository;
+    ContaReceberResponseDTO criar(
+            CriarContaReceberRequestDTO dto
+    );
 
-    public ContaReceber salvar(ContaReceber conta) {
-        return repository.save(conta);
-    }
+    ContaReceberResponseDTO buscarPorId(
+            Long id
+    );
 
-    public List<ContaReceber> listarTodas() {
-        return repository.findAll();
-    }
+    List<ContaReceberResponseDTO> listar();
 
-    public List<ContaReceber> listarPendentes() {
-        return repository.findByStatus(
-                StatusContaReceber.PENDENTE
-        );
-    }
+    List<ContaReceberResponseDTO> buscarPorCliente(
+            Long clienteId
+    );
 
-    public ContaReceber registrarPagamento(
+    List<ContaReceberResponseDTO> buscarPorStatus(
+            StatusContaReceber status
+    );
+
+    ContaReceberResponseDTO atualizar(
             Long id,
-            LocalDate dataPagamento) {
+            AtualizarContaReceberRequestDTO dto
+    );
 
-        ContaReceber conta = repository.findById(id)
-                .orElseThrow(() ->
-                        new RuntimeException("Conta não encontrada"));
+    ContaReceberResponseDTO registrarPagamento(
+            Long id,
+            AtualizarContaReceberRequestDTO dto
+    );
 
-        conta.setStatus(StatusContaReceber.PAGO);
-        conta.setDataPagamento(dataPagamento);
+    void excluir(
+            Long id
+    );
 
-        return repository.save(conta);
-    }
 }
-

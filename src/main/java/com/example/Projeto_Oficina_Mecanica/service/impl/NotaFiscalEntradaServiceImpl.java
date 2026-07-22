@@ -469,23 +469,4 @@ public Page<NotaFiscalEntradaResponseDTO> buscarPorFornecedor(
 
 }
 
-// ==========================================================
-// VALIDAR NUMERO DA NOTA
-// ==========================================================
-
-private void validarNumeroNota(
-        String numero
-){
-
-    if(repository.existsByNumero(numero)){
-
-        throw new BusinessException(
-                "Já existe uma Nota Fiscal cadastrada com o número "
-                        + numero
-        );
-
-    }
-
-}
-
 }

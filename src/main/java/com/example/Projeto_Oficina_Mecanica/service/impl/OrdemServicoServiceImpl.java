@@ -12,7 +12,8 @@ import com.example.Projeto_Oficina_Mecanica.mapper.OrdemServicoMapper;
 import com.example.Projeto_Oficina_Mecanica.repository.*;
 import com.example.Projeto_Oficina_Mecanica.service.EstoqueService;
 import com.example.Projeto_Oficina_Mecanica.service.OrdemServicoService;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 

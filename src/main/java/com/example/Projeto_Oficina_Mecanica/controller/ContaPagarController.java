@@ -1,10 +1,10 @@
 package com.example.Projeto_Oficina_Mecanica.controller;
 
-import com.example.Projeto_Oficina_Mecanica.dto.request.AtualizarContaReceberRequestDTO;
-import com.example.Projeto_Oficina_Mecanica.dto.request.CriarContaReceberRequestDTO;
-import com.example.Projeto_Oficina_Mecanica.dto.response.ContaReceberResponseDTO;
-import com.example.Projeto_Oficina_Mecanica.enums.StatusContaReceber;
-import com.example.Projeto_Oficina_Mecanica.service.ContaReceberService;
+import com.example.Projeto_Oficina_Mecanica.dto.request.AtualizarContaPagarRequestDTO;
+import com.example.Projeto_Oficina_Mecanica.dto.request.CriarContaPagarRequestDTO;
+import com.example.Projeto_Oficina_Mecanica.dto.response.ContaPagarResponseDTO;
+import com.example.Projeto_Oficina_Mecanica.enums.StatusContaPagar;
+import com.example.Projeto_Oficina_Mecanica.service.ContaPagarService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -12,6 +12,10 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,26 +25,26 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/contas-receber")
+@RequestMapping("/api/contas-pagar")
 @RequiredArgsConstructor
 @Tag(
-        name = "Contas a Receber",
-        description = "Gerenciamento Financeiro de Contas a Receber"
+        name = "Contas a Pagar",
+        description = "Gerenciamento das obrigações financeiras da empresa"
 )
-public class ContaReceberController {
+public class ContaPagarController {
 
-    private final ContaReceberService service;
+    private final ContaPagarService service;
 
     // ==========================================================
     // CADASTRAR
     // ==========================================================
 
     @PostMapping
-    @Operation(summary = "Cadastrar Conta a Receber")
-    public ResponseEntity<ContaReceberResponseDTO> criar(
+    @Operation(summary = "Cadastrar conta a pagar")
+    public ResponseEntity<ContaPagarResponseDTO> criar(
 
             @Valid
-            @RequestBody CriarContaReceberRequestDTO dto
+            @RequestBody CriarContaPagarRequestDTO dto
 
     ) {
 
@@ -54,8 +58,8 @@ public class ContaReceberController {
     // ==========================================================
 
     @GetMapping("/{id}")
-    @Operation(summary = "Buscar Conta por ID")
-    public ResponseEntity<ContaReceberResponseDTO> buscarPorId(
+    @Operation(summary = "Buscar conta por ID")
+    public ResponseEntity<ContaPagarResponseDTO> buscarPorId(
 
             @PathVariable Long id
 
@@ -72,29 +76,16 @@ public class ContaReceberController {
     // ==========================================================
 
     @GetMapping
-    @Operation(summary = "Listar Contas a Receber")
-    public ResponseEntity<List<ContaReceberResponseDTO>> listar() {
+    @Operation(summary = "Listar contas a pagar")
+    public ResponseEntity<Page<ContaPagarResponseDTO>> listar(
 
-        return ResponseEntity.ok(
-                service.listar()
-        );
-
-    }
-
-    // ==========================================================
-    // BUSCAR POR CLIENTE
-    // ==========================================================
-
-    @GetMapping("/cliente/{clienteId}")
-    @Operation(summary = "Buscar Contas por Cliente")
-    public ResponseEntity<List<ContaReceberResponseDTO>> buscarCliente(
-
-            @PathVariable Long clienteId
+            @PageableDefault(size = 20)
+            Pageable pageable
 
     ) {
 
         return ResponseEntity.ok(
-                service.buscarPorCliente(clienteId)
+                service.listar(pageable)
         );
 
     }
@@ -104,10 +95,10 @@ public class ContaReceberController {
     // ==========================================================
 
     @GetMapping("/status/{status}")
-    @Operation(summary = "Buscar Contas por Status")
-    public ResponseEntity<List<ContaReceberResponseDTO>> buscarStatus(
+    @Operation(summary = "Buscar contas por status")
+    public ResponseEntity<List<ContaPagarResponseDTO>> buscarPorStatus(
 
-            @PathVariable StatusContaReceber status
+            @PathVariable StatusContaPagar status
 
     ) {
 
@@ -118,17 +109,49 @@ public class ContaReceberController {
     }
 
     // ==========================================================
+    // LISTAR PENDENTES
+    // ==========================================================
+
+    @GetMapping("/pendentes")
+    @Operation(summary = "Listar contas pendentes")
+    public ResponseEntity<List<ContaPagarResponseDTO>> listarPendentes() {
+
+        return ResponseEntity.ok(
+                service.listarPendentes()
+        );
+
+    }
+
+    // ==========================================================
+    // BUSCAR POR FORNECEDOR
+    // ==========================================================
+
+    @GetMapping("/fornecedor/{fornecedorId}")
+    @Operation(summary = "Buscar contas por fornecedor")
+    public ResponseEntity<List<ContaPagarResponseDTO>> buscarPorFornecedor(
+
+            @PathVariable Long fornecedorId
+
+    ) {
+
+        return ResponseEntity.ok(
+                service.buscarPorFornecedor(fornecedorId)
+        );
+
+    }
+
+    // ==========================================================
     // ATUALIZAR
     // ==========================================================
 
     @PutMapping("/{id}")
-    @Operation(summary = "Atualizar Conta a Receber")
-    public ResponseEntity<ContaReceberResponseDTO> atualizar(
+    @Operation(summary = "Atualizar conta a pagar")
+    public ResponseEntity<ContaPagarResponseDTO> atualizar(
 
             @PathVariable Long id,
 
             @Valid
-            @RequestBody AtualizarContaReceberRequestDTO dto
+            @RequestBody AtualizarContaPagarRequestDTO dto
 
     ) {
 
@@ -143,13 +166,13 @@ public class ContaReceberController {
     // ==========================================================
 
     @PatchMapping("/{id}/pagamento")
-    @Operation(summary = "Registrar Pagamento")
-    public ResponseEntity<ContaReceberResponseDTO> registrarPagamento(
+    @Operation(summary = "Registrar pagamento da conta")
+    public ResponseEntity<ContaPagarResponseDTO> registrarPagamento(
 
             @PathVariable Long id,
 
             @Valid
-            @RequestBody AtualizarContaReceberRequestDTO dto
+            @RequestBody AtualizarContaPagarRequestDTO dto
 
     ) {
 
@@ -164,7 +187,7 @@ public class ContaReceberController {
     // ==========================================================
 
     @DeleteMapping("/{id}")
-    @Operation(summary = "Excluir Conta a Receber")
+    @Operation(summary = "Excluir conta a pagar")
     public ResponseEntity<Void> excluir(
 
             @PathVariable Long id

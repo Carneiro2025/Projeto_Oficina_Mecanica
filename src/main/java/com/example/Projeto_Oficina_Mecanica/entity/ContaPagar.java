@@ -16,15 +16,19 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ContasPagar {
+public class ContaPagar {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "fornecedor_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "fornecedor_id", nullable = false)
     private Fornecedor fornecedor;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "nota_fiscal_entrada_id")
+    private NotaFiscalEntrada notaFiscalEntrada;
 
     @Column(nullable = false, length = 200)
     private String descricao;
@@ -47,16 +51,32 @@ public class ContasPagar {
     @Column(length = 500)
     private String observacao;
 
+    @Builder.Default
+    @Column(nullable = false)
+    private Boolean ativo = true;
+
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+
     @PrePersist
-    public void onCreate() {
+    public void prePersist() {
 
         createdAt = LocalDateTime.now();
 
         if (status == null) {
             status = StatusContaPagar.PENDENTE;
         }
+
     }
+
+    @PreUpdate
+    public void preUpdate() {
+
+        updatedAt = LocalDateTime.now();
+
+    }
+
 }

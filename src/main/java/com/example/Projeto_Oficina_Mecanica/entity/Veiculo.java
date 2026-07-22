@@ -44,7 +44,6 @@ public class Veiculo {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cliente_id", nullable = false)
     @ToString.Exclude
-    @EqualsAndHashCode.Exclude
     private Cliente cliente;
 
     /**

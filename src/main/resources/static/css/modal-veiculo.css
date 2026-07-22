@@ -1,0 +1,311 @@
+/* ==========================================================
+   Projeto.......: OficinaPRO
+   Arquivo.......: modal-veiculo.css
+   Descrição.....: Modal de Veículos
+========================================================== */
+
+/* ==========================================================
+   MODAL
+========================================================== */
+
+.modal{
+
+    position:fixed;
+
+    top:0;
+
+    left:0;
+
+    width:100%;
+
+    height:100%;
+
+    background:rgba(0,0,0,.60);
+
+    display:none;
+
+    justify-content:center;
+
+    align-items:center;
+
+    z-index:9999;
+
+}
+
+.modal.show{
+
+    display:flex;
+
+}
+
+/* ==========================================================
+   CONTAINER
+========================================================== */
+
+.modal-content{
+
+    background:#FFFFFF;
+
+    width:95%;
+
+    max-width:900px;
+
+    border-radius:12px;
+
+    overflow:hidden;
+
+    box-shadow:0 20px 40px rgba(0,0,0,.25);
+
+    animation:abrirModal .25s ease;
+
+}
+
+/* ==========================================================
+   HEADER
+========================================================== */
+
+.modal-header{
+
+    background:#2563EB;
+
+    color:#FFF;
+
+    padding:18px 25px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+}
+
+.modal-header h2{
+
+    font-size:22px;
+
+    font-weight:600;
+
+}
+
+.btn-close{
+
+    background:none;
+
+    border:none;
+
+    color:#FFF;
+
+    font-size:24px;
+
+    cursor:pointer;
+
+}
+
+/* ==========================================================
+   BODY
+========================================================== */
+
+.modal-body{
+
+    padding:25px;
+
+    max-height:70vh;
+
+    overflow-y:auto;
+
+}
+
+/* ==========================================================
+   FORMULÁRIO
+========================================================== */
+
+.form-row{
+
+    display:flex;
+
+    gap:20px;
+
+    margin-bottom:18px;
+
+}
+
+.form-group{
+
+    flex:1;
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+.form-group label{
+
+    margin-bottom:6px;
+
+    font-weight:600;
+
+    color:#334155;
+
+}
+
+.form-group input,
+
+.form-group select,
+
+.form-group textarea{
+
+    padding:12px;
+
+    border:1px solid #CBD5E1;
+
+    border-radius:8px;
+
+    font-size:15px;
+
+    transition:.3s;
+
+}
+
+.form-group input:focus,
+
+.form-group select:focus,
+
+.form-group textarea:focus{
+
+    outline:none;
+
+    border-color:#2563EB;
+
+    box-shadow:0 0 5px rgba(37,99,235,.25);
+
+}
+
+textarea{
+
+    resize:vertical;
+
+}
+
+/* ==========================================================
+   FOOTER
+========================================================== */
+
+.modal-footer{
+
+    background:#F8FAFC;
+
+    padding:20px;
+
+    display:flex;
+
+    justify-content:flex-end;
+
+    gap:15px;
+
+}
+
+/* ==========================================================
+   BOTÕES
+========================================================== */
+
+.btn{
+
+    border:none;
+
+    padding:12px 20px;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    font-size:15px;
+
+    transition:.3s;
+
+}
+
+.btn-primary{
+
+    background:#2563EB;
+
+    color:#FFF;
+
+}
+
+.btn-primary:hover{
+
+    background:#1D4ED8;
+
+}
+
+.btn-secondary{
+
+    background:#64748B;
+
+    color:#FFF;
+
+}
+
+.btn-secondary:hover{
+
+    background:#475569;
+
+}
+
+/* ==========================================================
+   ANIMAÇÃO
+========================================================== */
+
+@keyframes abrirModal{
+
+    from{
+
+        opacity:0;
+
+        transform:scale(.90);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:scale(1);
+
+    }
+
+}
+
+/* ==========================================================
+   RESPONSIVO
+========================================================== */
+
+@media(max-width:768px){
+
+    .modal-content{
+
+        width:98%;
+
+    }
+
+    .form-row{
+
+        flex-direction:column;
+
+    }
+
+    .modal-footer{
+
+        flex-direction:column;
+
+    }
+
+    .modal-footer .btn{
+
+        width:100%;
+
+    }
+
+}

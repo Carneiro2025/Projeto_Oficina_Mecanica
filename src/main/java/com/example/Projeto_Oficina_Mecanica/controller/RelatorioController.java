@@ -72,12 +72,4 @@ public class RelatorioController {
             relatorioService.relatorioClientes()
     );
     }
-
-    @GetMapping("/ordens-servico")
-public ResponseEntity<List<RelatorioOSDTO>> ordensServico() {
-
-    return ResponseEntity.ok(
-            relatorioService.relatorioOrdensServico()
-    );
-}
 }

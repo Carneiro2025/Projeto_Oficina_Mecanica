@@ -1,0 +1,793 @@
+/* ==========================================================
+   Projeto.......: OficinaPRO
+   Arquivo.......: produtos.css
+   Descrição.....: Tela de Produtos
+========================================================== */
+
+/* ==========================================================
+   GERAL
+========================================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+
+    background:#F1F5F9;
+
+    color:#1E293B;
+
+}
+
+/* ==========================================================
+   CONTEÚDO PRINCIPAL
+========================================================== */
+
+.main{
+
+    margin-left:250px;
+
+    padding:30px;
+
+    min-height:100vh;
+
+}
+
+/* ==========================================================
+   HEADER
+========================================================== */
+
+.page-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:20px;
+
+}
+
+.page-header h1{
+
+    font-size:34px;
+
+    color:#1E293B;
+
+}
+
+.page-header p{
+
+    color:#64748B;
+
+    margin-top:5px;
+
+}
+
+/* ==========================================================
+   BOTÕES
+========================================================== */
+
+.header-actions{
+
+    display:flex;
+
+    gap:15px;
+
+}
+
+.btn-primary,
+.btn-secondary,
+.btn-success,
+.btn-danger,
+.btn-info{
+
+    border:none;
+
+    padding:12px 22px;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    font-size:15px;
+
+    transition:.30s;
+
+    color:#FFF;
+
+}
+
+.btn-primary{
+
+    background:#2563EB;
+
+}
+
+.btn-primary:hover{
+
+    background:#1D4ED8;
+
+}
+
+.btn-secondary{
+
+    background:#64748B;
+
+}
+
+.btn-secondary:hover{
+
+    background:#475569;
+
+}
+
+.btn-success{
+
+    background:#16A34A;
+
+}
+
+.btn-success:hover{
+
+    background:#15803D;
+
+}
+
+.btn-danger{
+
+    background:#DC2626;
+
+}
+
+.btn-danger:hover{
+
+    background:#B91C1C;
+
+}
+
+.btn-info{
+
+    background:#0891B2;
+
+}
+
+.btn-info:hover{
+
+    background:#0E7490;
+
+}
+
+/* ==========================================================
+   BREADCRUMB
+========================================================== */
+
+.breadcrumb{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    margin-bottom:30px;
+
+    color:#64748B;
+
+    font-size:15px;
+
+}
+
+.breadcrumb .active{
+
+    font-weight:bold;
+
+    color:#2563EB;
+
+}
+
+/* ==========================================================
+   CARDS
+========================================================== */
+
+.dashboard-cards{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+
+    gap:20px;
+
+    margin-bottom:30px;
+
+}
+
+.card-info{
+
+    background:#FFFFFF;
+
+    border-radius:12px;
+
+    padding:25px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:20px;
+
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
+
+    transition:.30s;
+
+}
+
+.card-info:hover{
+
+    transform:translateY(-5px);
+
+    box-shadow:0 12px 25px rgba(0,0,0,.12);
+
+}
+
+.card-icon{
+
+    width:65px;
+
+    height:65px;
+
+    border-radius:50%;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:28px;
+
+    color:#FFFFFF;
+
+}
+
+.azul{
+
+    background:#2563EB;
+
+}
+
+.verde{
+
+    background:#16A34A;
+
+}
+
+.vermelho{
+
+    background:#DC2626;
+
+}
+
+.laranja{
+
+    background:#F59E0B;
+
+}
+
+.card-info h3{
+
+    font-size:30px;
+
+    color:#1E293B;
+
+}
+
+.card-info span{
+
+    color:#64748B;
+
+    font-size:15px;
+
+}
+
+/* ==========================================================
+   TOOLBAR
+========================================================== */
+
+.toolbar{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:20px;
+
+    margin-bottom:25px;
+
+    flex-wrap:wrap;
+
+}
+
+.toolbar-left{
+
+    display:flex;
+
+    gap:15px;
+
+    flex:1;
+
+    flex-wrap:wrap;
+
+}
+
+.toolbar-right{
+
+    display:flex;
+
+    gap:10px;
+
+    flex-wrap:wrap;
+
+}
+
+/* ==========================================================
+   PESQUISA
+========================================================== */
+
+.search-box{
+
+    display:flex;
+
+    align-items:center;
+
+    background:#FFFFFF;
+
+    border:1px solid #CBD5E1;
+
+    border-radius:8px;
+
+    padding:10px 15px;
+
+    min-width:350px;
+
+    flex:1;
+
+}
+
+.search-box i{
+
+    color:#64748B;
+
+    margin-right:10px;
+
+}
+
+.search-box input{
+
+    border:none;
+
+    outline:none;
+
+    width:100%;
+
+    font-size:15px;
+
+}
+
+/* ==========================================================
+   FILTROS
+========================================================== */
+
+.toolbar select{
+
+    padding:11px 15px;
+
+    border:1px solid #CBD5E1;
+
+    border-radius:8px;
+
+    background:#FFFFFF;
+
+    cursor:pointer;
+
+    min-width:180px;
+
+}
+
+/* ==========================================================
+   RESUMO
+========================================================== */
+
+.table-info{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:15px;
+
+    color:#475569;
+
+    font-size:15px;
+
+}
+
+.table-info strong{
+
+    color:#2563EB;
+
+}
+
+/* ==========================================================
+   TABELA
+========================================================== */
+
+.table-container{
+
+    background:#FFFFFF;
+
+    border-radius:12px;
+
+    overflow:hidden;
+
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
+
+}
+
+.table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+}
+
+.table thead{
+
+    background:#2563EB;
+
+    color:#FFFFFF;
+
+}
+
+.table th{
+
+    padding:16px;
+
+    text-align:left;
+
+    font-size:15px;
+
+    font-weight:600;
+
+}
+
+.table td{
+
+    padding:15px;
+
+    border-bottom:1px solid #E2E8F0;
+
+    vertical-align:middle;
+
+}
+
+.table tbody tr{
+
+    transition:.25s;
+
+}
+
+.table tbody tr:hover{
+
+    background:#F8FAFC;
+
+}
+
+/* ==========================================================
+   BADGES
+========================================================== */
+
+.badge{
+
+    padding:6px 12px;
+
+    border-radius:20px;
+
+    color:#FFFFFF;
+
+    font-size:13px;
+
+    font-weight:bold;
+
+}
+
+.badge-ativo{
+
+    background:#16A34A;
+
+}
+
+.badge-inativo{
+
+    background:#DC2626;
+
+}
+
+/* ==========================================================
+   STATUS DO ESTOQUE
+========================================================== */
+
+.estoque-normal{
+
+    color:#16A34A;
+
+    font-weight:bold;
+
+}
+
+.estoque-baixo{
+
+    color:#F59E0B;
+
+    font-weight:bold;
+
+}
+
+.estoque-critico{
+
+    color:#DC2626;
+
+    font-weight:bold;
+
+}
+
+/* ==========================================================
+   BOTÕES DA TABELA
+========================================================== */
+
+.btn-action{
+
+    width:38px;
+
+    height:38px;
+
+    border:none;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    color:#FFFFFF;
+
+    margin-right:5px;
+
+    transition:.25s;
+
+}
+
+.btn-view{
+
+    background:#0EA5E9;
+
+}
+
+.btn-view:hover{
+
+    background:#0284C7;
+
+}
+
+.btn-edit{
+
+    background:#F59E0B;
+
+}
+
+.btn-edit:hover{
+
+    background:#D97706;
+
+}
+
+.btn-delete{
+
+    background:#DC2626;
+
+}
+
+.btn-delete:hover{
+
+    background:#B91C1C;
+
+}
+
+/* ==========================================================
+   PAGINAÇÃO
+========================================================== */
+
+.pagination{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-top:25px;
+
+    flex-wrap:wrap;
+
+    gap:15px;
+
+}
+
+.pagination-info{
+
+    color:#475569;
+
+}
+
+.pagination-buttons{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+}
+
+.btn-page{
+
+    width:40px;
+
+    height:40px;
+
+    border:none;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    background:#2563EB;
+
+    color:#FFFFFF;
+
+    transition:.25s;
+
+}
+
+.btn-page:hover{
+
+    background:#1D4ED8;
+
+}
+
+#paginaAtual{
+
+    font-weight:bold;
+
+    color:#1E293B;
+
+}
+
+/* ==========================================================
+   FOOTER
+========================================================== */
+
+.page-footer{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-top:40px;
+
+    padding-top:20px;
+
+    border-top:1px solid #CBD5E1;
+
+    color:#64748B;
+
+    font-size:14px;
+
+}
+
+/* ==========================================================
+   RESPONSIVO
+========================================================== */
+
+@media(max-width:992px){
+
+    .main{
+
+        margin-left:0;
+
+        padding:20px;
+
+    }
+
+    .page-header{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+        gap:20px;
+
+    }
+
+    .toolbar{
+
+        flex-direction:column;
+
+        align-items:stretch;
+
+    }
+
+    .toolbar-left{
+
+        flex-direction:column;
+
+    }
+
+    .toolbar-right{
+
+        justify-content:flex-start;
+
+    }
+
+    .search-box{
+
+        min-width:100%;
+
+    }
+
+}
+
+@media(max-width:768px){
+
+    .table-container{
+
+        overflow-x:auto;
+
+    }
+
+    .table{
+
+        min-width:1200px;
+
+    }
+
+    .pagination{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+    }
+
+    .page-footer{
+
+        flex-direction:column;
+
+        gap:10px;
+
+        text-align:center;
+
+    }
+
+}
+
