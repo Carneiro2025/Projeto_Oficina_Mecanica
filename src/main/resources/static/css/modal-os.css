@@ -1,0 +1,564 @@
+/* ==========================================================
+   MODAL ORDEM DE SERVIÇO
+========================================================== */
+
+#modalOS .modal-dialog{
+
+    max-width:1400px;
+
+}
+
+#modalOS .modal-content{
+
+    border:none;
+
+    border-radius:16px;
+
+    overflow:hidden;
+
+    box-shadow:0 15px 40px rgba(0,0,0,.18);
+
+    background:#f8fafc;
+
+}
+
+/* ==========================================================
+   HEADER
+========================================================== */
+
+#modalOS .modal-header{
+
+    padding:18px 24px;
+
+    background:linear-gradient(90deg,#0d6efd,#0b5ed7);
+
+    color:#fff;
+
+    border-bottom:none;
+
+}
+
+#modalOS .modal-header h4{
+
+    margin:0;
+
+    font-weight:700;
+
+}
+
+#modalOS .modal-header small{
+
+    opacity:.85;
+
+}
+
+#modalOS .btn-close{
+
+    filter:invert(1);
+
+}
+
+/* ==========================================================
+   BODY
+========================================================== */
+
+#modalOS .modal-body{
+
+    padding:25px;
+
+    background:#f8fafc;
+
+    max-height:75vh;
+
+    overflow-y:auto;
+
+}
+
+#modalOS .modal-body::-webkit-scrollbar{
+
+    width:8px;
+
+}
+
+#modalOS .modal-body::-webkit-scrollbar-thumb{
+
+    background:#cbd5e1;
+
+    border-radius:20px;
+
+}
+
+/* ==========================================================
+   TABS
+========================================================== */
+
+#tabOS{
+
+    border-bottom:2px solid #dee2e6;
+
+}
+
+#tabOS .nav-link{
+
+    color:#495057;
+
+    font-weight:600;
+
+    border:none;
+
+    border-bottom:3px solid transparent;
+
+    transition:.25s;
+
+    padding:12px 18px;
+
+}
+
+#tabOS .nav-link:hover{
+
+    color:#0d6efd;
+
+    background:#eef5ff;
+
+}
+
+#tabOS .nav-link.active{
+
+    color:#0d6efd;
+
+    background:#fff;
+
+    border-bottom:3px solid #0d6efd;
+
+}
+
+#tabOS i{
+
+    margin-right:6px;
+
+}
+
+/* ==========================================================
+   TAB CONTENT
+========================================================== */
+
+.tab-content{
+
+    margin-top:25px;
+
+}
+
+.tab-pane{
+
+    animation:fadeTab .25s ease;
+
+}
+
+@keyframes fadeTab{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(10px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+/* ==========================================================
+   CARDS
+========================================================== */
+
+#modalOS .card{
+
+    border:none;
+
+    border-radius:12px;
+
+    box-shadow:0 3px 10px rgba(0,0,0,.08);
+
+    margin-bottom:20px;
+
+}
+
+#modalOS .card-header{
+
+    background:#fff;
+
+    border-bottom:1px solid #ececec;
+
+    font-weight:600;
+
+    padding:15px 20px;
+
+}
+
+#modalOS .card-body{
+
+    padding:20px;
+
+}
+
+/* ==========================================================
+   FOOTER
+========================================================== */
+
+#modalOS .modal-footer{
+
+    background:#fff;
+
+    border-top:1px solid #dee2e6;
+
+    padding:18px 24px;
+
+}
+
+#modalOS .modal-footer .btn{
+
+    min-width:140px;
+
+    font-weight:600;
+
+}
+
+/* ==========================================================
+   RESPONSIVO
+========================================================== */
+
+@media(max-width:992px){
+
+    #modalOS .modal-body{
+
+        padding:15px;
+
+    }
+
+    #tabOS{
+
+        flex-wrap:nowrap;
+
+        overflow-x:auto;
+
+        white-space:nowrap;
+
+    }
+
+    #tabOS .nav-link{
+
+        min-width:max-content;
+
+    }
+
+}
+
+@media(max-width:576px){
+
+    #modalOS .modal-footer{
+
+        display:flex;
+
+        flex-direction:column;
+
+        gap:10px;
+
+    }
+
+    #modalOS .modal-footer .btn{
+
+        width:100%;
+
+    }
+
+}
+
+/* ==========================================================
+   FORMULÁRIOS
+========================================================== */
+
+#modalOS label.form-label{
+
+    font-weight:600;
+
+    color:#495057;
+
+    margin-bottom:6px;
+
+}
+
+#modalOS .form-control,
+#modalOS .form-select{
+
+    height:45px;
+
+    border-radius:10px;
+
+    border:1px solid #ced4da;
+
+    transition:all .25s ease;
+
+    font-size:.95rem;
+
+    box-shadow:none;
+
+}
+
+#modalOS textarea.form-control{
+
+    height:auto;
+
+    resize:vertical;
+
+    min-height:120px;
+
+}
+
+#modalOS .form-control:focus,
+#modalOS .form-select:focus{
+
+    border-color:#0d6efd;
+
+    box-shadow:0 0 0 .20rem rgba(13,110,253,.15);
+
+}
+
+/* ==========================================================
+   READONLY
+========================================================== */
+
+#modalOS input[readonly]{
+
+    background:#f1f3f5;
+
+    color:#495057;
+
+    font-weight:600;
+
+    cursor:not-allowed;
+
+}
+
+#modalOS input:disabled,
+#modalOS select:disabled,
+#modalOS textarea:disabled{
+
+    background:#e9ecef;
+
+}
+
+/* ==========================================================
+   INPUT GROUP
+========================================================== */
+
+#modalOS .input-group .btn{
+
+    border-radius:0 10px 10px 0;
+
+}
+
+#modalOS .input-group .form-control{
+
+    border-radius:10px 0 0 10px;
+
+}
+
+/* ==========================================================
+   BOTÕES
+========================================================== */
+
+#modalOS .btn{
+
+    border-radius:10px;
+
+    transition:.25s;
+
+    font-weight:600;
+
+}
+
+#modalOS .btn i{
+
+    margin-right:6px;
+
+}
+
+#modalOS .btn:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:0 5px 15px rgba(0,0,0,.15);
+
+}
+
+/* ==========================================================
+   BADGES
+========================================================== */
+
+#modalOS .badge{
+
+    padding:8px 14px;
+
+    font-size:.85rem;
+
+    border-radius:20px;
+
+    font-weight:600;
+
+}
+
+/* ==========================================================
+   ALERTAS
+========================================================== */
+
+#modalOS .alert{
+
+    border:none;
+
+    border-radius:12px;
+
+    font-size:.94rem;
+
+}
+
+#modalOS .alert i{
+
+    margin-right:8px;
+
+}
+
+/* ==========================================================
+   CHECKBOXES
+========================================================== */
+
+#modalOS .form-check{
+
+    margin-bottom:12px;
+
+}
+
+#modalOS .form-check-input{
+
+    cursor:pointer;
+
+}
+
+#modalOS .form-check-label{
+
+    cursor:pointer;
+
+    font-weight:500;
+
+}
+
+/* ==========================================================
+   INPUT FILE
+========================================================== */
+
+#modalOS input[type=file]{
+
+    padding:12px;
+
+    border:2px dashed #ced4da;
+
+    border-radius:10px;
+
+    background:#fff;
+
+}
+
+#modalOS input[type=file]:hover{
+
+    border-color:#0d6efd;
+
+}
+
+/* ==========================================================
+   LISTA DE ANEXOS
+========================================================== */
+
+#listaArquivosOS{
+
+    max-height:250px;
+
+    overflow-y:auto;
+
+}
+
+#listaArquivosOS .list-group-item{
+
+    border-radius:8px;
+
+    margin-bottom:8px;
+
+    border:1px solid #dee2e6;
+
+}
+
+/* ==========================================================
+   GALERIA
+========================================================== */
+
+#galeriaFotosOS img{
+
+    width:100%;
+
+    height:170px;
+
+    object-fit:cover;
+
+    border-radius:10px;
+
+    transition:.30s;
+
+}
+
+#galeriaFotosOS img:hover{
+
+    transform:scale(1.03);
+
+}
+
+/* ==========================================================
+   CAMPOS OBRIGATÓRIOS
+========================================================== */
+
+.required::after{
+
+    content:" *";
+
+    color:#dc3545;
+
+    font-weight:bold;
+
+}
+
+/* ==========================================================
+   VALIDAÇÃO
+========================================================== */
+
+.is-valid{
+
+    border-color:#198754 !important;
+
+}
+
+.is-invalid{
+
+    border-color:#dc3545 !important;
+
+}
+
+.invalid-feedback{
+
+    font-size:.85rem;
+
+}
+

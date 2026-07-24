@@ -1,0 +1,1826 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>OficinaPRO | Ordem de Serviço</title>
+
+    <!-- Bootstrap -->
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+        rel="stylesheet">
+
+    <!-- SweetAlert -->
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- CSS -->
+
+    <link rel="stylesheet" href="css/layout.css">
+
+    <link rel="stylesheet" href="css/os.css">
+
+</head>
+
+<body>
+
+<div class="wrapper">
+
+    <!-- SIDEBAR -->
+
+    <aside id="sidebar"></aside>
+
+    <!-- CONTEÚDO -->
+
+    <main class="content">
+
+        <!-- TÍTULO -->
+
+        <div class="container-fluid">
+
+            <div class="page-header">
+
+                <div>
+
+                    <h2>
+
+                        <i class="bi bi-tools"></i>
+
+                        Ordem de Serviço
+
+                    </h2>
+
+                    <p>
+
+                        Gerenciamento das Ordens de Serviço da oficina.
+
+                    </p>
+
+                </div>
+
+                <div class="acoes-header">
+
+                    <button
+                        id="btnNovaOS"
+                        class="btn btn-primary">
+
+                        <i class="bi bi-plus-circle"></i>
+
+                        Nova OS
+
+                    </button>
+
+                </div>
+
+            </div>
+
+                        <!-- FILTROS -->
+
+            <div class="card shadow-sm mb-4">
+
+                <div class="card-body">
+
+                    <div class="row">
+
+                        <div class="col-md-4">
+
+                            <label class="form-label">
+
+                                Pesquisa
+
+                            </label>
+
+                            <input
+
+                                id="campoPesquisa"
+
+                                type="text"
+
+                                class="form-control"
+
+                                placeholder="Cliente, Placa ou Nº da OS">
+
+                        </div>
+
+                        <div class="col-md-2">
+
+                            <label class="form-label">
+
+                                Status
+
+                            </label>
+
+                            <select
+
+                                id="filtroStatus"
+
+                                class="form-select">
+
+                                <option value="">Todos</option>
+
+                                <option>ABERTA</option>
+
+                                <option>EM_ANDAMENTO</option>
+
+                                <option>AGUARDANDO_PECA</option>
+
+                                <option>FINALIZADA</option>
+
+                                <option>CANCELADA</option>
+
+                            </select>
+
+                        </div>
+
+                        <div class="col-md-2">
+
+                            <label class="form-label">
+
+                                Data Inicial
+
+                            </label>
+
+                            <input
+
+                                id="dataInicial"
+
+                                type="date"
+
+                                class="form-control">
+
+                        </div>
+
+                        <div class="col-md-2">
+
+                            <label class="form-label">
+
+                                Data Final
+
+                            </label>
+
+                            <input
+
+                                id="dataFinal"
+
+                                type="date"
+
+                                class="form-control">
+
+                        </div>
+
+                        <div
+                            class="col-md-2
+                                   d-flex
+                                   align-items-end">
+
+                            <button
+
+                                id="btnPesquisar"
+
+                                class="btn btn-primary w-100">
+
+                                <i class="bi bi-search"></i>
+
+                                Pesquisar
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+                        <!-- BOTÕES -->
+
+            <div class="mb-3 d-flex gap-2">
+
+                <button
+                    id="btnAtualizar"
+                    class="btn btn-outline-primary">
+
+                    <i class="bi bi-arrow-clockwise"></i>
+
+                    Atualizar
+
+                </button>
+
+                <button
+                    id="btnExportarExcel"
+                    class="btn btn-outline-success">
+
+                    <i class="bi bi-file-earmark-excel"></i>
+
+                    Excel
+
+                </button>
+
+                <button
+                    id="btnExportarPdf"
+                    class="btn btn-outline-danger">
+
+                    <i class="bi bi-file-earmark-pdf"></i>
+
+                    PDF
+
+                </button>
+
+                <button
+                    id="btnImprimir"
+                    class="btn btn-outline-dark">
+
+                    <i class="bi bi-printer"></i>
+
+                    Imprimir
+
+                </button>
+
+            </div>
+
+                        <!-- ==========================================================
+                 TABELA DE ORDENS DE SERVIÇO
+            ========================================================== -->
+
+            <div class="card shadow-sm">
+
+                <div class="card-body">
+
+                    <div class="table-responsive">
+
+                        <table
+                            id="tabelaOS"
+                            class="table table-hover table-striped align-middle">
+
+                            <thead class="table-dark">
+
+                                <tr>
+
+                                    <th width="70">
+
+                                        Nº OS
+
+                                    </th>
+
+                                    <th>
+
+                                        Cliente
+
+                                    </th>
+
+                                    <th>
+
+                                        Veículo
+
+                                    </th>
+
+                                    <th width="120">
+
+                                        Placa
+
+                                    </th>
+
+                                    <th>
+
+                                        Mecânico
+
+                                    </th>
+
+                                    <th width="130">
+
+                                        Entrada
+
+                                    </th>
+
+                                    <th width="130">
+
+                                        Previsão
+
+                                    </th>
+
+                                    <th width="150">
+
+                                        Status
+
+                                    </th>
+
+                                    <th width="140">
+
+                                        Total
+
+                                    </th>
+
+                                    <th width="220"
+                                        class="text-center">
+
+                                        Ações
+
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody id="corpoTabelaOS">
+
+                                <!-- Preenchido via JavaScript -->
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+                        <!-- ==========================================================
+                 PAGINAÇÃO
+            ========================================================== -->
+
+            <div
+                class="d-flex
+                       justify-content-between
+                       align-items-center
+                       mt-4">
+
+                <div>
+
+                    <small
+                        id="textoPaginacao"
+                        class="text-muted">
+
+                        Exibindo 0 registros
+
+                    </small>
+
+                </div>
+
+                <nav>
+
+                    <ul
+                        id="paginacaoOS"
+                        class="pagination mb-0">
+
+                        <!-- JavaScript -->
+
+                    </ul>
+
+                </nav>
+
+            </div>
+
+                        <!-- ==========================================================
+                 MODAL
+            ========================================================== -->
+
+            <div id="modalContainer"></div>
+
+                        <!-- ==========================================================
+                 LOADING
+            ========================================================== -->
+
+            <div
+                id="loading"
+
+                class="loading-overlay d-none">
+
+                <div
+                    class="spinner-border
+                           text-primary">
+
+                </div>
+
+            </div>
+
+                    </div>
+
+    </main>
+
+</div>
+
+<!-- Bootstrap -->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- IMask -->
+
+<script src="https://unpkg.com/imask"></script>
+
+<!-- Sistema -->
+
+<script src="js/layout.js"></script>
+
+<script src="js/api.js"></script>
+
+<script src="js/auth.js"></script>
+
+<script src="js/loading.js"></script>
+
+<script src="js/toast.js"></script>
+
+<script src="js/os.js"></script>
+
+<script src="js/modal-os.js"></script>
+
+</body>
+
+</html>
+
+            <!-- ==========================================================
+                 DASHBOARD DA ORDEM DE SERVIÇO
+            ========================================================== -->
+
+            <div class="row mb-4">
+
+                <!-- Total OS -->
+
+                <div class="col-xl-2 col-lg-4 col-md-6 mb-3">
+
+                    <div class="card card-indicador shadow-sm">
+
+                        <div class="card-body">
+
+                            <div class="d-flex justify-content-between">
+
+                                <div>
+
+                                    <small class="text-muted">
+
+                                        Total de OS
+
+                                    </small>
+
+                                    <h3 id="totalOS">
+
+                                        0
+
+                                    </h3>
+
+                                </div>
+
+                                <div class="icone-card bg-primary">
+
+                                    <i class="bi bi-tools"></i>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- Abertas -->
+
+                <div class="col-xl-2 col-lg-4 col-md-6 mb-3">
+
+                    <div class="card card-indicador shadow-sm">
+
+                        <div class="card-body">
+
+                            <div class="d-flex justify-content-between">
+
+                                <div>
+
+                                    <small class="text-muted">
+
+                                        Abertas
+
+                                    </small>
+
+                                    <h3 id="osAbertas">
+
+                                        0
+
+                                    </h3>
+
+                                </div>
+
+                                <div class="icone-card bg-warning">
+
+                                    <i class="bi bi-folder2-open"></i>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- Em Andamento -->
+
+                <div class="col-xl-2 col-lg-4 col-md-6 mb-3">
+
+                    <div class="card card-indicador shadow-sm">
+
+                        <div class="card-body">
+
+                            <div class="d-flex justify-content-between">
+
+                                <div>
+
+                                    <small class="text-muted">
+
+                                        Em Andamento
+
+                                    </small>
+
+                                    <h3 id="osAndamento">
+
+                                        0
+
+                                    </h3>
+
+                                </div>
+
+                                <div class="icone-card bg-info">
+
+                                    <i class="bi bi-gear"></i>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- Aguardando Peças -->
+
+                <div class="col-xl-2 col-lg-4 col-md-6 mb-3">
+
+                    <div class="card card-indicador shadow-sm">
+
+                        <div class="card-body">
+
+                            <div class="d-flex justify-content-between">
+
+                                <div>
+
+                                    <small class="text-muted">
+
+                                        Aguardando Peças
+
+                                    </small>
+
+                                    <h3 id="osPecas">
+
+                                        0
+
+                                    </h3>
+
+                                </div>
+
+                                <div class="icone-card bg-secondary">
+
+                                    <i class="bi bi-box-seam"></i>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- Finalizadas -->
+
+                <div class="col-xl-2 col-lg-4 col-md-6 mb-3">
+
+                    <div class="card card-indicador shadow-sm">
+
+                        <div class="card-body">
+
+                            <div class="d-flex justify-content-between">
+
+                                <div>
+
+                                    <small class="text-muted">
+
+                                        Finalizadas
+
+                                    </small>
+
+                                    <h3 id="osFinalizadas">
+
+                                        0
+
+                                    </h3>
+
+                                </div>
+
+                                <div class="icone-card bg-success">
+
+                                    <i class="bi bi-check-circle"></i>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- Valor Faturado -->
+
+                <div class="col-xl-2 col-lg-4 col-md-6 mb-3">
+
+                    <div class="card card-indicador shadow-sm">
+
+                        <div class="card-body">
+
+                            <div class="d-flex justify-content-between">
+
+                                <div>
+
+                                    <small class="text-muted">
+
+                                        Faturamento
+
+                                    </small>
+
+                                    <h4 id="valorFaturado">
+
+                                        R$ 0,00
+
+                                    </h4>
+
+                                </div>
+
+                                <div class="icone-card bg-danger">
+
+                                    <i class="bi bi-currency-dollar"></i>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- ==========================================================
+     FILTROS AVANÇADOS
+========================================================== -->
+
+<div class="card shadow-sm mb-4">
+
+    <div class="card-header bg-white">
+
+        <h5 class="mb-0">
+
+            <i class="bi bi-funnel"></i>
+
+            Filtros Avançados
+
+        </h5>
+
+    </div>
+
+    <div class="card-body">
+
+        <div class="row">
+
+            <!-- Número da OS -->
+
+            <div class="col-md-2 mb-3">
+
+                <label class="form-label">
+
+                    Nº OS
+
+                </label>
+
+                <input
+                    id="filtroNumeroOS"
+                    type="number"
+                    class="form-control">
+
+            </div>
+
+            <!-- Cliente -->
+
+            <div class="col-md-4 mb-3">
+
+                <label class="form-label">
+
+                    Cliente
+
+                </label>
+
+                <input
+                    id="filtroCliente"
+                    type="text"
+                    class="form-control"
+                    placeholder="Nome do cliente">
+
+            </div>
+
+            <!-- Veículo -->
+
+            <div class="col-md-3 mb-3">
+
+                <label class="form-label">
+
+                    Veículo
+
+                </label>
+
+                <input
+                    id="filtroVeiculo"
+                    type="text"
+                    class="form-control"
+                    placeholder="Modelo">
+
+            </div>
+
+            <!-- Placa -->
+
+            <div class="col-md-3 mb-3">
+
+                <label class="form-label">
+
+                    Placa
+
+                </label>
+
+                <input
+                    id="filtroPlaca"
+                    type="text"
+                    class="form-control"
+                    placeholder="ABC1D23">
+
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <!-- Mecânico -->
+
+            <div class="col-md-3 mb-3">
+
+                <label class="form-label">
+
+                    Mecânico
+
+                </label>
+
+                <select
+                    id="filtroMecanico"
+                    class="form-select">
+
+                    <option value="">
+
+                        Todos
+
+                    </option>
+
+                </select>
+
+            </div>
+
+            <!-- Status -->
+
+            <div class="col-md-3 mb-3">
+
+                <label class="form-label">
+
+                    Status
+
+                </label>
+
+                <select
+                    id="filtroStatusOS"
+                    class="form-select">
+
+                    <option value="">Todos</option>
+                    <option value="ABERTA">Aberta</option>
+                    <option value="EM_ANDAMENTO">Em andamento</option>
+                    <option value="AGUARDANDO_PECA">Aguardando peças</option>
+                    <option value="FINALIZADA">Finalizada</option>
+                    <option value="CANCELADA">Cancelada</option>
+
+                </select>
+
+            </div>
+
+            <!-- Forma de Pagamento -->
+
+            <div class="col-md-3 mb-3">
+
+                <label class="form-label">
+
+                    Pagamento
+
+                </label>
+
+                <select
+                    id="filtroPagamento"
+                    class="form-select">
+
+                    <option value="">
+
+                        Todos
+
+                    </option>
+
+                    <option value="DINHEIRO">
+
+                        Dinheiro
+
+                    </option>
+
+                    <option value="PIX">
+
+                        PIX
+
+                    </option>
+
+                    <option value="CARTAO">
+
+                        Cartão
+
+                    </option>
+
+                    <option value="BOLETO">
+
+                        Boleto
+
+                    </option>
+
+                </select>
+
+            </div>
+
+            <!-- Situação Financeira -->
+
+            <div class="col-md-3 mb-3">
+
+                <label class="form-label">
+
+                    Financeiro
+
+                </label>
+
+                <select
+                    id="filtroFinanceiro"
+                    class="form-select">
+
+                    <option value="">
+
+                        Todos
+
+                    </option>
+
+                    <option value="PENDENTE">
+
+                        Pendente
+
+                    </option>
+
+                    <option value="PAGO">
+
+                        Pago
+
+                    </option>
+
+                    <option value="PARCIAL">
+
+                        Parcial
+
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <!-- Valor Inicial -->
+
+            <div class="col-md-2 mb-3">
+
+                <label class="form-label">
+
+                    Valor Inicial
+
+                </label>
+
+                <input
+                    id="valorInicial"
+                    type="number"
+                    step="0.01"
+                    class="form-control">
+
+            </div>
+
+            <!-- Valor Final -->
+
+            <div class="col-md-2 mb-3">
+
+                <label class="form-label">
+
+                    Valor Final
+
+                </label>
+
+                <input
+                    id="valorFinal"
+                    type="number"
+                    step="0.01"
+                    class="form-control">
+
+            </div>
+
+            <!-- Entrada -->
+
+            <div class="col-md-2 mb-3">
+
+                <label class="form-label">
+
+                    Entrada
+
+                </label>
+
+                <input
+                    id="entradaInicial"
+                    type="date"
+                    class="form-control">
+
+            </div>
+
+            <div class="col-md-2 mb-3">
+
+                <label class="form-label">
+
+                    Até
+
+                </label>
+
+                <input
+                    id="entradaFinal"
+                    type="date"
+                    class="form-control">
+
+            </div>
+
+            <!-- Entrega -->
+
+            <div class="col-md-2 mb-3">
+
+                <label class="form-label">
+
+                    Entrega
+
+                </label>
+
+                <input
+                    id="entregaInicial"
+                    type="date"
+                    class="form-control">
+
+            </div>
+
+            <div class="col-md-2 mb-3">
+
+                <label class="form-label">
+
+                    Até
+
+                </label>
+
+                <input
+                    id="entregaFinal"
+                    type="date"
+                    class="form-control">
+
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-12 text-end">
+
+                <button
+                    id="btnLimparFiltros"
+                    class="btn btn-secondary">
+
+                    <i class="bi bi-eraser"></i>
+
+                    Limpar
+
+                </button>
+
+                <button
+                    id="btnPesquisarAvancado"
+                    class="btn btn-primary">
+
+                    <i class="bi bi-search"></i>
+
+                    Aplicar Filtros
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ==========================================================
+     AÇÕES EM LOTE
+========================================================== -->
+
+<div class="card shadow-sm mb-4">
+
+    <div class="card-header bg-white">
+
+        <div class="d-flex justify-content-between align-items-center">
+
+            <h5 class="mb-0">
+
+                <i class="bi bi-check2-square"></i>
+
+                Ações em Lote
+
+            </h5>
+
+            <span
+                id="contadorSelecionados"
+                class="badge bg-primary">
+
+                0 selecionadas
+
+            </span>
+
+        </div>
+
+    </div>
+
+    <div class="card-body">
+
+        <div class="row">
+
+            <div class="col-lg-12">
+
+                <div class="btn-toolbar gap-2">
+
+                    <!-- Selecionar -->
+
+                    <button
+                        id="btnSelecionarTodos"
+                        class="btn btn-outline-primary">
+
+                        <i class="bi bi-check-all"></i>
+
+                        Selecionar Todas
+
+                    </button>
+
+                    <button
+                        id="btnLimparSelecao"
+                        class="btn btn-outline-secondary">
+
+                        <i class="bi bi-x-circle"></i>
+
+                        Limpar Seleção
+
+                    </button>
+
+                    <!-- Impressão -->
+
+                    <button
+                        id="btnImprimirSelecionadas"
+                        class="btn btn-outline-dark">
+
+                        <i class="bi bi-printer"></i>
+
+                        Imprimir
+
+                    </button>
+
+                    <!-- Exportar -->
+
+                    <button
+                        id="btnExportarSelecionadas"
+
+                        class="btn btn-outline-success">
+
+                        <i class="bi bi-file-earmark-excel"></i>
+
+                        Exportar
+
+                    </button>
+
+                    <!-- Alterar Status -->
+
+                    <div class="btn-group">
+
+                        <button
+
+                            class="btn btn-outline-warning dropdown-toggle"
+
+                            data-bs-toggle="dropdown">
+
+                            <i class="bi bi-arrow-repeat"></i>
+
+                            Alterar Status
+
+                        </button>
+
+                        <ul class="dropdown-menu">
+
+                            <li>
+
+                                <a
+                                    class="dropdown-item alterar-status"
+                                    data-status="ABERTA">
+
+                                    Aberta
+
+                                </a>
+
+                            </li>
+
+                            <li>
+
+                                <a
+                                    class="dropdown-item alterar-status"
+                                    data-status="EM_ANDAMENTO">
+
+                                    Em andamento
+
+                                </a>
+
+                            </li>
+
+                            <li>
+
+                                <a
+                                    class="dropdown-item alterar-status"
+                                    data-status="AGUARDANDO_PECA">
+
+                                    Aguardando peças
+
+                                </a>
+
+                            </li>
+
+                            <li>
+
+                                <a
+                                    class="dropdown-item alterar-status"
+                                    data-status="FINALIZADA">
+
+                                    Finalizada
+
+                                </a>
+
+                            </li>
+
+                            <li>
+
+                                <a
+                                    class="dropdown-item alterar-status"
+                                    data-status="CANCELADA">
+
+                                    Cancelada
+
+                                </a>
+
+                            </li>
+
+                        </ul>
+
+                    </div>
+
+                    <!-- Excluir -->
+
+                    <button
+
+                        id="btnExcluirSelecionadas"
+
+                        class="btn btn-outline-danger">
+
+                        <i class="bi bi-trash3"></i>
+
+                        Excluir
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<thead class="table-dark">
+
+<tr>
+
+    <th width="40">
+
+        <input
+
+            id="checkTodos"
+
+            type="checkbox"
+
+            class="form-check-input">
+
+    </th>
+
+    <th width="70">
+
+        Nº OS
+
+    </th>
+
+    <th>
+
+        Cliente
+
+    </th>
+
+    ...
+
+    <tr>
+
+    <td>
+
+        <input
+
+            type="checkbox"
+
+            class="checkOS form-check-input"
+
+            value="${os.id}">
+
+    </td>
+
+    <td>
+
+        ${os.numero}
+
+    </td>
+
+    ...
+
+    <div
+    class="alert alert-info mt-3 mb-0">
+
+    <i class="bi bi-info-circle"></i>
+
+    Selecione uma ou mais Ordens de Serviço para executar ações em lote.
+
+</div>
+
+<!-- ==========================================================
+     RESUMO FINANCEIRO
+========================================================== -->
+
+<div class="row mb-4">
+
+    <!-- Total de Serviços -->
+
+    <div class="col-xl-3 col-md-6 mb-3">
+
+        <div class="card border-0 shadow-sm h-100">
+
+            <div class="card-body">
+
+                <div class="d-flex justify-content-between align-items-center">
+
+                    <div>
+
+                        <small class="text-muted">
+
+                            Total de Serviços
+
+                        </small>
+
+                        <h4 id="totalServicos">
+
+                            R$ 0,00
+
+                        </h4>
+
+                    </div>
+
+                    <div class="icone-card bg-primary">
+
+                        <i class="bi bi-wrench-adjustable-circle"></i>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Total de Produtos -->
+
+    <div class="col-xl-3 col-md-6 mb-3">
+
+        <div class="card border-0 shadow-sm h-100">
+
+            <div class="card-body">
+
+                <div class="d-flex justify-content-between align-items-center">
+
+                    <div>
+
+                        <small class="text-muted">
+
+                            Total de Produtos
+
+                        </small>
+
+                        <h4 id="totalProdutos">
+
+                            R$ 0,00
+
+                        </h4>
+
+                    </div>
+
+                    <div class="icone-card bg-success">
+
+                        <i class="bi bi-box-seam"></i>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Descontos -->
+
+    <div class="col-xl-3 col-md-6 mb-3">
+
+        <div class="card border-0 shadow-sm h-100">
+
+            <div class="card-body">
+
+                <div class="d-flex justify-content-between align-items-center">
+
+                    <div>
+
+                        <small class="text-muted">
+
+                            Descontos
+
+                        </small>
+
+                        <h4 id="totalDescontos">
+
+                            R$ 0,00
+
+                        </h4>
+
+                    </div>
+
+                    <div class="icone-card bg-warning">
+
+                        <i class="bi bi-percent"></i>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Acréscimos -->
+
+    <div class="col-xl-3 col-md-6 mb-3">
+
+        <div class="card border-0 shadow-sm h-100">
+
+            <div class="card-body">
+
+                <div class="d-flex justify-content-between align-items-center">
+
+                    <div>
+
+                        <small class="text-muted">
+
+                            Acréscimos
+
+                        </small>
+
+                        <h4 id="totalAcrescimos">
+
+                            R$ 0,00
+
+                        </h4>
+
+                    </div>
+
+                    <div class="icone-card bg-info">
+
+                        <i class="bi bi-graph-up-arrow"></i>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="row mb-4">
+
+    <!-- Ticket Médio -->
+
+    <div class="col-xl-3 col-md-6 mb-3">
+
+        <div class="card border-0 shadow-sm h-100">
+
+            <div class="card-body">
+
+                <small class="text-muted">
+
+                    Ticket Médio
+
+                </small>
+
+                <h4 id="ticketMedio">
+
+                    R$ 0,00
+
+                </h4>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Lucro -->
+
+    <div class="col-xl-3 col-md-6 mb-3">
+
+        <div class="card border-0 shadow-sm h-100">
+
+            <div class="card-body">
+
+                <small class="text-muted">
+
+                    Lucro Estimado
+
+                </small>
+
+                <h4 id="lucroEstimado">
+
+                    R$ 0,00
+
+                </h4>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Produtos -->
+
+    <div class="col-xl-3 col-md-6 mb-3">
+
+        <div class="card border-0 shadow-sm h-100">
+
+            <div class="card-body">
+
+                <small class="text-muted">
+
+                    Produtos Vendidos
+
+                </small>
+
+                <h4 id="produtosVendidos">
+
+                    0
+
+                </h4>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Tempo Médio -->
+
+    <div class="col-xl-3 col-md-6 mb-3">
+
+        <div class="card border-0 shadow-sm h-100">
+
+            <div class="card-body">
+
+                <small class="text-muted">
+
+                    Tempo Médio
+
+                </small>
+
+                <h4 id="tempoMedio">
+
+                    0 dias
+
+                </h4>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ==========================================================
+     AÇÕES RÁPIDAS
+========================================================== -->
+
+<div class="card shadow-sm mb-4">
+
+    <div class="card-header bg-white">
+
+        <h5 class="mb-0">
+
+            <i class="bi bi-lightning-charge-fill"></i>
+
+            Ações Rápidas
+
+        </h5>
+
+    </div>
+
+    <div class="card-body">
+
+        <div class="row g-3">
+
+            <!-- Nova OS -->
+
+            <div class="col-xl-2 col-lg-3 col-md-4 col-6">
+
+                <button
+                    id="btnNovaOSRapida"
+                    class="btn btn-primary w-100 h-100 py-3">
+
+                    <i class="bi bi-plus-circle fs-2 d-block mb-2"></i>
+
+                    Nova OS
+
+                </button>
+
+            </div>
+
+            <!-- Orçamento -->
+
+            <div class="col-xl-2 col-lg-3 col-md-4 col-6">
+
+                <button
+                    id="btnGerarOrcamento"
+                    class="btn btn-outline-primary w-100 h-100 py-3">
+
+                    <i class="bi bi-file-earmark-text fs-2 d-block mb-2"></i>
+
+                    Orçamento
+
+                </button>
+
+            </div>
+
+            <!-- PDF -->
+
+            <div class="col-xl-2 col-lg-3 col-md-4 col-6">
+
+                <button
+                    id="btnGerarPDF"
+                    class="btn btn-outline-danger w-100 h-100 py-3">
+
+                    <i class="bi bi-file-earmark-pdf fs-2 d-block mb-2"></i>
+
+                    Gerar PDF
+
+                </button>
+
+            </div>
+
+            <!-- Impressão -->
+
+            <div class="col-xl-2 col-lg-3 col-md-4 col-6">
+
+                <button
+                    id="btnImprimirOS"
+                    class="btn btn-outline-dark w-100 h-100 py-3">
+
+                    <i class="bi bi-printer fs-2 d-block mb-2"></i>
+
+                    Imprimir
+
+                </button>
+
+            </div>
+
+            <!-- WhatsApp -->
+
+            <div class="col-xl-2 col-lg-3 col-md-4 col-6">
+
+                <button
+                    id="btnEnviarWhatsApp"
+                    class="btn btn-outline-success w-100 h-100 py-3">
+
+                    <i class="bi bi-whatsapp fs-2 d-block mb-2"></i>
+
+                    WhatsApp
+
+                </button>
+
+            </div>
+
+            <!-- Email -->
+
+            <div class="col-xl-2 col-lg-3 col-md-4 col-6">
+
+                <button
+                    id="btnEnviarEmail"
+                    class="btn btn-outline-secondary w-100 h-100 py-3">
+
+                    <i class="bi bi-envelope-fill fs-2 d-block mb-2"></i>
+
+                    E-mail
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="card shadow-sm mb-4">
+
+    <div class="card-body">
+
+        <div class="row g-3">
+
+            <!-- Duplicar -->
+
+            <div class="col-xl-2 col-lg-3 col-md-4 col-6">
+
+                <button
+                    id="btnDuplicarOS"
+                    class="btn btn-outline-info w-100 h-100 py-3">
+
+                    <i class="bi bi-files fs-2 d-block mb-2"></i>
+
+                    Duplicar
+
+                </button>
+
+            </div>
+
+            <!-- Favoritar -->
+
+            <div class="col-xl-2 col-lg-3 col-md-4 col-6">
+
+                <button
+                    id="btnFavoritarOS"
+                    class="btn btn-outline-warning w-100 h-100 py-3">
+
+                    <i class="bi bi-star-fill fs-2 d-block mb-2"></i>
+
+                    Favoritar
+
+                </button>
+
+            </div>
+
+            <!-- Prioridade -->
+
+            <div class="col-xl-2 col-lg-3 col-md-4 col-6">
+
+                <button
+                    id="btnPrioridade"
+                    class="btn btn-outline-danger w-100 h-100 py-3">
+
+                    <i class="bi bi-pin-angle-fill fs-2 d-block mb-2"></i>
+
+                    Prioridade
+
+                </button>
+
+            </div>
+
+            <!-- Histórico -->
+
+            <div class="col-xl-2 col-lg-3 col-md-4 col-6">
+
+                <button
+                    id="btnHistorico"
+                    class="btn btn-outline-dark w-100 h-100 py-3">
+
+                    <i class="bi bi-clock-history fs-2 d-block mb-2"></i>
+
+                    Histórico
+
+                </button>
+
+            </div>
+
+            <!-- Atualizar -->
+
+            <div class="col-xl-2 col-lg-3 col-md-4 col-6">
+
+                <button
+                    id="btnAtualizarLista"
+                    class="btn btn-outline-success w-100 h-100 py-3">
+
+                    <i class="bi bi-arrow-repeat fs-2 d-block mb-2"></i>
+
+                    Atualizar
+
+                </button>
+
+            </div>
+
+            <!-- Dashboard -->
+
+            <div class="col-xl-2 col-lg-3 col-md-4 col-6">
+
+                <button
+                    id="btnDashboardOS"
+                    class="btn btn-outline-primary w-100 h-100 py-3">
+
+                    <i class="bi bi-speedometer2 fs-2 d-block mb-2"></i>
+
+                    Dashboard
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+

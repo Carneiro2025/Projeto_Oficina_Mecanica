@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Fornecedores | OficinaPRO</title>
+
+    <!-- Bootstrap -->
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- CSS -->
+
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/sidebar.css">
+    <link rel="stylesheet" href="../css/navbar.css">
+    <link rel="stylesheet" href="../css/loading.css">
+    <link rel="stylesheet" href="../css/fornecedores.css">
+
+</head>
+
+<body>
+
+<div id="sidebar-container"></div>
+
+<div class="main-content">
+
+    <div id="navbar-container"></div>
+
+    <main class="page-fornecedores">
+
+        <!-- HEADER -->
+
+        <div class="page-header">
+
+            <div>
+
+                <h1 class="page-title">
+
+                    <i class="bi bi-truck"></i>
+
+                    Fornecedores
+
+                </h1>
+
+                <p class="page-subtitle">
+
+                    Cadastro e gerenciamento dos fornecedores.
+
+                </p>
+
+            </div>
+
+            <button
+                id="btnNovoFornecedor"
+                class="btn btn-primary">
+
+                <i class="bi bi-plus-circle"></i>
+
+                Novo Fornecedor
+
+            </button>
+
+        </div>
+
+                <!-- DASHBOARD -->
+
+        <section class="dashboard-cards">
+
+            <div class="dashboard-card">
+
+                <i class="bi bi-buildings"></i>
+
+                <h4>Total</h4>
+
+                <h2 id="totalFornecedores">0</h2>
+
+            </div>
+
+            <div class="dashboard-card">
+
+                <i class="bi bi-check-circle-fill"></i>
+
+                <h4>Ativos</h4>
+
+                <h2 id="fornecedoresAtivos">0</h2>
+
+            </div>
+
+            <div class="dashboard-card">
+
+                <i class="bi bi-x-circle-fill"></i>
+
+                <h4>Inativos</h4>
+
+                <h2 id="fornecedoresInativos">0</h2>
+
+            </div>
+
+            <div class="dashboard-card">
+
+                <i class="bi bi-calendar-plus"></i>
+
+                <h4>Novos</h4>
+
+                <h2 id="novosFornecedores">0</h2>
+
+            </div>
+
+        </section>
+
+                <!-- PESQUISA -->
+
+        <section class="search-container">
+
+            <input
+
+                id="campoPesquisa"
+
+                type="text"
+
+                placeholder="Pesquisar por Razão Social, Nome Fantasia, CNPJ, Cidade ou Responsável...">
+
+            <div class="search-actions">
+
+                <button
+                    class="btn btn-secondary"
+                    id="btnLimparPesquisa">
+
+                    <i class="bi bi-eraser"></i>
+
+                    Limpar
+
+                </button>
+
+                <button
+                    class="btn btn-success"
+                    id="btnPesquisar">
+
+                    <i class="bi bi-search"></i>
+
+                    Pesquisar
+
+                </button>
+
+            </div>
+
+        </section>
+
+                <!-- EXPORTAÇÃO -->
+
+        <section class="export-buttons">
+
+            <button
+                class="btn btn-success"
+                id="btnExportarExcel">
+
+                <i class="bi bi-file-earmark-excel"></i>
+
+                Excel
+
+            </button>
+
+            <button
+                class="btn btn-danger"
+                id="btnExportarPdf">
+
+                <i class="bi bi-file-earmark-pdf"></i>
+
+                PDF
+
+            </button>
+
+            <button
+                class="btn btn-info"
+                id="btnImprimir">
+
+                <i class="bi bi-printer"></i>
+
+                Imprimir
+
+            </button>
+
+        </section>
+
+                <!-- TABELA -->
+
+        <section class="table-container">
+
+            <table class="table-fornecedores">
+
+                <thead>
+
+                    <tr>
+
+                        <th onclick="ordenarFornecedores('id')">
+                            Código
+                        </th>
+
+                        <th onclick="ordenarFornecedores('razaoSocial')">
+                            Razão Social
+                        </th>
+
+                        <th onclick="ordenarFornecedores('nomeFantasia')">
+                            Nome Fantasia
+                        </th>
+
+                        <th onclick="ordenarFornecedores('cnpj')">
+                            CNPJ
+                        </th>
+
+                        <th onclick="ordenarFornecedores('cidade')">
+                            Cidade
+                        </th>
+
+                        <th onclick="ordenarFornecedores('telefone')">
+                            Telefone
+                        </th>
+
+                        <th onclick="ordenarFornecedores('ativo')">
+                            Situação
+                        </th>
+
+                        <th style="width:170px">
+                            Ações
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="tbodyFornecedores">
+
+                    <tr>
+
+                        <td colspan="8">
+
+                            <div class="table-loading">
+
+                                <div class="spinner"></div>
+
+                                <span>Carregando fornecedores...</span>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </section>
+
+                <!-- PAGINAÇÃO -->
+
+        <section class="pagination">
+
+            <div class="pagination-info">
+
+                Exibindo página
+
+                <strong id="paginaAtual">1</strong>
+
+                de
+
+                <strong id="totalPaginas">1</strong>
+
+                •
+
+                Total de registros:
+
+                <strong id="totalRegistros">0</strong>
+
+            </div>
+
+            <div class="pagination-buttons">
+
+                <button
+                    onclick="primeiraPagina()"
+                    title="Primeira Página">
+
+                    <i class="bi bi-chevron-double-left"></i>
+
+                </button>
+
+                <button
+                    onclick="paginaAnterior()"
+                    title="Página Anterior">
+
+                    <i class="bi bi-chevron-left"></i>
+
+                </button>
+
+                <button
+                    onclick="proximaPagina()"
+                    title="Próxima Página">
+
+                    <i class="bi bi-chevron-right"></i>
+
+                </button>
+
+                <button
+                    onclick="ultimaPagina()"
+                    title="Última Página">
+
+                    <i class="bi bi-chevron-double-right"></i>
+
+                </button>
+
+            </div>
+
+        </section>
+
+                <!-- MODAL -->
+
+        <div id="modalFornecedorContainer"></div>
+
+    </main>
+
+</div>
+
+<!-- COMPONENTES -->
+
+<script src="../js/layout.js"></script>
+
+<script>
+
+    carregarSidebar();
+
+    carregarNavbar();
+
+    carregarModalFornecedor();
+
+</script>
+
+<!-- BIBLIOTECAS -->
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+
+<!-- SCRIPTS -->
+
+<script src="../js/api.js"></script>
+
+<script src="../js/utils.js"></script>
+
+<script src="../js/loading.js"></script>
+
+<script src="../js/modal-fornecedor.js"></script>
+
+<script src="../js/fornecedores.js"></script>
+
+</body>
+
+</html>

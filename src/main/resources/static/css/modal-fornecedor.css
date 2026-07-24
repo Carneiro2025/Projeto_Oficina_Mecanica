@@ -1,0 +1,1164 @@
+/* ==========================================================
+   MODAL FORNECEDOR
+========================================================== */
+
+#modalFornecedor .modal-dialog{
+
+    max-width:1200px;
+
+}
+
+#modalFornecedor .modal-content{
+
+    border:none;
+
+    border-radius:16px;
+
+    overflow:hidden;
+
+    box-shadow:0 15px 40px rgba(0,0,0,.18);
+
+    animation:modalFade .30s ease;
+
+}
+
+/* ==========================================================
+   HEADER
+========================================================== */
+
+#modalFornecedor .modal-header{
+
+    background:#2563EB;
+
+    color:#FFFFFF;
+
+    padding:20px 30px;
+
+    border-bottom:none;
+
+}
+
+#modalFornecedor .modal-title{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    font-size:26px;
+
+    font-weight:700;
+
+}
+
+#modalFornecedor .modal-title i{
+
+    font-size:28px;
+
+}
+
+#modalFornecedor .modal-header small{
+
+    display:block;
+
+    margin-top:5px;
+
+    opacity:.90;
+
+}
+
+#modalFornecedor .btn-close{
+
+    filter:invert(1);
+
+}
+
+/* ==========================================================
+   BODY
+========================================================== */
+
+#modalFornecedor .modal-body{
+
+    background:#F8FAFC;
+
+    padding:30px;
+
+}
+
+#modalFornecedor form{
+
+    width:100%;
+
+}
+
+/* ==========================================================
+   NAV TABS
+========================================================== */
+
+#modalFornecedor .nav-tabs{
+
+    border-bottom:2px solid #E2E8F0;
+
+}
+
+#modalFornecedor .nav-link{
+
+    border:none;
+
+    color:#475569;
+
+    font-weight:600;
+
+    padding:14px 22px;
+
+    transition:.25s;
+
+}
+
+#modalFornecedor .nav-link i{
+
+    margin-right:8px;
+
+}
+
+#modalFornecedor .nav-link.active{
+
+    color:#2563EB;
+
+    background:#EFF6FF;
+
+    border-bottom:3px solid #2563EB;
+
+}
+
+#modalFornecedor .nav-link:hover{
+
+    color:#2563EB;
+
+}
+
+/* ==========================================================
+   TAB CONTENT
+========================================================== */
+
+#modalFornecedor .tab-content{
+
+    margin-top:25px;
+
+    background:#FFFFFF;
+
+    padding:25px;
+
+    border-radius:12px;
+
+    box-shadow:0 5px 15px rgba(0,0,0,.05);
+
+}
+
+/* ==========================================================
+   FORMULÁRIO
+========================================================== */
+
+#modalFornecedor .form-label{
+
+    font-weight:600;
+
+    color:#334155;
+
+    margin-bottom:6px;
+
+}
+
+#modalFornecedor .form-control,
+
+#modalFornecedor .form-select{
+
+    height:45px;
+
+    border-radius:8px;
+
+    border:1px solid #CBD5E1;
+
+    transition:.25s;
+
+}
+
+#modalFornecedor textarea.form-control{
+
+    height:auto;
+
+    resize:vertical;
+
+    min-height:180px;
+
+}
+
+#modalFornecedor .form-control:focus,
+
+#modalFornecedor .form-select:focus{
+
+    border-color:#2563EB;
+
+    box-shadow:0 0 0 .2rem rgba(37,99,235,.15);
+
+}
+
+/* ==========================================================
+   FOOTER
+========================================================== */
+
+#modalFornecedor .modal-footer{
+
+    background:#FFFFFF;
+
+    border-top:1px solid #E2E8F0;
+
+    padding:20px 30px;
+
+    display:flex;
+
+    justify-content:flex-end;
+
+    gap:12px;
+
+}
+
+/* ==========================================================
+   BOTÕES
+========================================================== */
+
+#modalFornecedor .btn{
+
+    min-width:140px;
+
+    height:45px;
+
+    border-radius:8px;
+
+    font-weight:600;
+
+    transition:all .25s ease;
+
+}
+
+#modalFornecedor .btn i{
+
+    margin-right:8px;
+
+}
+
+#modalFornecedor .btn:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:0 8px 20px rgba(0,0,0,.12);
+
+}
+
+#modalFornecedor .btn-primary{
+
+    background:#2563EB;
+
+    border-color:#2563EB;
+
+}
+
+#modalFornecedor .btn-primary:hover{
+
+    background:#1D4ED8;
+
+}
+
+#modalFornecedor .btn-secondary{
+
+    background:#64748B;
+
+    border-color:#64748B;
+
+}
+
+#modalFornecedor .btn-danger{
+
+    background:#DC2626;
+
+    border-color:#DC2626;
+
+}
+
+/* ==========================================================
+   INPUT GROUP
+========================================================== */
+
+#modalFornecedor .input-group .btn{
+
+    min-width:50px;
+
+    width:50px;
+
+    height:45px;
+
+    padding:0;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+}
+
+#modalFornecedor .input-group .btn i{
+
+    margin:0;
+
+}
+
+/* ==========================================================
+   CAMPOS OBRIGATÓRIOS
+========================================================== */
+
+#modalFornecedor .text-danger{
+
+    color:#DC2626 !important;
+
+}
+
+#modalFornecedor .campo-obrigatorio{
+
+    border-left:4px solid #DC2626;
+
+}
+
+/* ==========================================================
+   VALIDAÇÃO
+========================================================== */
+
+#modalFornecedor .is-valid{
+
+    border-color:#16A34A !important;
+
+}
+
+#modalFornecedor .is-invalid{
+
+    border-color:#DC2626 !important;
+
+}
+
+#modalFornecedor .is-valid:focus{
+
+    box-shadow:0 0 0 .2rem rgba(22,163,74,.15);
+
+}
+
+#modalFornecedor .is-invalid:focus{
+
+    box-shadow:0 0 0 .2rem rgba(220,38,38,.15);
+
+}
+
+/* ==========================================================
+   VALIDAÇÃO
+========================================================== */
+
+#modalFornecedor .is-valid{
+
+    border-color:#16A34A !important;
+
+}
+
+#modalFornecedor .is-invalid{
+
+    border-color:#DC2626 !important;
+
+}
+
+#modalFornecedor .is-valid:focus{
+
+    box-shadow:0 0 0 .2rem rgba(22,163,74,.15);
+
+}
+
+#modalFornecedor .is-invalid:focus{
+
+    box-shadow:0 0 0 .2rem rgba(220,38,38,.15);
+
+}
+
+/* ==========================================================
+   SEPARADORES
+========================================================== */
+
+#modalFornecedor hr{
+
+    border:0;
+
+    border-top:1px solid #E2E8F0;
+
+    margin:25px 0;
+
+}
+
+/* ==========================================================
+   CARD INTERNO
+========================================================== */
+
+#modalFornecedor .card-form{
+
+    background:#FFFFFF;
+
+    border:1px solid #E2E8F0;
+
+    border-radius:10px;
+
+    padding:20px;
+
+    margin-bottom:20px;
+
+}
+
+/* ==========================================================
+   RESPONSIVIDADE - NOTEBOOK
+========================================================== */
+
+@media (max-width:1200px){
+
+    #modalFornecedor .modal-dialog{
+
+        max-width:95%;
+
+    }
+
+    #modalFornecedor .tab-content{
+
+        padding:20px;
+
+    }
+
+}
+
+/* ==========================================================
+   TABLET
+========================================================== */
+
+@media (max-width:992px){
+
+    #modalFornecedor .modal-dialog{
+
+        max-width:98%;
+
+        margin:10px auto;
+
+    }
+
+    #modalFornecedor .modal-body{
+
+        padding:20px;
+
+    }
+
+    #modalFornecedor .modal-header{
+
+        padding:18px 20px;
+
+    }
+
+    #modalFornecedor .modal-footer{
+
+        padding:18px 20px;
+
+    }
+
+    #modalFornecedor .modal-title{
+
+        font-size:22px;
+
+    }
+
+    #modalFornecedor .nav-tabs{
+
+        overflow-x:auto;
+
+        overflow-y:hidden;
+
+        flex-wrap:nowrap;
+
+        white-space:nowrap;
+
+    }
+
+    #modalFornecedor .nav-link{
+
+        min-width:max-content;
+
+    }
+
+}
+
+/* ==========================================================
+   MOBILE
+========================================================== */
+
+@media (max-width:768px){
+
+    #modalFornecedor .modal-dialog{
+
+        margin:5px;
+
+        max-width:100%;
+
+    }
+
+    #modalFornecedor .modal-content{
+
+        border-radius:10px;
+
+    }
+
+    #modalFornecedor .modal-title{
+
+        font-size:18px;
+
+    }
+
+    #modalFornecedor .modal-body{
+
+        padding:15px;
+
+    }
+
+    #modalFornecedor .tab-content{
+
+        padding:15px;
+
+    }
+
+    #modalFornecedor .modal-footer{
+
+        flex-direction:column;
+
+    }
+
+    #modalFornecedor .modal-footer .btn{
+
+        width:100%;
+
+    }
+
+    #modalFornecedor .row{
+
+        margin:0;
+
+    }
+
+    #modalFornecedor [class*="col-"]{
+
+        padding-left:0;
+
+        padding-right:0;
+
+    }
+
+}
+
+/* ==========================================================
+   SCROLL
+========================================================== */
+
+#modalFornecedor .modal-body::-webkit-scrollbar{
+
+    width:8px;
+
+}
+
+#modalFornecedor .modal-body::-webkit-scrollbar-track{
+
+    background:#E2E8F0;
+
+}
+
+#modalFornecedor .modal-body::-webkit-scrollbar-thumb{
+
+    background:#94A3B8;
+
+    border-radius:20px;
+
+}
+
+#modalFornecedor .modal-body::-webkit-scrollbar-thumb:hover{
+
+    background:#64748B;
+
+}
+
+/* ==========================================================
+   ANIMAÇÕES
+========================================================== */
+
+@keyframes modalFade{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(-20px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+@keyframes fadeTab{
+
+    from{
+
+        opacity:0;
+
+    }
+
+    to{
+
+        opacity:1;
+
+    }
+
+}
+
+#modalFornecedor .tab-pane.active{
+
+    animation:fadeTab .25s ease;
+
+}
+
+/* ==========================================================
+   MELHORIAS VISUAIS
+========================================================== */
+
+#modalFornecedor .form-control:hover,
+
+#modalFornecedor .form-select:hover{
+
+    border-color:#94A3B8;
+
+}
+
+#modalFornecedor .input-group-text{
+
+    background:#F8FAFC;
+
+    border:1px solid #CBD5E1;
+
+}
+
+#modalFornecedor .form-control::placeholder{
+
+    color:#94A3B8;
+
+    font-size:14px;
+
+}
+
+#modalFornecedor textarea{
+
+    line-height:1.6;
+
+}
+
+/* ==========================================================
+   ALERTAS
+========================================================== */
+
+#modalFornecedor .alert{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    padding:14px 18px;
+
+    border:none;
+
+    border-radius:10px;
+
+    font-weight:600;
+
+    margin-bottom:20px;
+
+}
+
+#modalFornecedor .alert i{
+
+    font-size:20px;
+
+}
+
+#modalFornecedor .alert-success{
+
+    background:#DCFCE7;
+
+    color:#166534;
+
+}
+
+#modalFornecedor .alert-danger{
+
+    background:#FEE2E2;
+
+    color:#991B1B;
+
+}
+
+#modalFornecedor .alert-warning{
+
+    background:#FEF3C7;
+
+    color:#92400E;
+
+}
+
+#modalFornecedor .alert-info{
+
+    background:#DBEAFE;
+
+    color:#1E40AF;
+
+}
+
+/* ==========================================================
+   TOOLTIP
+========================================================== */
+
+#modalFornecedor .tooltip-inner{
+
+    background:#0F172A;
+
+    color:#FFFFFF;
+
+    font-size:13px;
+
+    padding:8px 12px;
+
+    border-radius:6px;
+
+}
+
+#modalFornecedor .tooltip.show{
+
+    opacity:1;
+
+}
+
+/* ==========================================================
+   LOADING
+========================================================== */
+
+#modalFornecedor .loading-overlay{
+
+    position:absolute;
+
+    top:0;
+
+    left:0;
+
+    width:100%;
+
+    height:100%;
+
+    background:rgba(255,255,255,.75);
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    z-index:9999;
+
+    border-radius:16px;
+
+}
+
+#modalFornecedor .loading-overlay.hidden{
+
+    display:none;
+
+}
+
+/* ==========================================================
+   SPINNER
+========================================================== */
+
+#modalFornecedor .spinner{
+
+    width:60px;
+
+    height:60px;
+
+    border:6px solid #E2E8F0;
+
+    border-top:6px solid #2563EB;
+
+    border-radius:50%;
+
+    animation:spin 1s linear infinite;
+
+}
+
+@keyframes spin{
+
+    from{
+
+        transform:rotate(0deg);
+
+    }
+
+    to{
+
+        transform:rotate(360deg);
+
+    }
+
+}
+
+/* ==========================================================
+   ESTADOS
+========================================================== */
+
+#modalFornecedor .disabled{
+
+    pointer-events:none;
+
+    opacity:.60;
+
+}
+
+#modalFornecedor .hidden{
+
+    display:none !important;
+
+}
+
+#modalFornecedor .visible{
+
+    display:block !important;
+
+}
+
+/* ==========================================================
+   SOMBRAS
+========================================================== */
+
+#modalFornecedor .shadow-sm{
+
+    box-shadow:0 2px 8px rgba(0,0,0,.08);
+
+}
+
+#modalFornecedor .shadow{
+
+    box-shadow:0 6px 18px rgba(0,0,0,.10);
+
+}
+
+#modalFornecedor .shadow-lg{
+
+    box-shadow:0 12px 30px rgba(0,0,0,.15);
+
+}
+
+/* ==========================================================
+   UTILITÁRIOS
+========================================================== */
+
+#modalFornecedor .text-center{
+
+    text-align:center;
+
+}
+
+#modalFornecedor .text-end{
+
+    text-align:right;
+
+}
+
+#modalFornecedor .fw-bold{
+
+    font-weight:700;
+
+}
+
+#modalFornecedor .mt-10{
+
+    margin-top:10px;
+
+}
+
+#modalFornecedor .mt-20{
+
+    margin-top:20px;
+
+}
+
+#modalFornecedor .mb-10{
+
+    margin-bottom:10px;
+
+}
+
+#modalFornecedor .mb-20{
+
+    margin-bottom:20px;
+
+}
+
+#modalFornecedor .w-100{
+
+    width:100%;
+
+}
+
+/* ==========================================================
+   ÍCONES
+========================================================== */
+
+#modalFornecedor .bi{
+
+    vertical-align:middle;
+
+}
+
+#modalFornecedor .icon-primary{
+
+    color:#2563EB;
+
+}
+
+#modalFornecedor .icon-success{
+
+    color:#16A34A;
+
+}
+
+#modalFornecedor .icon-danger{
+
+    color:#DC2626;
+
+}
+
+#modalFornecedor .icon-warning{
+
+    color:#F59E0B;
+
+}
+
+
+/* ==========================================================
+   ACESSIBILIDADE
+========================================================== */
+
+#modalFornecedor button:focus-visible,
+#modalFornecedor input:focus-visible,
+#modalFornecedor select:focus-visible,
+#modalFornecedor textarea:focus-visible{
+
+    outline:3px solid rgba(37,99,235,.25);
+
+    outline-offset:2px;
+
+}
+
+#modalFornecedor button:disabled{
+
+    opacity:.60;
+
+    cursor:not-allowed;
+
+}
+
+#modalFornecedor input:disabled,
+#modalFornecedor select:disabled,
+#modalFornecedor textarea:disabled{
+
+    background:#F1F5F9;
+
+    color:#64748B;
+
+    cursor:not-allowed;
+
+}
+
+/* ==========================================================
+   LINKS
+========================================================== */
+
+#modalFornecedor a{
+
+    color:#2563EB;
+
+    text-decoration:none;
+
+    transition:.25s;
+
+}
+
+#modalFornecedor a:hover{
+
+    color:#1D4ED8;
+
+    text-decoration:underline;
+
+}
+
+/* ==========================================================
+   IMPRESSÃO
+========================================================== */
+
+@media print{
+
+    #modalFornecedor .modal-header{
+
+        background:#FFFFFF !important;
+
+        color:#000000 !important;
+
+    }
+
+    #modalFornecedor .modal-footer{
+
+        display:none;
+
+    }
+
+    #modalFornecedor .nav-tabs{
+
+        display:none;
+
+    }
+
+    #modalFornecedor .tab-pane{
+
+        display:block !important;
+
+        opacity:1 !important;
+
+    }
+
+    #modalFornecedor .btn{
+
+        display:none !important;
+
+    }
+
+    #modalFornecedor input,
+    #modalFornecedor select,
+    #modalFornecedor textarea{
+
+        border:none;
+
+        box-shadow:none;
+
+    }
+
+}
+
+/* ==========================================================
+   OTIMIZAÇÕES
+========================================================== */
+
+#modalFornecedor *{
+
+    box-sizing:border-box;
+
+}
+
+#modalFornecedor img{
+
+    max-width:100%;
+
+}
+
+#modalFornecedor input,
+#modalFornecedor select,
+#modalFornecedor textarea,
+#modalFornecedor button{
+
+    font-family:inherit;
+
+}
+
+/* ==========================================================
+   SCROLL
+========================================================== */
+
+#modalFornecedor{
+
+    scroll-behavior:smooth;
+
+}
+
+#modalFornecedor textarea{
+
+    scrollbar-width:thin;
+
+}
+
+/* ==========================================================
+   AJUSTES FINAIS
+========================================================== */
+
+#modalFornecedor .form-control,
+#modalFornecedor .form-select{
+
+    transition:
+
+        border-color .25s ease,
+
+        box-shadow .25s ease,
+
+        background-color .25s ease;
+
+}
+
+#modalFornecedor .tab-pane{
+
+    min-height:450px;
+
+}
+
+#modalFornecedor .modal-content{
+
+    position:relative;
+
+}
+
+/* ==========================================================
+   FIM DO ARQUIVO
+========================================================== */
+
+/*
+
+ ███╗   ███╗ ██████╗ ██████╗  █████╗ ██╗
+ ████╗ ████║██╔═══██╗██╔══██╗██╔══██╗██║
+ ██╔████╔██║██║   ██║██║  ██║███████║██║
+ ██║╚██╔╝██║██║   ██║██║  ██║██╔══██║██║
+ ██║ ╚═╝ ██║╚██████╔╝██████╔╝██║  ██║███████╗
+ ╚═╝     ╚═╝ ╚═════╝ ╚═════╝ ╚═╝  ╚═╝╚══════╝
+
+modal-fornecedor.css
+VERSÃO FINAL
+
+Projeto OficinaPRO
+Sprint 6
+
+*/
