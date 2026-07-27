@@ -3,6 +3,7 @@ package com.example.Projeto_Oficina_Mecanica.controller;
 import com.example.Projeto_Oficina_Mecanica.dto.request.AtualizarProdutoRequestDTO;
 import com.example.Projeto_Oficina_Mecanica.dto.request.CriarProdutoRequestDTO;
 import com.example.Projeto_Oficina_Mecanica.dto.response.ProdutoResponseDTO;
+import com.example.Projeto_Oficina_Mecanica.enums.CategoriaProduto;
 import com.example.Projeto_Oficina_Mecanica.service.ProdutoService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -26,6 +27,11 @@ import org.springframework.http.ResponseEntity;
 
 import org.springframework.web.bind.annotation.*;
 
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 
 @RestController
 @RequestMapping("/api/produtos")
@@ -39,6 +45,45 @@ public class ProdutoController {
 
 
     private final ProdutoService produtoService;
+
+    // Rótulos amigáveis para exibição no front-end
+    private static final Map<CategoriaProduto, String> ROTULOS_CATEGORIA = new LinkedHashMap<>();
+    static {
+        ROTULOS_CATEGORIA.put(CategoriaProduto.OLEO_LUBRIFICANTE, "Óleo Lubrificante");
+        ROTULOS_CATEGORIA.put(CategoriaProduto.FILTRO, "Filtro");
+        ROTULOS_CATEGORIA.put(CategoriaProduto.PECA_MOTOR, "Peça de Motor");
+        ROTULOS_CATEGORIA.put(CategoriaProduto.PECA_FREIO, "Peça de Freio");
+        ROTULOS_CATEGORIA.put(CategoriaProduto.PECA_SUSPENSAO, "Peça de Suspensão");
+        ROTULOS_CATEGORIA.put(CategoriaProduto.PECA_ELETRICA, "Peça Elétrica");
+        ROTULOS_CATEGORIA.put(CategoriaProduto.PECA_TRANSMISSAO, "Peça de Transmissão");
+        ROTULOS_CATEGORIA.put(CategoriaProduto.PNEU, "Pneu");
+        ROTULOS_CATEGORIA.put(CategoriaProduto.BATERIA, "Bateria");
+        ROTULOS_CATEGORIA.put(CategoriaProduto.FLUIDO, "Fluido");
+        ROTULOS_CATEGORIA.put(CategoriaProduto.ACESSORIO, "Acessório");
+        ROTULOS_CATEGORIA.put(CategoriaProduto.FERRAMENTA, "Ferramenta");
+        ROTULOS_CATEGORIA.put(CategoriaProduto.OUTROS, "Outros");
+    }
+
+    /**
+     * Lista as categorias de produto disponíveis, usada para popular
+     * selects no front-end (tela de produtos e modal de cadastro).
+     */
+    @GetMapping("/categorias")
+    @Operation(summary = "Listar categorias de produto")
+    public ResponseEntity<List<Map<String, String>>> listarCategorias() {
+
+        List<Map<String, String>> categorias = ROTULOS_CATEGORIA.entrySet()
+                .stream()
+                .map(entry -> {
+                    Map<String, String> item = new LinkedHashMap<>();
+                    item.put("id", entry.getKey().name());
+                    item.put("nome", entry.getValue());
+                    return item;
+                })
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(categorias);
+    }
 
 
 
@@ -107,6 +152,14 @@ public class ProdutoController {
             String codigo,
 
 
+            @RequestParam(required = false)
+            CategoriaProduto categoria,
+
+
+            @RequestParam(required = false)
+            Long fornecedorId,
+
+
             @ParameterObject
             Pageable pageable
 
@@ -118,6 +171,8 @@ public class ProdutoController {
                 produtoService.listar(
                         descricao,
                         codigo,
+                        categoria,
+                        fornecedorId,
                         pageable
                 )
 

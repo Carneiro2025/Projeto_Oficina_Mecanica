@@ -3,7 +3,9 @@ package com.example.Projeto_Oficina_Mecanica.service;
 import com.example.Projeto_Oficina_Mecanica.dto.request.LoginRequestDTO;
 import com.example.Projeto_Oficina_Mecanica.dto.request.RefreshTokenRequestDTO;
 import com.example.Projeto_Oficina_Mecanica.dto.response.TokenResponseDTO;
+import com.example.Projeto_Oficina_Mecanica.entity.Usuario;
 import com.example.Projeto_Oficina_Mecanica.exception.BusinessException;
+import com.example.Projeto_Oficina_Mecanica.mapper.UsuarioMapper;
 import com.example.Projeto_Oficina_Mecanica.security.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,6 +33,7 @@ public class AuthService {
     private final AuthenticationManager authenticationManager;
     private final UserDetailsService userDetailsService;
     private final JwtUtil jwtUtil;
+    private final UsuarioMapper usuarioMapper;
 
     /**
      * Autentica o usuário e retorna os tokens JWT.
@@ -70,11 +73,14 @@ public class AuthService {
     // ── Helper ───────────────────────────────────────────────────────────────
 
     private TokenResponseDTO buildTokenResponse(UserDetails user) {
+        Usuario usuario = (Usuario) user;
+
         return TokenResponseDTO.builder()
                 .accessToken(jwtUtil.gerarAccessToken(user))
                 .refreshToken(jwtUtil.gerarRefreshToken(user))
                 .tokenType("Bearer")
                 .expiresIn(jwtUtil.getExpirationEmSegundos())
+                .usuario(usuarioMapper.toResponseDTO(usuario))
                 .build();
     }
 }

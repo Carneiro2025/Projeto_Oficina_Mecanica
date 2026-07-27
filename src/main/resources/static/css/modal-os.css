@@ -562,3 +562,980 @@
 
 }
 
+/* ==========================================================
+   TABELAS
+========================================================== */
+
+#modalOS .table{
+
+    margin-bottom:0;
+
+    background:#fff;
+
+    font-size:.93rem;
+
+}
+
+#modalOS .table thead th{
+
+    background:#0d6efd;
+
+    color:#fff;
+
+    border:none;
+
+    font-weight:600;
+
+    text-align:center;
+
+    vertical-align:middle;
+
+    white-space:nowrap;
+
+    position:sticky;
+
+    top:0;
+
+    z-index:10;
+
+}
+
+#modalOS .table tbody td{
+
+    vertical-align:middle;
+
+    padding:12px 10px;
+
+}
+
+#modalOS .table tbody tr{
+
+    transition:.20s;
+
+}
+
+#modalOS .table tbody tr:hover{
+
+    background:#eef5ff;
+
+}
+
+/* ==========================================================
+   TABLE RESPONSIVE
+========================================================== */
+
+#modalOS .table-responsive{
+
+    border-radius:12px;
+
+    overflow:auto;
+
+    max-height:420px;
+
+    border:1px solid #dee2e6;
+
+    background:#fff;
+
+}
+
+#modalOS .table-responsive::-webkit-scrollbar{
+
+    height:8px;
+
+    width:8px;
+
+}
+
+#modalOS .table-responsive::-webkit-scrollbar-thumb{
+
+    background:#adb5bd;
+
+    border-radius:20px;
+
+}
+
+/* ==========================================================
+   COLUNAS FINANCEIRAS
+========================================================== */
+
+.valor,
+.quantidade,
+.subtotal,
+.total{
+
+    text-align:right;
+
+    font-weight:600;
+
+    white-space:nowrap;
+
+}
+
+.desconto{
+
+    color:#dc3545;
+
+}
+
+.acrescimo{
+
+    color:#198754;
+
+}
+
+/* ==========================================================
+   BOTÕES DAS TABELAS
+========================================================== */
+
+.btn-table{
+
+    width:34px;
+
+    height:34px;
+
+    padding:0;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:8px;
+
+}
+
+.btn-table i{
+
+    margin:0;
+
+    font-size:.95rem;
+
+}
+
+/* ==========================================================
+   LINHA SELECIONADA
+========================================================== */
+
+.table-active{
+
+    background:#dbeafe !important;
+
+}
+
+/* ==========================================================
+   RESUMOS
+========================================================== */
+
+#modalOS .card h3,
+#modalOS .card h4{
+
+    margin:0;
+
+    font-weight:700;
+
+}
+
+#modalOS .card small{
+
+    color:#6c757d;
+
+    text-transform:uppercase;
+
+    letter-spacing:.5px;
+
+    font-size:.78rem;
+
+}
+
+/* ==========================================================
+   TIMELINE
+========================================================== */
+
+.timeline{
+
+    position:relative;
+
+    padding-left:35px;
+
+}
+
+.timeline::before{
+
+    content:"";
+
+    position:absolute;
+
+    left:12px;
+
+    top:0;
+
+    bottom:0;
+
+    width:3px;
+
+    background:#dee2e6;
+
+}
+
+.timeline-item{
+
+    position:relative;
+
+    margin-bottom:25px;
+
+}
+
+.timeline-item::before{
+
+    content:"";
+
+    position:absolute;
+
+    left:-29px;
+
+    top:5px;
+
+    width:14px;
+
+    height:14px;
+
+    border-radius:50%;
+
+    background:#0d6efd;
+
+}
+
+.timeline-item h6{
+
+    margin-bottom:4px;
+
+    font-weight:700;
+
+}
+
+.timeline-item small{
+
+    color:#6c757d;
+
+}
+
+/* ==========================================================
+   HISTÓRICO
+========================================================== */
+
+#tabelaHistoricoOS tbody tr:hover{
+
+    background:#f5f9ff;
+
+}
+
+#tabelaHistoricoOS td{
+
+    font-size:.90rem;
+
+}
+
+/* ==========================================================
+   CARDS DOS TOTAIS
+========================================================== */
+
+.border-success h4{
+
+    color:#198754;
+
+}
+
+.border-danger h4{
+
+    color:#dc3545;
+
+}
+
+.border-warning h4{
+
+    color:#fd7e14;
+
+}
+
+.border-primary h4{
+
+    color:#0d6efd;
+
+}
+
+.border-info h4{
+
+    color:#0dcaf0;
+
+}
+
+/* ==========================================================
+   MOBILE
+========================================================== */
+
+@media(max-width:992px){
+
+    #modalOS table{
+
+        min-width:1100px;
+
+    }
+
+}
+
+/* ==========================================================
+   HOVER DOS RESUMOS
+========================================================== */
+
+#modalOS .card{
+
+    transition:.25s;
+
+}
+
+#modalOS .card:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:0 10px 25px rgba(0,0,0,.12);
+
+}
+
+/* ==========================================================
+   HOVER DOS RESUMOS
+========================================================== */
+
+#modalOS .card{
+
+    transition:.25s;
+
+}
+
+#modalOS .card:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:0 10px 25px rgba(0,0,0,.12);
+
+}
+
+/* ==========================================================
+   EVENTOS
+========================================================== */
+
+.timeline-card{
+
+    background:#fff;
+
+    border-radius:12px;
+
+    padding:15px;
+
+    border-left:4px solid #0d6efd;
+
+    box-shadow:0 2px 8px rgba(0,0,0,.08);
+
+}
+
+.timeline-card h6{
+
+    margin-bottom:5px;
+
+    font-weight:700;
+
+}
+
+.timeline-card small{
+
+    color:#6c757d;
+
+}
+
+/* ==========================================================
+   DRAG & DROP
+========================================================== */
+
+.upload-area{
+
+    border:2px dashed #adb5bd;
+
+    border-radius:12px;
+
+    padding:40px;
+
+    text-align:center;
+
+    background:#fff;
+
+    transition:.30s;
+
+    cursor:pointer;
+
+}
+
+.upload-area:hover{
+
+    border-color:#0d6efd;
+
+    background:#eef5ff;
+
+}
+
+.upload-area.dragover{
+
+    border-color:#198754;
+
+    background:#e9f7ef;
+
+}
+
+.upload-area i{
+
+    font-size:3rem;
+
+    color:#0d6efd;
+
+    margin-bottom:10px;
+
+}
+
+.upload-area p{
+
+    margin:0;
+
+    color:#6c757d;
+
+}
+
+/* ==========================================================
+   ARQUIVOS
+========================================================== */
+
+.arquivo-item{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:12px 15px;
+
+    border:1px solid #dee2e6;
+
+    border-radius:10px;
+
+    margin-bottom:10px;
+
+    background:#fff;
+
+}
+
+.arquivo-item:hover{
+
+    background:#f8f9fa;
+
+}
+
+/* ==========================================================
+   GALERIA
+========================================================== */
+
+.galeria-item{
+
+    position:relative;
+
+    overflow:hidden;
+
+    border-radius:12px;
+
+}
+
+.galeria-item img{
+
+    width:100%;
+
+    height:180px;
+
+    object-fit:cover;
+
+    transition:.35s;
+
+}
+
+.galeria-item:hover img{
+
+    transform:scale(1.08);
+
+}
+
+.galeria-overlay{
+
+    position:absolute;
+
+    inset:0;
+
+    background:rgba(0,0,0,.55);
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    opacity:0;
+
+    transition:.30s;
+
+}
+
+.galeria-item:hover .galeria-overlay{
+
+    opacity:1;
+
+}
+
+.galeria-overlay button{
+
+    margin:5px;
+
+}
+
+/* ==========================================================
+   PROGRESSO
+========================================================== */
+
+.progress{
+
+    height:24px;
+
+    border-radius:20px;
+
+    background:#dee2e6;
+
+}
+
+.progress-bar{
+
+    font-weight:600;
+
+    transition:width .35s;
+
+}
+
+/* ==========================================================
+   LOADING
+========================================================== */
+
+.loading-overlay{
+
+    position:absolute;
+
+    inset:0;
+
+    background:rgba(255,255,255,.75);
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    z-index:2000;
+
+}
+
+.loading-overlay.hidden{
+
+    display:none;
+
+}
+
+.loading-spinner{
+
+    width:60px;
+
+    height:60px;
+
+    border:6px solid #dee2e6;
+
+    border-top:6px solid #0d6efd;
+
+    border-radius:50%;
+
+    animation:spin .8s linear infinite;
+
+}
+
+@keyframes spin{
+
+    to{
+
+        transform:rotate(360deg);
+
+    }
+
+}
+
+/* ==========================================================
+   SKELETON
+========================================================== */
+
+.skeleton{
+
+    background:linear-gradient(
+        90deg,
+        #ececec 25%,
+        #f7f7f7 50%,
+        #ececec 75%
+    );
+
+    background-size:400% 100%;
+
+    animation:skeleton 1.3s infinite;
+
+    border-radius:8px;
+
+}
+
+@keyframes skeleton{
+
+    from{
+
+        background-position:100% 0;
+
+    }
+
+    to{
+
+        background-position:-100% 0;
+
+    }
+
+}
+
+/* ==========================================================
+   TOAST
+========================================================== */
+
+.toast{
+
+    border:none;
+
+    border-radius:12px;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.15);
+
+}
+
+.toast-header{
+
+    font-weight:700;
+
+}
+
+/* ==========================================================
+   STATUS
+========================================================== */
+
+.status-online{
+
+    color:#198754;
+
+}
+
+.status-offline{
+
+    color:#dc3545;
+
+}
+
+.status-warning{
+
+    color:#fd7e14;
+
+}
+
+/* ==========================================================
+   STATUS
+========================================================== */
+
+.status-online{
+
+    color:#198754;
+
+}
+
+.status-offline{
+
+    color:#dc3545;
+
+}
+
+.status-warning{
+
+    color:#fd7e14;
+
+}
+
+/* ==========================================================
+   BOTÕES FLUTUANTES
+========================================================== */
+
+.btn-floating{
+
+    width:50px;
+
+    height:50px;
+
+    border-radius:50%;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    box-shadow:0 5px 15px rgba(0,0,0,.20);
+
+}
+
+.btn-floating i{
+
+    margin:0;
+
+}
+
+/* ==========================================================
+   ANIMAÇÕES
+========================================================== */
+
+.fade-in{
+
+    animation:fadeIn .30s ease;
+
+}
+
+@keyframes fadeIn{
+
+    from{
+
+        opacity:0;
+
+    }
+
+    to{
+
+        opacity:1;
+
+    }
+
+}
+
+.zoom-in{
+
+    animation:zoomIn .25s ease;
+
+}
+
+@keyframes zoomIn{
+
+    from{
+
+        transform:scale(.95);
+
+        opacity:0;
+
+    }
+
+    to{
+
+        transform:scale(1);
+
+        opacity:1;
+
+    }
+
+}
+
+/* ==========================================================
+   UTILITÁRIOS
+========================================================== */
+
+.cursor-pointer{
+
+    cursor:pointer;
+
+}
+
+.text-nowrap{
+
+    white-space:nowrap;
+
+}
+
+.fw-600{
+
+    font-weight:600;
+
+}
+
+.fw-700{
+
+    font-weight:700;
+
+}
+
+.shadow-soft{
+
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
+
+}
+
+/* ==========================================================
+   IMPRESSÃO
+========================================================== */
+
+@media print{
+
+    .modal-header,
+
+    .modal-footer,
+
+    .nav-tabs,
+
+    .btn,
+
+    .upload-area,
+
+    input[type=file]{
+
+        display:none !important;
+
+    }
+
+    .modal-content{
+
+        border:none;
+
+        box-shadow:none;
+
+    }
+
+    .tab-pane{
+
+        display:block !important;
+
+        opacity:1 !important;
+
+    }
+
+    .table{
+
+        font-size:12px;
+
+    }
+
+}
+
+/* ==========================================================
+   RESPONSIVIDADE
+========================================================== */
+
+@media(max-width:768px){
+
+    #modalOS .row>[class*="col-"]{
+
+        margin-bottom:15px;
+
+    }
+
+    #modalOS .card{
+
+        margin-bottom:15px;
+
+    }
+
+    #modalOS .table{
+
+        font-size:.85rem;
+
+    }
+
+    #modalOS h3{
+
+        font-size:1.3rem;
+
+    }
+
+    #modalOS h4{
+
+        font-size:1.1rem;
+
+    }
+
+}
+
+/* ==========================================================
+   SCROLL
+========================================================== */
+
+::-webkit-scrollbar{
+
+    width:8px;
+
+    height:8px;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:#adb5bd;
+
+    border-radius:20px;
+
+}
+
+::-webkit-scrollbar-track{
+
+    background:#f1f1f1;
+
+}
+
+/* ==========================================================
+   ACESSIBILIDADE
+========================================================== */
+
+button:focus,
+
+input:focus,
+
+select:focus,
+
+textarea:focus{
+
+    outline:none;
+
+}
+
+/* ==========================================================
+   TRANSIÇÕES
+========================================================== */
+
+*{
+
+    transition:
+
+        background-color .20s,
+
+        color .20s,
+
+        border-color .20s;
+
+}
+
+/* ==========================================================
+   FIM DO ARQUIVO
+========================================================== */
+

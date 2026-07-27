@@ -14,6 +14,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import com.example.Projeto_Oficina_Mecanica.dto.response.ApiErrorResponseDTO;
 
@@ -29,11 +30,19 @@ import java.util.List;
 public class GlobalExceptionHandler {
 
     // ── 404 ──────────────────────────────────────────────────────────────────
-    @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<ApiErrorResponseDTO> handleNotFound(
-            ResourceNotFoundException ex, HttpServletRequest req) {
-        return build(HttpStatus.NOT_FOUND, "Recurso não encontrado", ex.getMessage(), req, null);
-    }
+@ExceptionHandler(NoResourceFoundException.class)
+public ResponseEntity<ApiErrorResponseDTO> handleNotFound(
+        NoResourceFoundException ex,
+        HttpServletRequest request) {
+
+    return build(
+            HttpStatus.NOT_FOUND,
+            "Recurso não encontrado",
+            ex.getMessage(),
+            request,
+            null
+    );
+}
 
     // ── 422 Regra de Negócio ──────────────────────────────────────────────────
     @ExceptionHandler(BusinessException.class)
@@ -71,6 +80,18 @@ public class GlobalExceptionHandler {
             AccessDeniedException ex, HttpServletRequest req) {
         return build(HttpStatus.FORBIDDEN, "Acesso negado",
                 "Você não tem permissão para acessar este recurso", req, null);
+    }
+
+    @ExceptionHandler(ForbiddenException.class)
+    public ResponseEntity<ApiErrorResponseDTO> handleForbidden(
+            ForbiddenException ex, HttpServletRequest req) {
+        return build(HttpStatus.FORBIDDEN, "Acesso negado", ex.getMessage(), req, null);
+    }
+
+    @ExceptionHandler(UnauthorizedException.class)
+    public ResponseEntity<ApiErrorResponseDTO> handleUnauthorized(
+            UnauthorizedException ex, HttpServletRequest req) {
+        return build(HttpStatus.UNAUTHORIZED, "Não autorizado", ex.getMessage(), req, null);
     }
 
     // ── 500 Erro inesperado ───────────────────────────────────────────────────

@@ -13,4 +13,6 @@ public interface NotaFiscalEntradaRepository
     boolean existsByNumero(String numero);
 
     Page<NotaFiscalEntrada> findAll(Pageable pageable);
+
+    Page<NotaFiscalEntrada> findByFornecedorId(Long fornecedorId, Pageable pageable);
 }

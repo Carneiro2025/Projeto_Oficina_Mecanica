@@ -3,7 +3,7 @@ package com.example.Projeto_Oficina_Mecanica.dto;
 import lombok.*;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Builder
 public class RelatorioOSDTO {
 
-    private Long numero;
+    private String numero;
 
     private String cliente;
 
@@ -22,9 +22,9 @@ public class RelatorioOSDTO {
 
     private String status;
 
-    private LocalDateTime dataAbertura;
+    private LocalDate dataAbertura;
 
-    private LocalDateTime dataFechamento;
+    private LocalDate dataConclusao;
 
     private BigDecimal valorTotal;
 

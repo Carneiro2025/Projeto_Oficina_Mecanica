@@ -52,10 +52,11 @@ public class ClienteServiceImpl implements ClienteService {
 public Page<ClienteResponseDTO> listar(
         String nome,
         String cpfCnpj,
+        Boolean ativo,
         Pageable pageable) {
 
     return clienteRepository
-            .buscarComFiltros(nome, cpfCnpj, pageable)
+            .buscarComFiltros(nome, cpfCnpj, ativo, pageable)
             .map(clienteMapper::toResponseDTO);
 }
 

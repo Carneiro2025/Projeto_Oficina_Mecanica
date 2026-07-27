@@ -15,6 +15,7 @@ C:\Users\Carneiro\Documents\Projeto da Faculdade\Projeto_Oficina_Mecanica\src\ma
 C:\Users\Carneiro\Documents\Projeto da Faculdade\Projeto_Oficina_Mecanica\src\main\java\com\example\Projeto_Oficina_Mecanica\entity\ItemServicoOS.java
 C:\Users\Carneiro\Documents\Projeto da Faculdade\Projeto_Oficina_Mecanica\src\main\java\com\example\Projeto_Oficina_Mecanica\dto\response\MovimentacaoEstoqueResponseDTO.java
 C:\Users\Carneiro\Documents\Projeto da Faculdade\Projeto_Oficina_Mecanica\src\main\java\com\example\Projeto_Oficina_Mecanica\mapper\NotaFiscalEntradaMapper.java
+C:\Users\Carneiro\Documents\Projeto da Faculdade\Projeto_Oficina_Mecanica\src\main\java\com\example\Projeto_Oficina_Mecanica\service\impl\ProdutoServiceImpl.java
 C:\Users\Carneiro\Documents\Projeto da Faculdade\Projeto_Oficina_Mecanica\src\main\java\com\example\Projeto_Oficina_Mecanica\dto\RelatorioClienteDTO.java
 C:\Users\Carneiro\Documents\Projeto da Faculdade\Projeto_Oficina_Mecanica\src\main\java\com\example\Projeto_Oficina_Mecanica\dto\response\VeiculoResponseDTO.java
 C:\Users\Carneiro\Documents\Projeto da Faculdade\Projeto_Oficina_Mecanica\src\main\java\com\example\Projeto_Oficina_Mecanica\repository\ProdutoRepository.java
@@ -42,7 +43,6 @@ C:\Users\Carneiro\Documents\Projeto da Faculdade\Projeto_Oficina_Mecanica\src\ma
 C:\Users\Carneiro\Documents\Projeto da Faculdade\Projeto_Oficina_Mecanica\src\main\java\com\example\Projeto_Oficina_Mecanica\dto\request\RefreshTokenRequestDTO.java
 C:\Users\Carneiro\Documents\Projeto da Faculdade\Projeto_Oficina_Mecanica\src\main\java\com\example\Projeto_Oficina_Mecanica\repository\ContaPagarRepository.java
 C:\Users\Carneiro\Documents\Projeto da Faculdade\Projeto_Oficina_Mecanica\src\main\java\com\example\Projeto_Oficina_Mecanica\service\impl\NotaFiscalEntradaServiceImpl.java
-C:\Users\Carneiro\Documents\Projeto da Faculdade\Projeto_Oficina_Mecanica\src\main\java\com\example\Projeto_Oficina_Mecanica\service\ProdutoServiceImpl.java
 C:\Users\Carneiro\Documents\Projeto da Faculdade\Projeto_Oficina_Mecanica\src\main\java\com\example\Projeto_Oficina_Mecanica\dto\response\OrdemServicoResponseDTO.java
 C:\Users\Carneiro\Documents\Projeto da Faculdade\Projeto_Oficina_Mecanica\src\main\java\com\example\Projeto_Oficina_Mecanica\dto\response\ApiErrorResponseDTO.java
 C:\Users\Carneiro\Documents\Projeto da Faculdade\Projeto_Oficina_Mecanica\src\main\java\com\example\Projeto_Oficina_Mecanica\dto\response\FluxoCaixaResponseDTO.java
@@ -122,6 +122,7 @@ C:\Users\Carneiro\Documents\Projeto da Faculdade\Projeto_Oficina_Mecanica\src\ma
 C:\Users\Carneiro\Documents\Projeto da Faculdade\Projeto_Oficina_Mecanica\src\main\java\com\example\Projeto_Oficina_Mecanica\entity\MovimentacaoEstoque.java
 C:\Users\Carneiro\Documents\Projeto da Faculdade\Projeto_Oficina_Mecanica\src\main\java\com\example\Projeto_Oficina_Mecanica\service\impl\DashboardServiceImpl.java
 C:\Users\Carneiro\Documents\Projeto da Faculdade\Projeto_Oficina_Mecanica\src\main\java\com\example\Projeto_Oficina_Mecanica\enums\UnidadeMedida.java
+C:\Users\Carneiro\Documents\Projeto da Faculdade\Projeto_Oficina_Mecanica\src\main\java\com\example\Projeto_Oficina_Mecanica\entity\GerarHash.java
 C:\Users\Carneiro\Documents\Projeto da Faculdade\Projeto_Oficina_Mecanica\src\main\java\com\example\Projeto_Oficina_Mecanica\dto\request\AtualizarVeiculoRequestDTO.java
 C:\Users\Carneiro\Documents\Projeto da Faculdade\Projeto_Oficina_Mecanica\src\main\java\com\example\Projeto_Oficina_Mecanica\mapper\MovimentacaoEstoqueMapper.java
 C:\Users\Carneiro\Documents\Projeto da Faculdade\Projeto_Oficina_Mecanica\src\main\java\com\example\Projeto_Oficina_Mecanica\service\UsuarioService.java

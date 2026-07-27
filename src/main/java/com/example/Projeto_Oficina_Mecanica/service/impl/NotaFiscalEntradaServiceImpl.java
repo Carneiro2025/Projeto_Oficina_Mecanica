@@ -452,14 +452,6 @@ public Page<NotaFiscalEntradaResponseDTO> buscarPorFornecedor(
         Pageable pageable
 ) {
 
-    // REVISAR NA ETAPA FINAL
-    // Necessário criar o método abaixo no Repository:
-    //
-    // Page<NotaFiscalEntrada> findByFornecedorId(
-    //          Long fornecedorId,
-    //          Pageable pageable
-    // );
-
     return repository
             .findByFornecedorId(
                     fornecedorId,

@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     if (!sidebar) return;
 
-    const resposta = await fetch("components/sidebar.html");
+    const resposta = await fetch("sidebar.html");
 
     sidebar.innerHTML = await resposta.text();
 

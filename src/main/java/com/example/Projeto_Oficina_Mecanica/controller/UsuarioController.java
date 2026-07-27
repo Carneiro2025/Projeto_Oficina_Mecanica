@@ -4,7 +4,9 @@ import com.example.Projeto_Oficina_Mecanica.dto.AlterarSenhaDTO;
 import com.example.Projeto_Oficina_Mecanica.dto.request.AtualizarUsuarioRequestDTO;
 import com.example.Projeto_Oficina_Mecanica.dto.request.CriarUsuarioRequestDTO;
 import com.example.Projeto_Oficina_Mecanica.dto.response.UsuarioResponseDTO;
+import com.example.Projeto_Oficina_Mecanica.entity.Usuario;
 import com.example.Projeto_Oficina_Mecanica.enums.PerfilUsuario;
+import com.example.Projeto_Oficina_Mecanica.mapper.UsuarioMapper;
 import com.example.Projeto_Oficina_Mecanica.service.UsuarioService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -15,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -24,6 +27,21 @@ import org.springframework.web.bind.annotation.*;
 public class UsuarioController {
 
     private final UsuarioService usuarioService;
+    private final UsuarioMapper usuarioMapper;
+
+    /**
+     * Retorna os dados do usuário atualmente autenticado (usado pelo front-end
+     * logo após o login/refresh, para exibir nome/perfil sem precisar de ID).
+     */
+    @GetMapping("/me")
+    @PreAuthorize("isAuthenticated()")
+    @Operation(summary = "Dados do usuário autenticado")
+    public ResponseEntity<UsuarioResponseDTO> me(Authentication authentication) {
+
+        Usuario usuario = (Usuario) authentication.getPrincipal();
+
+        return ResponseEntity.ok(usuarioMapper.toResponseDTO(usuario));
+    }
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")

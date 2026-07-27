@@ -66,7 +66,7 @@ public class ItemNotaFiscalEntrada {
 
     @PrePersist
     @PreUpdate
-    private void calcularSubtotal(){
+    public void calcularSubtotal(){
 
         if(valorUnitario != null && quantidade != null){
 

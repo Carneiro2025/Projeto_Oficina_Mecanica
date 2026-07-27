@@ -1,6 +1,7 @@
 package com.example.Projeto_Oficina_Mecanica.dto.request;
 
 import com.example.Projeto_Oficina_Mecanica.dto.response.EnderecoResponseDTO;
+import com.example.Projeto_Oficina_Mecanica.validation.CpfCnpj;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
@@ -13,6 +14,11 @@ import lombok.Data;
 @Data
 @Schema(description = "Dados para atualização de fornecedor (todos os campos opcionais)")
 public class AtualizarFornecedorRequestDTO {
+
+    // CNPJ do fornecedor (utilizado para reconsulta/validação de duplicidade na atualização)
+    @CpfCnpj
+    @Schema(example = "11.222.333/0001-81")
+    private String cnpj;
 
     // Nome jurídico/oficial da empresa fornecedora de peças ou insumos
     @Size(min = 3, max = 200, message = "A Razão Social deve conter entre {min} e {max} caracteres.")

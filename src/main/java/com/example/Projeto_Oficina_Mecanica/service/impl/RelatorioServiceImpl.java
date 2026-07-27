@@ -80,10 +80,10 @@ public class RelatorioServiceImpl implements RelatorioService {
                 .numero(os.getNumero())
                 .cliente(os.getCliente().getNome())
                 .veiculo(os.getVeiculo().getMarca() + " " + os.getVeiculo().getModelo())
-                .mecanico(os.getMecanico() != null ? os.getMecanico().getNome() : "")
+                .mecanico(os.getMecanicoResponsavel() != null ? os.getMecanicoResponsavel() : "")
                 .status(os.getStatus().name())
                 .dataAbertura(os.getDataAbertura())
-                .dataFechamento(os.getDataFechamento())
+                .dataConclusao(os.getDataConclusao())
                 .valorTotal(os.getValorTotal())
                 .build();
     }

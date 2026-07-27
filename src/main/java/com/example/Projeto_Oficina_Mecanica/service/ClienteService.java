@@ -22,6 +22,7 @@ public interface ClienteService {
     Page<ClienteResponseDTO> listar(
             String nome,
             String cpfCnpj,
+            Boolean ativo,
             Pageable pageable
     );
 

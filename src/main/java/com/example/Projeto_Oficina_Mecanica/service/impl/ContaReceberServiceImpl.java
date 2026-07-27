@@ -306,7 +306,7 @@ public ContaReceberResponseDTO registrarPagamento(
     );
 
     conta.setStatus(
-            StatusContaReceber.PAGA
+            StatusContaReceber.PAGO
     );
 
     ContaReceber salva =

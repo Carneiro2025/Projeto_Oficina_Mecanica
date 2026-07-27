@@ -5,6 +5,7 @@ import com.example.Projeto_Oficina_Mecanica.dto.request.CriarProdutoRequestDTO;
 import com.example.Projeto_Oficina_Mecanica.dto.response.ProdutoResponseDTO;
 import com.example.Projeto_Oficina_Mecanica.entity.Fornecedor;
 import com.example.Projeto_Oficina_Mecanica.entity.Produto;
+import com.example.Projeto_Oficina_Mecanica.enums.CategoriaProduto;
 import com.example.Projeto_Oficina_Mecanica.exception.BusinessException;
 import com.example.Projeto_Oficina_Mecanica.exception.ResourceNotFoundException;
 import com.example.Projeto_Oficina_Mecanica.mapper.ProdutoMapper;
@@ -130,6 +131,8 @@ public class ProdutoServiceImpl implements ProdutoService {
 public Page<ProdutoResponseDTO> listar(
         String descricao,
         String codigo,
+        CategoriaProduto categoria,
+        Long fornecedorId,
         Pageable pageable) {
 
 
@@ -137,6 +140,8 @@ public Page<ProdutoResponseDTO> listar(
             .buscarComFiltros(
                     descricao,
                     codigo,
+                    categoria,
+                    fornecedorId,
                     pageable
             )
             .map(this::montarResponse);

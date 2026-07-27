@@ -3,6 +3,7 @@ package com.example.Projeto_Oficina_Mecanica.service;
 import com.example.Projeto_Oficina_Mecanica.dto.request.AtualizarProdutoRequestDTO;
 import com.example.Projeto_Oficina_Mecanica.dto.request.CriarProdutoRequestDTO;
 import com.example.Projeto_Oficina_Mecanica.dto.response.ProdutoResponseDTO;
+import com.example.Projeto_Oficina_Mecanica.enums.CategoriaProduto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -22,6 +23,8 @@ public interface ProdutoService {
     Page<ProdutoResponseDTO> listar(
             String descricao,
             String codigo,
+            CategoriaProduto categoria,
+            Long fornecedorId,
             Pageable pageable
     );
 

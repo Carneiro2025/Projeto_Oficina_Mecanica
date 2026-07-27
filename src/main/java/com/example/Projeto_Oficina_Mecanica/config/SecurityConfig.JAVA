@@ -54,7 +54,19 @@ public class SecurityConfig {
 
             "/swagger-ui/**",
 
-            "/swagger-ui.html"
+            "/swagger-ui.html",
+
+            // Front-end estático (HTML/CSS/JS) — a proteção real fica
+            // nas chamadas à API feitas por esses arquivos, não nos
+            // arquivos em si. Sem isto, nem a própria tela de login
+            // consegue carregar (erro 403 antes do usuário logar).
+            "/",
+
+            "/*.html",
+
+            "/css/**",
+
+            "/js/**"
 
     };
 
@@ -102,6 +114,13 @@ public class SecurityConfig {
                         // ===============================
                         // USUÁRIOS
                         // ===============================
+
+                        .requestMatchers(
+                                HttpMethod.GET,
+                                "/api/usuarios/me"
+                        )
+                        .authenticated()
+
 
                         .requestMatchers(
                                 HttpMethod.POST,

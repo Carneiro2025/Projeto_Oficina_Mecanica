@@ -25,4 +25,7 @@ public class TokenResponseDTO {
 
     @Schema(description = "Expiração do access token em segundos")
     private Long expiresIn;
+
+    @Schema(description = "Dados básicos do usuário autenticado")
+    private UsuarioResponseDTO usuario;
 }

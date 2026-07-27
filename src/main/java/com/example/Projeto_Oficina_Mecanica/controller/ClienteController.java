@@ -64,6 +64,9 @@ public class ClienteController {
             @RequestParam(required = false)
             String cpfCnpj,
 
+            @RequestParam(required = false)
+            Boolean ativo,
+
             @PageableDefault(size = 10)
             Pageable pageable) {
 
@@ -72,6 +75,7 @@ public class ClienteController {
                 clienteService.listar(
                         nome,
                         cpfCnpj,
+                        ativo,
                         pageable
                 )
         );

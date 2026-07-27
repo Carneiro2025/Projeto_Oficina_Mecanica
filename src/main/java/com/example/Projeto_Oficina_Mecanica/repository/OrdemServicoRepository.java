@@ -25,6 +25,8 @@ public interface OrdemServicoRepository extends JpaRepository<OrdemServico, Long
 
     Page<OrdemServico> findByVeiculoId(Long veiculoId, Pageable pageable);
 
+    long countByStatus(StatusOrdemServico status);
+
     @Query("""
             SELECT os
             FROM OrdemServico os
