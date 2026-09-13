@@ -44,6 +44,14 @@ public ResponseEntity<ApiErrorResponseDTO> handleNotFound(
     );
 }
 
+    // ── 404 Recurso não encontrado (regra de negócio) ──────────────────────────
+    @ExceptionHandler(com.example.Projeto_Oficina_Mecanica.exception.ResourceNotFoundException.class)
+    public ResponseEntity<ApiErrorResponseDTO> handleResourceNotFound(
+            com.example.Projeto_Oficina_Mecanica.exception.ResourceNotFoundException ex,
+            HttpServletRequest req) {
+        return build(HttpStatus.NOT_FOUND, "Recurso não encontrado", ex.getMessage(), req, null);
+    }
+
     // ── 422 Regra de Negócio ──────────────────────────────────────────────────
     @ExceptionHandler(BusinessException.class)
     public ResponseEntity<ApiErrorResponseDTO> handleBusiness(

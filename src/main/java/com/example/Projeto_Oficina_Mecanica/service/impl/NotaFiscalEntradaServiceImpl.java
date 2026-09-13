@@ -55,6 +55,8 @@ public class NotaFiscalEntradaServiceImpl
 
     private final EstoqueService estoqueService;
 
+    private final ContaPagarRepository contaPagarRepository;
+
 
 
     // ==========================================================
@@ -149,6 +151,12 @@ public class NotaFiscalEntradaServiceImpl
 
 
 
+        gerarContaPagar(
+                salva
+        );
+
+
+
         log.info(
                 "NF {} cadastrada com sucesso",
                 salva.getNumero()
@@ -158,6 +166,57 @@ public class NotaFiscalEntradaServiceImpl
 
         return mapper.toResponseDTO(
                 salva
+        );
+
+    }
+
+
+
+
+    // ==========================================================
+    // GERAR CONTA A PAGAR (automático ao cadastrar a NF)
+    // ==========================================================
+
+
+    private void gerarContaPagar(
+            NotaFiscalEntrada nota
+    ) {
+
+        ContaPagar conta =
+                ContaPagar.builder()
+
+                        .fornecedor(
+                                nota.getFornecedor()
+                        )
+
+                        .notaFiscalEntrada(
+                                nota
+                        )
+
+                        .descricao(
+                                "Nota Fiscal " + nota.getNumero()
+                        )
+
+                        .valor(
+                                nota.getValorTotal()
+                        )
+
+                        .dataVencimento(
+                                nota.getDataEmissao().plusDays(30)
+                        )
+
+                        .observacao(
+                                "Gerada automaticamente a partir da NF "
+                                + nota.getNumero()
+                        )
+
+                        .build();
+
+        contaPagarRepository.save(conta);
+
+        log.info(
+                "Conta a pagar gerada automaticamente para a NF {}",
+                nota.getNumero()
         );
 
     }

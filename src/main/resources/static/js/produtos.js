@@ -72,7 +72,9 @@ async function carregarProdutos() {
 
         mostrarLoading();
 
-        const produtos = await api.get("/produtos");
+        const resposta = await api.get("/produtos");
+
+        const produtos = Array.isArray(resposta) ? resposta : (resposta.content ?? []);
 
         preencherTabela(produtos);
 
@@ -98,29 +100,37 @@ async function carregarProdutos() {
    CARREGAR CATEGORIAS
 ========================================================== */
 
-async function carregarCategorias() {
+function carregarCategorias() {
 
-    try {
+    const categorias = [
+        { valor: "OLEO_LUBRIFICANTE", nome: "Óleo/Lubrificante" },
+        { valor: "FILTRO",            nome: "Filtro" },
+        { valor: "PECA_MOTOR",        nome: "Peça de Motor" },
+        { valor: "PECA_FREIO",        nome: "Peça de Freio" },
+        { valor: "PECA_SUSPENSAO",    nome: "Peça de Suspensão" },
+        { valor: "PECA_ELETRICA",     nome: "Peça Elétrica" },
+        { valor: "PECA_TRANSMISSAO",  nome: "Peça de Transmissão" },
+        { valor: "PNEU",              nome: "Pneu" },
+        { valor: "BATERIA",           nome: "Bateria" },
+        { valor: "FLUIDO",            nome: "Fluido" },
+        { valor: "ACESSORIO",         nome: "Acessório" },
+        { valor: "FERRAMENTA",        nome: "Ferramenta" },
+        { valor: "OUTROS",            nome: "Outros" },
+    ];
 
-        const categorias = await api.get("/categorias");
+    const select = document.getElementById("filtroCategoria");
 
-        const select = document.getElementById("filtroCategoria");
+    if (!select) return;
 
-        categorias.forEach(categoria => {
+    categorias.forEach(categoria => {
 
-            select.innerHTML += `
-                <option value="${categoria.id}">
-                    ${categoria.nome}
-                </option>
-            `;
+        select.innerHTML += `
+            <option value="${categoria.valor}">
+                ${categoria.nome}
+            </option>
+        `;
 
-        });
-
-    } catch (erro) {
-
-        console.error(erro);
-
-    }
+    });
 
 }
 

@@ -10,13 +10,11 @@ let produtoEditando = null;
 
 /* ==========================================================
    INICIALIZAÇÃO
+   Observação: configurarEventosModal() é chamada explicitamente
+   por produtos.html, logo depois que o HTML do modal (buscado via
+   fetch de modal-produto.html) é injetado no DOM — não aqui no
+   DOMContentLoaded, porque nesse momento o modal ainda não existe.
 ========================================================== */
-
-document.addEventListener("DOMContentLoaded", () => {
-
-    configurarEventosModal();
-
-});
 
 /* ==========================================================
    EVENTOS
@@ -704,16 +702,6 @@ function fecharModalProduto() {
     resetFormularioProduto();
 
 }
-
-/* ==========================================================
-   INICIALIZAÇÃO
-========================================================== */
-
-document.addEventListener("DOMContentLoaded", () => {
-
-    configurarEventosModal();
-
-});
 
 /* ==========================================================
    FIM DO ARQUIVO

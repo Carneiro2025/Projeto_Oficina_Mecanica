@@ -56,17 +56,25 @@
             <scope>runtime</scope>
         </dependency>
 
-        <!-- FLYWAY -->
+         <!-- XML -->
         <dependency>
-            <groupId>org.flywaydb</groupId>
-            <artifactId>flyway-core</artifactId>
+             <groupId>com.h2database</groupId>
+             <artifactId>h2</artifactId>
+             <scope>test</scope>
         </dependency>
 
+        <!-- FLYWAY -->
+        <dependency>
+           <groupId>org.flywaydb</groupId>
+           <artifactId>flyway-core</artifactId>
+        </dependency>
+
+        <!-- FLYWAY MYSQL SUPPORT -->
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-mysql</artifactId>
         </dependency>
-
+        
         <!-- JWT -->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
@@ -113,6 +121,11 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
 
         <!-- TESTES -->

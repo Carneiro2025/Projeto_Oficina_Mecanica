@@ -550,7 +550,7 @@ document.addEventListener("DOMContentLoaded", async () => {
            Verifica autenticação
         =============================== */
 
-        verificarLogin();
+        auth.checkAuthentication();
 
         /* ===============================
            Carrega Sidebar
@@ -577,6 +577,10 @@ document.addEventListener("DOMContentLoaded", async () => {
         const html = await response.text();
 
         document.getElementById("modalProdutoContainer").innerHTML = html;
+
+        if (typeof configurarEventosModal === "function") {
+            configurarEventosModal();
+        }
 
         /* ===============================
            Inicializa tela

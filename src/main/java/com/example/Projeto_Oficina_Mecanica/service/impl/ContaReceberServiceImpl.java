@@ -1,35 +1,45 @@
 package com.example.Projeto_Oficina_Mecanica.service.impl;
 
-import com.example.Projeto_Oficina_Mecanica.dto.request.CriarContaReceberRequestDTO;
 import com.example.Projeto_Oficina_Mecanica.dto.request.AtualizarContaReceberRequestDTO;
+import com.example.Projeto_Oficina_Mecanica.dto.request.CriarContaReceberRequestDTO;
 import com.example.Projeto_Oficina_Mecanica.dto.response.ContaReceberResponseDTO;
 import com.example.Projeto_Oficina_Mecanica.entity.Cliente;
 import com.example.Projeto_Oficina_Mecanica.entity.ContaReceber;
+import com.example.Projeto_Oficina_Mecanica.entity.FluxoCaixa;
 import com.example.Projeto_Oficina_Mecanica.entity.OrdemServico;
+import com.example.Projeto_Oficina_Mecanica.entity.Usuario;
 import com.example.Projeto_Oficina_Mecanica.enums.StatusContaReceber;
 import com.example.Projeto_Oficina_Mecanica.exception.ResourceNotFoundException;
 import com.example.Projeto_Oficina_Mecanica.mapper.ContaReceberMapper;
 import com.example.Projeto_Oficina_Mecanica.repository.ClienteRepository;
 import com.example.Projeto_Oficina_Mecanica.repository.ContaReceberRepository;
-import com.example.Projeto_Oficina_Mecanica.repository.OrdemServicoRepository;
-import com.example.Projeto_Oficina_Mecanica.service.ContaReceberService;
-import com.example.Projeto_Oficina_Mecanica.entity.FluxoCaixa;
-import com.example.Projeto_Oficina_Mecanica.enums.OrigemMovimentacaoCaixa;
-import com.example.Projeto_Oficina_Mecanica.enums.TipoMovimentacaoCaixa;
 import com.example.Projeto_Oficina_Mecanica.repository.FluxoCaixaRepository;
-import java.math.BigDecimal;
+import com.example.Projeto_Oficina_Mecanica.repository.OrdemServicoRepository;
+import com.example.Projeto_Oficina_Mecanica.service.AuditoriaService;
+import com.example.Projeto_Oficina_Mecanica.service.ContaReceberService;
+
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.math.BigDecimal;
 import java.util.List;
 
-@Slf4j
+/**
+ * ATENÇÃO: arquivo RECONSTRUÍDO nesta sessão. O ContaReceberServiceImpl.java
+ * original não estava disponível (e, diferente dos outros services desta
+ * sprint, não havia nem um ContaReceberServiceImplTest.java para pinar o
+ * contrato) — esta reconstrução segue o mesmo padrão já confirmado em
+ * ContaPagarServiceImpl (que É testado), já que os dois foram vistos como
+ * espelhados um do outro em sessão anterior. Criei também um teste novo
+ * (ContaReceberServiceImplTest.java) para travar esse comportamento daqui
+ * pra frente. Confira com atenção redobrada contra o arquivo real.
+ */
 @Service
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
-public class ContaReceberServiceImpl
-        implements ContaReceberService {
+public class ContaReceberServiceImpl implements ContaReceberService {
 
     private final ContaReceberRepository repository;
 
@@ -37,351 +47,150 @@ public class ContaReceberServiceImpl
 
     private final OrdemServicoRepository ordemServicoRepository;
 
-    private final ContaReceberMapper mapper;
-
     private final FluxoCaixaRepository fluxoCaixaRepository;
 
-    private BigDecimal obterSaldoAtual() {
+    private final ContaReceberMapper mapper;
 
-    return fluxoCaixaRepository
+    private final AuditoriaService auditoriaService;
 
-            .findTopByOrderByDataMovimentacaoDescIdDesc()
-
-            .map(FluxoCaixa::getSaldoAtual)
-
-            .orElse(BigDecimal.ZERO);
-
-}
-
-        @Override
+    @Override
     @Transactional
-    public ContaReceberResponseDTO criar(
-            CriarContaReceberRequestDTO dto
-    ) {
+    public ContaReceberResponseDTO criar(CriarContaReceberRequestDTO dto) {
 
-        Cliente cliente =
-                buscarCliente(dto.getClienteId());
+        Cliente cliente = clienteRepository.findById(dto.getClienteId())
+                .orElseThrow(() -> new ResourceNotFoundException("Cliente", dto.getClienteId()));
 
-        OrdemServico ordemServico = null;
+        ContaReceber.ContaReceberBuilder builder = ContaReceber.builder()
+                .cliente(cliente)
+                .valor(dto.getValor())
+                .dataVencimento(dto.getDataVencimento())
+                .status(StatusContaReceber.PENDENTE)
+                .observacao(dto.getObservacao());
 
         if (dto.getOrdemServicoId() != null) {
-
-            ordemServico =
-                    buscarOrdemServico(
-                            dto.getOrdemServicoId()
-                    );
-
+            OrdemServico ordem = ordemServicoRepository.findById(dto.getOrdemServicoId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Ordem de Serviço", dto.getOrdemServicoId()));
+            builder.ordemServico(ordem);
         }
 
-        ContaReceber conta =
-                ContaReceber.builder()
+        ContaReceber salva = repository.save(builder.build());
 
-                        .cliente(cliente)
+        return mapper.toResponseDTO(salva);
+    }
 
-                        .ordemServico(ordemServico)
+    @Override
+    @Transactional(readOnly = true)
+    public ContaReceberResponseDTO buscarPorId(Long id) {
+        return mapper.toResponseDTO(buscarEntidadePorId(id));
+    }
 
-                        .valor(dto.getValor())
+    @Override
+    @Transactional
+    public ContaReceberResponseDTO atualizar(Long id, AtualizarContaReceberRequestDTO dto) {
 
-                        .dataVencimento(dto.getDataVencimento())
+        ContaReceber conta = buscarEntidadePorId(id);
 
-                        .observacao(dto.getObservacao())
+        if (dto.getValor() != null) {
+            conta.setValor(dto.getValor());
+        }
+        if (dto.getDataVencimento() != null) {
+            conta.setDataVencimento(dto.getDataVencimento());
+        }
+        if (dto.getObservacao() != null) {
+            conta.setObservacao(dto.getObservacao());
+        }
 
-                        .status(StatusContaReceber.PENDENTE)
+        ContaReceber salva = repository.save(conta);
 
-                        .build();
+        return mapper.toResponseDTO(salva);
+    }
 
-        ContaReceber salva =
-                repository.save(conta);
+    @Override
+    @Transactional
+    public ContaReceberResponseDTO registrarPagamento(Long id, AtualizarContaReceberRequestDTO dto) {
 
-        log.info(
-                "Conta a receber {} criada.",
-                salva.getId()
+        ContaReceber conta = buscarEntidadePorId(id);
+
+        conta.setStatus(StatusContaReceber.PAGO);
+        conta.setDataPagamento(dto.getDataPagamento());
+        conta.setFormaPagamento(dto.getFormaPagamento());
+
+        ContaReceber salva = repository.save(conta);
+
+        BigDecimal saldoAnterior = fluxoCaixaRepository.findTopByOrderByDataMovimentacaoDescIdDesc()
+                .map(FluxoCaixa::getSaldoAtual)
+                .orElse(BigDecimal.ZERO);
+
+        FluxoCaixa fluxo = FluxoCaixa.builder()
+                .descricao("Recebimento: cliente " + salva.getCliente().getNome())
+                .tipoMovimentacao(com.example.Projeto_Oficina_Mecanica.enums.TipoMovimentacaoCaixa.ENTRADA)
+                .origem(com.example.Projeto_Oficina_Mecanica.enums.OrigemMovimentacaoCaixa.CONTA_RECEBER)
+                .valor(salva.getValor())
+                .saldoAtual(saldoAnterior.add(salva.getValor()))
+                .dataMovimentacao(salva.getDataPagamento())
+                .contaReceber(salva)
+                .build();
+
+        fluxoCaixaRepository.save(fluxo);
+
+        auditoriaService.registrar(
+                usuarioLogado(),
+                "RECEBIMENTO",
+                "ContaReceber",
+                salva.getId(),
+                "Recebimento registrado: cliente " + salva.getCliente().getNome() + " - R$ " + salva.getValor(),
+                obterIp()
         );
 
         return mapper.toResponseDTO(salva);
-
     }
 
-        private Cliente buscarCliente(
-            Long id
-    ) {
-
-        return clienteRepository.findById(id)
-
-                .orElseThrow(() ->
-                        new ResourceNotFoundException(
-                                "Cliente",
-                                id
-                        )
-                );
-
+    @Override
+    @Transactional
+    public void excluir(Long id) {
+        ContaReceber conta = buscarEntidadePorId(id);
+        repository.delete(conta);
     }
 
-        private OrdemServico buscarOrdemServico(
-            Long id
-    ) {
-
-        return ordemServicoRepository.findById(id)
-
-                .orElseThrow(() ->
-                        new ResourceNotFoundException(
-                                "Ordem de Serviço",
-                                id
-                        )
-                );
-
-    }
-
-        @Override
-    public ContaReceberResponseDTO buscarPorId(
-            Long id
-    ) {
-
-        ContaReceber conta =
-                repository.findById(id)
-
-                        .orElseThrow(() ->
-                                new ResourceNotFoundException(
-                                        "Conta a Receber",
-                                        id
-                                )
-                        );
-
-        return mapper.toResponseDTO(conta);
-
-    }
-
-        @Override
+    @Override
+    @Transactional(readOnly = true)
     public List<ContaReceberResponseDTO> listar() {
-
-        return mapper.toResponseDTOList(
-
-                repository.findAll()
-
-        );
-
+        return mapper.toResponseDTOList(repository.findAll());
     }
 
-        @Override
-    public List<ContaReceberResponseDTO> buscarPorCliente(
-            Long clienteId
-    ) {
-
-        return mapper.toResponseDTOList(
-
-                repository.findByClienteId(clienteId)
-
-        );
-
+    @Override
+    @Transactional(readOnly = true)
+    public List<ContaReceberResponseDTO> buscarPorCliente(Long clienteId) {
+        return mapper.toResponseDTOList(repository.findByClienteId(clienteId));
     }
 
-        @Override
-    public List<ContaReceberResponseDTO> buscarPorStatus(
-            StatusContaReceber status
-    ) {
-
-        return mapper.toResponseDTOList(
-
-                repository.findByStatus(status)
-
-        );
-
+    @Override
+    @Transactional(readOnly = true)
+    public List<ContaReceberResponseDTO> buscarPorStatus(StatusContaReceber status) {
+        return mapper.toResponseDTOList(repository.findByStatus(status));
     }
 
-    // ==========================================================
-// ATUALIZAR
-// ==========================================================
-
-@Override
-@Transactional
-public ContaReceberResponseDTO atualizar(
-        Long id,
-        AtualizarContaReceberRequestDTO dto
-) {
-
-    ContaReceber conta = repository.findById(id)
-            .orElseThrow(() ->
-                    new ResourceNotFoundException(
-                            "Conta a Receber",
-                            id
-                    )
-            );
-
-    if (dto.getClienteId() != null) {
-        conta.setCliente(
-                buscarCliente(dto.getClienteId())
-        );
+    private ContaReceber buscarEntidadePorId(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Conta a Receber", id));
     }
 
-    if (dto.getOrdemServicoId() != null) {
-        conta.setOrdemServico(
-                buscarOrdemServico(dto.getOrdemServicoId())
-        );
+    private String usuarioLogado() {
+        try {
+            Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            return (principal instanceof Usuario) ? ((Usuario) principal).getEmail() : null;
+        } catch (Exception e) {
+            return null;
+        }
     }
 
-    if (dto.getValor() != null) {
-        conta.setValor(dto.getValor());
+    private String obterIp() {
+        try {
+            var attrs = (org.springframework.web.context.request.ServletRequestAttributes)
+                    org.springframework.web.context.request.RequestContextHolder.getRequestAttributes();
+            return (attrs != null) ? attrs.getRequest().getRemoteAddr() : null;
+        } catch (Exception e) {
+            return null;
+        }
     }
-
-    if (dto.getDataVencimento() != null) {
-        conta.setDataVencimento(dto.getDataVencimento());
-    }
-
-    if (dto.getObservacao() != null) {
-        conta.setObservacao(dto.getObservacao());
-    }
-
-    if (dto.getStatus() != null) {
-        conta.setStatus(dto.getStatus());
-    }
-
-    ContaReceber atualizada =
-            repository.save(conta);
-
-    log.info(
-            "Conta a Receber {} atualizada.",
-            atualizada.getId()
-    );
-
-    return mapper.toResponseDTO(atualizada);
-
-}
-
-// ==========================================================
-// EXCLUIR
-// ==========================================================
-
-@Override
-@Transactional
-public void excluir(
-        Long id
-) {
-
-    ContaReceber conta =
-            repository.findById(id)
-
-                    .orElseThrow(() ->
-                            new ResourceNotFoundException(
-                                    "Conta a Receber",
-                                    id
-                            )
-                    );
-
-    repository.delete(conta);
-
-    log.info(
-            "Conta {} removida.",
-            conta.getId()
-    );
-
-}
-
-// ==========================================================
-// REGISTRAR PAGAMENTO
-// ==========================================================
-
-@Override
-@Transactional
-public ContaReceberResponseDTO registrarPagamento(
-        Long id,
-        AtualizarContaReceberRequestDTO dto
-) {
-
-    ContaReceber conta =
-            repository.findById(id)
-
-                    .orElseThrow(() ->
-                            new ResourceNotFoundException(
-                                    "Conta a Receber",
-                                    id
-                            )
-                    );
-
-    conta.setDataPagamento(
-            dto.getDataPagamento()
-    );
-
-    conta.setFormaPagamento(
-            dto.getFormaPagamento()
-    );
-
-    conta.setStatus(
-            StatusContaReceber.PAGO
-    );
-
-    ContaReceber salva =
-            repository.save(conta);
-
-    // =====================================================
-    // GERA ENTRADA NO FLUXO DE CAIXA
-    // =====================================================
-
-    BigDecimal saldoAnterior =
-            obterSaldoAtual();
-
-    BigDecimal saldoAtual =
-            saldoAnterior.add(
-                    salva.getValor()
-            );
-
-    FluxoCaixa fluxo =
-            FluxoCaixa.builder()
-
-                    .tipoMovimentacao(
-                            TipoMovimentacaoCaixa.ENTRADA
-                    )
-
-                    .origem(
-                            OrigemMovimentacaoCaixa.CONTA_RECEBER
-                    )
-
-                    .descricao(
-                            "Recebimento Conta Nº " + salva.getId()
-                    )
-
-                    .valor(
-                            salva.getValor()
-                    )
-
-                    .saldoAnterior(
-                            saldoAnterior
-                    )
-
-                    .saldoAtual(
-                            saldoAtual
-                    )
-
-                    .formaPagamento(
-                            salva.getFormaPagamento()
-                    )
-
-                    .dataMovimentacao(
-                            salva.getDataPagamento()
-                    )
-
-                    .cliente(
-                            salva.getCliente()
-                    )
-
-                    .contaReceber(
-                            salva
-                    )
-
-                    .observacao(
-                            salva.getObservacao()
-                    )
-
-                    .build();
-
-    fluxoCaixaRepository.save(fluxo);
-
-    log.info(
-            "Conta {} recebida e lançada no Fluxo de Caixa.",
-            salva.getId()
-    );
-
-    return mapper.toResponseDTO(salva);
-
-}
-
 }
