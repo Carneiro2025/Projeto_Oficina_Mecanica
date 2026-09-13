@@ -12,4 +12,9 @@ public interface ContaReceberRepository
     List<ContaReceber> findByStatus(StatusContaReceber status);
 
     List<ContaReceber> findByClienteId(Long clienteId);
+
+    List<ContaReceber> findByDataVencimentoBeforeAndStatusNot(
+            java.time.LocalDate data,
+            StatusContaReceber status
+    );
 }

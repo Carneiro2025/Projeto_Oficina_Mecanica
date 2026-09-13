@@ -1,6 +1,7 @@
 com\example\Projeto_Oficina_Mecanica\enums\FormaPagamento.class
 com\example\Projeto_Oficina_Mecanica\dto\RelatorioFinanceiroDTO$RelatorioFinanceiroDTOBuilder.class
 com\example\Projeto_Oficina_Mecanica\enums\TipoMovimentacaoCaixa.class
+com\example\Projeto_Oficina_Mecanica\dto\FluxoDiarioDTO.class
 com\example\Projeto_Oficina_Mecanica\dto\response\ApiErrorResponseDTO$ApiErrorResponseDTOBuilder.class
 com\example\Projeto_Oficina_Mecanica\service\impl\EstoqueServiceImpl$1.class
 com\example\Projeto_Oficina_Mecanica\entity\FluxoCaixa.class
@@ -8,6 +9,7 @@ com\example\Projeto_Oficina_Mecanica\controller\UsuarioController.class
 com\example\Projeto_Oficina_Mecanica\dto\response\UsuarioResponseDTO$UsuarioResponseDTOBuilder.class
 com\example\Projeto_Oficina_Mecanica\repository\ItemOrdemServicoRepository.class
 com\example\Projeto_Oficina_Mecanica\enums\EspecialidadeMecanico.class
+com\example\Projeto_Oficina_Mecanica\service\impl\AuditoriaServiceImpl.class
 com\example\Projeto_Oficina_Mecanica\service\impl\FornecedorServiceImpl.class
 com\example\Projeto_Oficina_Mecanica\service\impl\RecebimentoServiceImpl.class
 com\example\Projeto_Oficina_Mecanica\dto\response\MovimentacaoEstoqueResponseDTO.class
@@ -16,6 +18,7 @@ com\example\Projeto_Oficina_Mecanica\exception\ResourceNotFoundException.class
 com\example\Projeto_Oficina_Mecanica\entity\Endereco$EnderecoBuilder.class
 com\example\Projeto_Oficina_Mecanica\mapper\VeiculoMapperImpl.class
 com\example\Projeto_Oficina_Mecanica\dto\request\CriarOrdemServicoRequestDTO.class
+com\example\Projeto_Oficina_Mecanica\dto\FluxoDiarioDTO$FluxoDiarioDTOBuilder.class
 com\example\Projeto_Oficina_Mecanica\mapper\ContaReceberMapperImpl.class
 com\example\Projeto_Oficina_Mecanica\entity\FluxoCaixa$FluxoCaixaBuilder.class
 com\example\Projeto_Oficina_Mecanica\controller\ContaReceberController.class
@@ -31,6 +34,7 @@ com\example\Projeto_Oficina_Mecanica\repository\ProdutoRepository.class
 com\example\Projeto_Oficina_Mecanica\dto\request\AtualizarUsuarioRequestDTO.class
 com\example\Projeto_Oficina_Mecanica\enums\TipoPessoa.class
 com\example\Projeto_Oficina_Mecanica\entity\Cliente.class
+com\example\Projeto_Oficina_Mecanica\service\AuditoriaService.class
 com\example\Projeto_Oficina_Mecanica\repository\ContaReceberRepository.class
 com\example\Projeto_Oficina_Mecanica\entity\Endereco.class
 com\example\Projeto_Oficina_Mecanica\enums\Combustivel.class
@@ -38,6 +42,7 @@ com\example\Projeto_Oficina_Mecanica\controller\RecebimentoController.class
 com\example\Projeto_Oficina_Mecanica\repository\FornecedorRepository.class
 com\example\Projeto_Oficina_Mecanica\service\impl\OrdemServicoServiceImpl.class
 com\example\Projeto_Oficina_Mecanica\config\SwaggerConfig.class
+com\example\Projeto_Oficina_Mecanica\repository\AuditoriaRepository.class
 com\example\Projeto_Oficina_Mecanica\exception\ErrorResponse$ErrorResponseBuilder.class
 com\example\Projeto_Oficina_Mecanica\mapper\NotaFiscalEntradaMapperImpl.class
 com\example\Projeto_Oficina_Mecanica\service\impl\UsuarioServiceImpl.class
@@ -64,6 +69,7 @@ com\example\Projeto_Oficina_Mecanica\controller\ClienteController.class
 com\example\Projeto_Oficina_Mecanica\mapper\MovimentacaoEstoqueMapper.class
 com\example\Projeto_Oficina_Mecanica\entity\Veiculo.class
 com\example\Projeto_Oficina_Mecanica\entity\Servico.class
+com\example\Projeto_Oficina_Mecanica\dto\ProdutoEstoqueBaixoDTO.class
 com\example\Projeto_Oficina_Mecanica\service\FornecedorService.class
 com\example\Projeto_Oficina_Mecanica\dto\request\CriarNotaFiscalEntradaRequestDTO.class
 com\example\Projeto_Oficina_Mecanica\validation\PlacaValidator$Placa.class
@@ -82,6 +88,7 @@ com\example\Projeto_Oficina_Mecanica\entity\ItemOrdemServico$ItemOrdemServicoBui
 com\example\Projeto_Oficina_Mecanica\service\impl\ProdutoServiceImpl.class
 com\example\Projeto_Oficina_Mecanica\enums\StatusRecebimento.class
 com\example\Projeto_Oficina_Mecanica\service\impl\RelatorioServiceImpl.class
+com\example\Projeto_Oficina_Mecanica\entity\Auditoria.class
 com\example\Projeto_Oficina_Mecanica\dto\DashboardDTO$DashboardDTOBuilder.class
 com\example\Projeto_Oficina_Mecanica\service\ProdutoService.class
 com\example\Projeto_Oficina_Mecanica\entity\ContaReceber$ContaReceberBuilder.class
@@ -89,6 +96,7 @@ com\example\Projeto_Oficina_Mecanica\service\impl\ContaReceberServiceImpl.class
 com\example\Projeto_Oficina_Mecanica\entity\Usuario$UsuarioBuilder.class
 com\example\Projeto_Oficina_Mecanica\dto\response\MecanicoResponseDTO.class
 com\example\Projeto_Oficina_Mecanica\service\RelatorioService.class
+com\example\Projeto_Oficina_Mecanica\dto\ProdutoEstoqueBaixoDTO$ProdutoEstoqueBaixoDTOBuilder.class
 com\example\Projeto_Oficina_Mecanica\dto\RelatorioClienteDTO$RelatorioClienteDTOBuilder.class
 com\example\Projeto_Oficina_Mecanica\enums\TipoMovimentacaoEstoque.class
 com\example\Projeto_Oficina_Mecanica\mapper\UsuarioMapper.class
@@ -207,6 +215,7 @@ com\example\Projeto_Oficina_Mecanica\dto\request\ItemOrdemServicoRequestDTO.clas
 com\example\Projeto_Oficina_Mecanica\dto\request\RefreshTokenRequestDTO.class
 com\example\Projeto_Oficina_Mecanica\dto\response\UsuarioResponseDTO.class
 com\example\Projeto_Oficina_Mecanica\dto\response\FluxoCaixaResponseDTO.class
+com\example\Projeto_Oficina_Mecanica\entity\Auditoria$AuditoriaBuilder.class
 com\example\Projeto_Oficina_Mecanica\mapper\ClienteMapper.class
 com\example\Projeto_Oficina_Mecanica\dto\request\AtualizarContaReceberRequestDTO.class
 com\example\Projeto_Oficina_Mecanica\enums\StatusOrdemServico.class

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Usuários | OficinaPRO</title>
+
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/sidebar.css">
+    <link rel="stylesheet" href="css/usuarios.css">
+    <link rel="stylesheet" href="css/toast.css">
+    <link rel="stylesheet" href="css/modal-usuario.css">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div id="sidebar"></div>
+
+<main class="main">
+
+    <header class="header">
+
+        <h1>Usuários do Sistema</h1>
+
+        <button class="btn-primary" id="btnNovo">
+
+            <i class="bi bi-plus-circle"></i>
+
+            Novo Usuário
+
+        </button>
+
+    </header>
+
+    <section class="pesquisa">
+
+        <input
+            type="text"
+            id="txtPesquisar"
+            placeholder="Pesquisar por nome">
+
+        <select id="selectPerfil">
+            <option value="">Todos os perfis</option>
+            <option value="ADMIN">Admin</option>
+            <option value="GERENTE">Gerente</option>
+            <option value="ATENDENTE">Atendente</option>
+            <option value="MECANICO">Mecânico</option>
+        </select>
+
+        <button id="btnPesquisar">
+
+            <i class="bi bi-search"></i>
+
+            Pesquisar
+
+        </button>
+
+    </section>
+
+    <section class="tabela">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>ID</th>
+
+                    <th>Nome</th>
+
+                    <th>E-mail</th>
+
+                    <th>Perfil</th>
+
+                    <th>Status</th>
+
+                    <th>Ações</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="tbodyUsuarios">
+            </tbody>
+
+        </table>
+
+    </section>
+
+</main>
+
+<div id="modalUsuarioContainer"></div>
+
+<script src="js/config.js"></script>
+<script src="js/util.js"></script>
+<script src="js/api.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/sidebar.js"></script>
+<script src="js/loading.js"></script>
+<script src="js/toast.js"></script>
+<script src="js/modal-usuario.js"></script>
+<script src="js/usuarios.js"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", async () => {
+
+        auth.checkAuthentication();
+
+        try {
+
+            const html = await (await fetch("modal-usuario.html")).text();
+
+            document.getElementById("modalUsuarioContainer").innerHTML = html;
+
+            if (typeof configurarEventosModalUsuario === "function") {
+                configurarEventosModalUsuario();
+            }
+
+        } catch (erro) {
+            console.error("Erro ao carregar modal de usuário:", erro);
+        }
+
+        if (typeof inicializarUsuarios === "function") {
+            inicializarUsuarios();
+        }
+
+    });
+</script>
+
+</body>
+
+</html>

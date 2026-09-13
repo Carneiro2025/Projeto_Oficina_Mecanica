@@ -133,19 +133,21 @@ async function requisicao(url, metodo = "GET", body = null) {
 
 function mostrarLoading() {
 
-    document
-        .querySelector(".loading-overlay")
-        ?.classList
-        .remove("hidden");
+    const overlay = document.querySelector(".loading-overlay");
+
+    overlay?.classList.remove("d-none");
+
+    overlay?.classList.add("show");
 
 }
 
 function esconderLoading() {
 
-    document
-        .querySelector(".loading-overlay")
-        ?.classList
-        .add("hidden");
+    const overlay = document.querySelector(".loading-overlay");
+
+    overlay?.classList.remove("show");
+
+    overlay?.classList.add("d-none");
 
 }
 
@@ -295,6 +297,10 @@ async function salvarOS(){
 
             sucesso("Ordem de Serviço atualizada.");
 
+            if (typeof carregarOrdensServico === "function") {
+                carregarOrdensServico();
+            }
+
         }
 
         else{
@@ -314,6 +320,10 @@ async function salvarOS(){
             editando=true;
 
             sucesso("Ordem de Serviço criada.");
+
+            if (typeof carregarOrdensServico === "function") {
+                carregarOrdensServico();
+            }
 
         }
 
@@ -339,63 +349,78 @@ async function salvarOS(){
 
 function montarDTO(){
 
-    return{
+    // A API espera uma única lista "itens" (cada um com tipoItem
+    // PECA/SERVICO), não duas listas separadas — e um "numero" que o
+    // formulário nunca coletou. O desconto também é um único valor por
+    // OS na API, não um desconto por item — somamos os descontos dos
+    // itens num total só.
 
-        clienteId:clienteSelecionado?.id,
+    const itensServico = listaServicos.map(s => ({
+        tipoItem: "SERVICO",
+        descricaoServico: s.descricao,
+        quantidade: s.quantidade,
+        valorUnitario: s.valorUnitario
+    }));
 
-        veiculoId:veiculoSelecionado?.id,
+    const itensProduto = listaProdutos.map(p => ({
+        tipoItem: "PECA",
+        produtoId: p.id,
+        quantidade: p.quantidade,
+        valorUnitario: p.valorUnitario
+    }));
 
-        status:
+    const valorDesconto =
+        [...listaServicos, ...listaProdutos]
+            .reduce((soma, item) => soma + Number(item.desconto || 0), 0);
 
-            document
-                .getElementById("statusOS")
-                .value,
+    const dto = {
 
-        prioridade:
+        clienteId: clienteSelecionado?.id,
 
-            document
-                .getElementById("prioridadeOS")
-                .value,
+        veiculoId: veiculoSelecionado?.id,
 
-        garantia:
+        valorDesconto,
 
-            document
-                .getElementById("garantiaOS")
-                .value==="true",
-
-        quilometragem:
-
-            Number(
-
-                document
-                    .getElementById("quilometragem")
-                    .value
-
-            ),
-
-        relatoCliente:
-
-            document
-                .getElementById("relatoCliente")
-                .value,
-
-        observacaoCliente:
-
-            document
-                .getElementById("observacaoCliente")
-                .value,
-
-        observacaoInterna:
-
-            document
-                .getElementById("observacaoInterna")
-                .value,
-
-        servicos:listaServicos,
-
-        produtos:listaProdutos
+        itens: [...itensServico, ...itensProduto]
 
     };
+
+    if (!editando) {
+
+        dto.numero = `OS-${gerarNumeroOS()}`;
+
+    } else {
+
+        // Estes campos só existem em AtualizarOrdemServicoRequestDTO —
+        // não fazem parte da criação (a OS sempre nasce como ABERTA).
+        dto.status = document.getElementById("statusOS").value;
+
+        dto.quilometragem = Number(document.getElementById("quilometragem").value) || null;
+
+        const partes = [
+            document.getElementById("relatoCliente").value,
+            document.getElementById("observacaoCliente").value,
+            document.getElementById("observacaoInterna").value
+        ].filter(texto => texto && texto.trim() !== "");
+
+        dto.observacoes = partes.join(" | ");
+
+    }
+
+    return dto;
+
+}
+
+function gerarNumeroOS(){
+
+    const agora = new Date();
+
+    const pad = (n) => String(n).padStart(2, "0");
+
+    return (
+        `${agora.getFullYear()}${pad(agora.getMonth()+1)}${pad(agora.getDate())}` +
+        `${pad(agora.getHours())}${pad(agora.getMinutes())}${pad(agora.getSeconds())}`
+    );
 
 }
 

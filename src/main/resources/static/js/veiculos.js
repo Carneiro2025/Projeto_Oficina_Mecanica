@@ -40,7 +40,9 @@ async function carregarVeiculos() {
 
         mostrarLoading();
 
-        const veiculos = await api.get("/veiculos");
+        const resposta = await api.get("/veiculos");
+
+        const veiculos = Array.isArray(resposta) ? resposta : (resposta.content ?? []);
 
         preencherTabela(veiculos);
 
@@ -151,7 +153,13 @@ async function pesquisarVeiculos() {
 
         mostrarLoading();
 
-        const lista = await api.get(`/veiculos?pesquisa=${texto}`);
+        // O back-end não tem um parâmetro genérico "pesquisa" — só
+        // placa/modelo/clienteId/ativo — então mandamos o texto como
+        // filtro de placa (o mais literal, já que a maioria das buscas
+        // aqui é por placa).
+        const resposta = await api.get(`/veiculos?placa=${encodeURIComponent(texto)}`);
+
+        const lista = Array.isArray(resposta) ? resposta : (resposta.content ?? []);
 
         preencherTabela(lista);
 

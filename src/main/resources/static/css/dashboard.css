@@ -150,3 +150,112 @@ body{
     }
 
 }
+/* ==========================================================
+   INDICADORES (adicionado ao reconstruir o dashboard.js)
+========================================================== */
+
+.indicadores{
+
+    display:flex;
+
+    gap:15px;
+
+    margin-bottom:20px;
+
+    flex-wrap:wrap;
+
+}
+
+.indicador{
+
+    flex:1;
+
+    min-width:150px;
+
+    background:#FFF;
+
+    border-radius:12px;
+
+    padding:18px;
+
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
+
+}
+
+.indicador-label{
+
+    display:block;
+
+    font-size:13px;
+
+    color:#64748B;
+
+    text-transform:uppercase;
+
+    margin-bottom:8px;
+
+}
+
+.indicador-valor{
+
+    display:block;
+
+    font-size:24px;
+
+    font-weight:700;
+
+    color:#1E293B;
+
+}
+
+.indicador-receita .indicador-valor{ color:#16A34A; }
+.indicador-despesa .indicador-valor{ color:#DC2626; }
+.indicador-lucro .indicador-valor{ color:#2563EB; }
+
+.alertas{
+
+    display:flex;
+
+    gap:15px;
+
+    margin-bottom:25px;
+
+    flex-wrap:wrap;
+
+}
+
+.alerta-card{
+
+    flex:1;
+
+    min-width:280px;
+
+    background:#FFF;
+
+    border-radius:12px;
+
+    padding:18px;
+
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
+
+}
+
+.alerta-card h3{
+
+    font-size:15px;
+
+    margin-bottom:10px;
+
+    color:#1E293B;
+
+}
+
+.alerta-card ul{
+
+    margin:8px 0 0 18px;
+
+    font-size:13px;
+
+    color:#334155;
+
+}

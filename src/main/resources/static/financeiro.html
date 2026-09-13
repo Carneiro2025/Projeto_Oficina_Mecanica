@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Financeiro | OficinaPRO</title>
+
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/sidebar.css">
+    <link rel="stylesheet" href="css/financeiro.css">
+    <link rel="stylesheet" href="css/toast.css">
+    <link rel="stylesheet" href="css/modal-financeiro.css">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div id="sidebar"></div>
+
+<main class="main">
+
+    <header class="header">
+
+        <h1>Financeiro</h1>
+
+    </header>
+
+    <section class="resumo-financeiro">
+
+        <div class="card-resumo">
+            <h3>Contas a Pagar Pendentes</h3>
+            <p id="totalContasPagarPendentes">--</p>
+        </div>
+
+        <div class="card-resumo">
+            <h3>Contas a Receber Pendentes</h3>
+            <p id="totalContasReceberPendentes">--</p>
+        </div>
+
+    </section>
+
+    <nav class="abas">
+
+        <button class="aba-btn ativa" data-aba="pagar" onclick="trocarAba('pagar')">
+            Contas a Pagar
+        </button>
+
+        <button class="aba-btn" data-aba="receber" onclick="trocarAba('receber')">
+            Contas a Receber
+        </button>
+
+        <button class="aba-btn" data-aba="fluxo" onclick="trocarAba('fluxo')">
+            Fluxo de Caixa
+        </button>
+
+    </nav>
+
+    <!-- ===================== CONTAS A PAGAR ===================== -->
+    <section id="painelPagar" class="painel-aba ativa">
+
+        <div class="pesquisa">
+
+            <button class="btn-primary" id="btnNovaContaPagar">
+                <i class="bi bi-plus-circle"></i>
+                Nova Conta a Pagar
+            </button>
+
+            <button id="btnFiltrarPendentesPagar">
+                Só pendentes
+            </button>
+
+        </div>
+
+        <section class="tabela">
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Fornecedor</th>
+                        <th>Descrição</th>
+                        <th>Vencimento</th>
+                        <th>Valor</th>
+                        <th>Status</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="tbodyContasPagar"></tbody>
+            </table>
+
+        </section>
+
+    </section>
+
+    <!-- ===================== CONTAS A RECEBER ===================== -->
+    <section id="painelReceber" class="painel-aba">
+
+        <div class="pesquisa">
+
+            <button id="btnFiltrarPendentesReceber">
+                Só pendentes
+            </button>
+
+        </div>
+
+        <section class="tabela">
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Cliente</th>
+                        <th>OS</th>
+                        <th>Vencimento</th>
+                        <th>Valor</th>
+                        <th>Status</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="tbodyContasReceber"></tbody>
+            </table>
+
+        </section>
+
+    </section>
+
+    <!-- ===================== FLUXO DE CAIXA ===================== -->
+    <section id="painelFluxo" class="painel-aba">
+
+        <section class="tabela">
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>Tipo</th>
+                        <th>Origem</th>
+                        <th>Descrição</th>
+                        <th>Valor</th>
+                        <th>Saldo</th>
+                    </tr>
+                </thead>
+                <tbody id="tbodyFluxoCaixa"></tbody>
+            </table>
+
+        </section>
+
+    </section>
+
+</main>
+
+<div id="modalFinanceiroContainer"></div>
+
+<script src="js/config.js"></script>
+<script src="js/util.js"></script>
+<script src="js/api.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/sidebar.js"></script>
+<script src="js/loading.js"></script>
+<script src="js/toast.js"></script>
+<script src="js/modal-financeiro.js"></script>
+<script src="js/financeiro.js"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", async () => {
+
+        auth.checkAuthentication();
+
+        try {
+
+            const html = await (await fetch("modal-financeiro.html")).text();
+
+            document.getElementById("modalFinanceiroContainer").innerHTML = html;
+
+            if (typeof configurarEventosModalFinanceiro === "function") {
+                configurarEventosModalFinanceiro();
+            }
+
+        } catch (erro) {
+            console.error("Erro ao carregar modal financeiro:", erro);
+        }
+
+        if (typeof inicializarFinanceiro === "function") {
+            inicializarFinanceiro();
+        }
+
+    });
+</script>
+
+</body>
+
+</html>

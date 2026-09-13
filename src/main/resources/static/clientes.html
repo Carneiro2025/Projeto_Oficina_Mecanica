@@ -548,6 +548,8 @@
 
 <script src="js/toast.js"></script>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <script src="js/modal-cliente.js"></script>
 
 <script src="js/clientes.js"></script>
@@ -577,11 +579,17 @@ document.addEventListener("DOMContentLoaded", async () => {
         document.getElementById("modalClienteContainer").innerHTML =
             await modal.text();
 
+        if(typeof configurarEventosModalCliente === "function"){
+
+            configurarEventosModalCliente();
+
+        }
+
         /* Carregar Clientes */
 
-        if(typeof carregarClientes==="function"){
+        if(typeof inicializarClientes==="function"){
 
-            carregarClientes();
+            inicializarClientes();
 
         }
 

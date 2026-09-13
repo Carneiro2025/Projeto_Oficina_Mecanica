@@ -9,7 +9,6 @@ import com.example.Projeto_Oficina_Mecanica.enums.PerfilUsuario;
 import com.example.Projeto_Oficina_Mecanica.exception.BusinessException;
 import com.example.Projeto_Oficina_Mecanica.mapper.UsuarioMapper;
 import com.example.Projeto_Oficina_Mecanica.security.JwtUtil;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -52,6 +51,9 @@ class AuthServiceTest {
 
     @Mock
     private UsuarioMapper usuarioMapper;
+
+    @Mock
+    private AuditoriaService auditoriaService;
 
     @InjectMocks
     private AuthService authService;
@@ -104,10 +106,14 @@ class AuthServiceTest {
             assertThat(resposta.getUsuario().getEmail()).isEqualTo("joao@oficina.com");
 
             verify(authenticationManager).authenticate(any(UsernamePasswordAuthenticationToken.class));
+            verify(auditoriaService).registrar(
+                    usuario.getEmail(), "LOGIN", "Usuario", usuario.getId(),
+                    "Login realizado com sucesso", null
+            );
         }
 
         @Test
-        @DisplayName("deve propagar BadCredentialsException quando as credenciais são inválidas")
+        @DisplayName("deve propagar BadCredentialsException e registrar a falha na auditoria")
         void deveLancarBadCredentialsException_quandoCredenciaisInvalidas() {
             LoginRequestDTO dto = new LoginRequestDTO();
             dto.setEmail("joao@oficina.com");
@@ -120,6 +126,14 @@ class AuthServiceTest {
                     .isInstanceOf(BadCredentialsException.class);
 
             verifyNoInteractions(jwtUtil);
+            verify(auditoriaService).registrar(
+                    eq("joao@oficina.com"),
+                    eq("LOGIN_FALHA"),
+                    eq("Usuario"),
+                    isNull(),
+                    contains("joao@oficina.com"),
+                    isNull()
+            );
         }
     }
 

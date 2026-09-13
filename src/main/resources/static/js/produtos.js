@@ -3,6 +3,15 @@
  * Projeto.......: OficinaPRO
  * Arquivo.......: produtos.js
  * Descrição.....: Controle da tela de Produtos
+ *
+ * REESCRITO: pesquisarProdutos() não extraía .content da resposta
+ * paginada (quebrava ao pesquisar) e mandava parâmetros que a API não
+ * reconhece (?pesquisa=, ?situacao= — o back-end só aceita descricao/
+ * codigo/categoria/fornecedorId). A paginação nos botões também era
+ * só cosmética: trocava o texto "Página X de Y" sem nunca buscar
+ * dados novos. Agora usa paginação de verdade (page/size na API).
+ * Corrigido também produto.valorVenda → produto.precoVenda (nome real
+ * do campo no ProdutoResponseDTO).
  * ==========================================================
  */
 
@@ -11,6 +20,10 @@ document.addEventListener("DOMContentLoaded", () => {
     inicializarProdutos();
 
 });
+
+let paginaAtualProdutos = 0;
+let totalPaginasProdutos = 1;
+const TAMANHO_PAGINA_PRODUTOS = 10;
 
 /* ==========================================================
    INICIALIZAÇÃO
@@ -32,38 +45,45 @@ function inicializarProdutos() {
 
 function configurarEventos() {
 
-    document
-        .getElementById("btnNovo")
-        .addEventListener("click", abrirModalNovoProduto);
+    document.getElementById("btnNovo").addEventListener("click", abrirModalNovoProduto);
 
-    document
-        .getElementById("btnPesquisar")
-        .addEventListener("click", pesquisarProdutos);
+    document.getElementById("btnPesquisar").addEventListener("click", () => {
+        paginaAtualProdutos = 0;
+        carregarProdutos();
+    });
 
-    document
-        .getElementById("btnAtualizar")
-        .addEventListener("click", carregarProdutos);
+    document.getElementById("btnAtualizar").addEventListener("click", carregarProdutos);
 
-    document
-        .getElementById("btnLimpar")
-        .addEventListener("click", limparFiltros);
+    document.getElementById("btnLimpar").addEventListener("click", limparFiltros);
 
-    document
-        .getElementById("btnExcel")
-        .addEventListener("click", exportarExcel);
+    document.getElementById("btnExcel")?.addEventListener("click", exportarExcel);
 
-    document
-        .getElementById("btnPdf")
-        .addEventListener("click", exportarPDF);
+    document.getElementById("btnPdf")?.addEventListener("click", exportarPDF);
 
-    document
-        .getElementById("btnImprimir")
-        .addEventListener("click", imprimirProdutos);
+    document.getElementById("btnImprimir")?.addEventListener("click", imprimirProdutos);
+
+    document.getElementById("btnPrimeiraPagina")?.addEventListener("click", () => irParaPaginaProdutos(0));
+
+    document.getElementById("btnPaginaAnterior")?.addEventListener("click", () => irParaPaginaProdutos(paginaAtualProdutos - 1));
+
+    document.getElementById("btnProximaPagina")?.addEventListener("click", () => irParaPaginaProdutos(paginaAtualProdutos + 1));
+
+    document.getElementById("btnUltimaPagina")?.addEventListener("click", () => irParaPaginaProdutos(totalPaginasProdutos - 1));
+
+}
+
+function irParaPaginaProdutos(pagina) {
+
+    if (pagina < 0 || pagina >= totalPaginasProdutos) return;
+
+    paginaAtualProdutos = pagina;
+
+    carregarProdutos();
 
 }
 
 /* ==========================================================
-   LISTAR PRODUTOS
+   LISTAR PRODUTOS (paginação real, sem filtro de texto)
 ========================================================== */
 
 async function carregarProdutos() {
@@ -72,13 +92,13 @@ async function carregarProdutos() {
 
         mostrarLoading();
 
-        const produtos = await api.get("/produtos");
+        const params = new URLSearchParams();
+        params.append("page", paginaAtualProdutos);
+        params.append("size", TAMANHO_PAGINA_PRODUTOS);
 
-        preencherTabela(produtos);
+        const pagina = await api.get(`/produtos?${params.toString()}`);
 
-        atualizarCards(produtos);
-
-        atualizarResumo(produtos);
+        aplicarResultadoPaginado(pagina);
 
     } catch (erro) {
 
@@ -96,68 +116,72 @@ async function carregarProdutos() {
 
 /* ==========================================================
    CARREGAR CATEGORIAS
+   (o back-end tem GET /api/produtos/categorias — mas como é um
+   enum fixo de 13 valores, populamos aqui direto pra evitar mais
+   uma chamada de rede no carregamento inicial da tela)
 ========================================================== */
 
-async function carregarCategorias() {
+function carregarCategorias() {
 
-    try {
+    const categorias = [
+        { valor: "OLEO_LUBRIFICANTE", nome: "Óleo/Lubrificante" },
+        { valor: "FILTRO",            nome: "Filtro" },
+        { valor: "PECA_MOTOR",        nome: "Peça de Motor" },
+        { valor: "PECA_FREIO",        nome: "Peça de Freio" },
+        { valor: "PECA_SUSPENSAO",    nome: "Peça de Suspensão" },
+        { valor: "PECA_ELETRICA",     nome: "Peça Elétrica" },
+        { valor: "PECA_TRANSMISSAO",  nome: "Peça de Transmissão" },
+        { valor: "PNEU",              nome: "Pneu" },
+        { valor: "BATERIA",           nome: "Bateria" },
+        { valor: "FLUIDO",            nome: "Fluido" },
+        { valor: "ACESSORIO",         nome: "Acessório" },
+        { valor: "FERRAMENTA",        nome: "Ferramenta" },
+        { valor: "OUTROS",            nome: "Outros" },
+    ];
 
-        const categorias = await api.get("/categorias");
+    const select = document.getElementById("filtroCategoria");
 
-        const select = document.getElementById("filtroCategoria");
+    if (!select) return;
 
-        categorias.forEach(categoria => {
+    categorias.forEach(categoria => {
 
-            select.innerHTML += `
-                <option value="${categoria.id}">
-                    ${categoria.nome}
-                </option>
-            `;
+        select.innerHTML += `
+            <option value="${categoria.valor}">
+                ${categoria.nome}
+            </option>
+        `;
 
-        });
-
-    } catch (erro) {
-
-        console.error(erro);
-
-    }
+    });
 
 }
 
 /* ==========================================================
    PESQUISAR PRODUTOS
+   (o back-end só filtra por descricao/codigo/categoria/fornecedorId
+   — não existe filtro de "situação"/ativo nesta API; o texto digitado
+   é usado como filtro de descrição)
 ========================================================== */
 
 async function pesquisarProdutos() {
 
-    const pesquisa = document
-        .getElementById("txtPesquisar")
-        .value
-        .trim();
-
-    const categoria = document
-        .getElementById("filtroCategoria")
-        .value;
-
-    const situacao = document
-        .getElementById("filtroSituacao")
-        .value;
+    const pesquisa = document.getElementById("txtPesquisar").value.trim();
+    const categoria = document.getElementById("filtroCategoria").value;
 
     try {
 
         mostrarLoading();
 
-        const produtos = await api.get(
+        const params = new URLSearchParams();
+        if (pesquisa) params.append("descricao", pesquisa);
+        if (categoria) params.append("categoria", categoria);
+        params.append("page", 0);
+        params.append("size", TAMANHO_PAGINA_PRODUTOS);
 
-            `/produtos?pesquisa=${encodeURIComponent(pesquisa)}&categoria=${categoria}&situacao=${situacao}`
+        paginaAtualProdutos = 0;
 
-        );
+        const pagina = await api.get(`/produtos?${params.toString()}`);
 
-        preencherTabela(produtos);
-
-        atualizarCards(produtos);
-
-        atualizarResumo(produtos);
+        aplicarResultadoPaginado(pagina);
 
     } catch (erro) {
 
@@ -173,6 +197,22 @@ async function pesquisarProdutos() {
 
 }
 
+function aplicarResultadoPaginado(pagina) {
+
+    const produtos = pagina.content ?? (Array.isArray(pagina) ? pagina : []);
+
+    totalPaginasProdutos = pagina.totalPages ?? 1;
+
+    preencherTabela(produtos);
+
+    atualizarCards(produtos, pagina.totalElements ?? produtos.length);
+
+    atualizarResumo(produtos, pagina.totalElements ?? produtos.length);
+
+    atualizarPaginacao();
+
+}
+
 /* ==========================================================
    LIMPAR FILTROS
 ========================================================== */
@@ -183,7 +223,10 @@ function limparFiltros() {
 
     document.getElementById("filtroCategoria").value = "";
 
-    document.getElementById("filtroSituacao").value = "";
+    const filtroSituacao = document.getElementById("filtroSituacao");
+    if (filtroSituacao) filtroSituacao.value = "";
+
+    paginaAtualProdutos = 0;
 
     carregarProdutos();
 
@@ -191,31 +234,25 @@ function limparFiltros() {
 
 /* ==========================================================
    ATUALIZAR CARDS
+   (refletem só a página atual — a API não expõe um endpoint de
+   estatísticas globais de produtos)
 ========================================================== */
 
-function atualizarCards(produtos) {
+function atualizarCards(produtos, totalGeral) {
 
     const ativos = produtos.filter(p => p.ativo);
 
     const inativos = produtos.filter(p => !p.ativo);
 
-    const estoqueBaixo = produtos.filter(
+    const estoqueBaixo = produtos.filter(p => p.estoqueAbaixoMinimo === true);
 
-        p => p.estoqueAtual <= p.estoqueMinimo
+    document.getElementById("totalProdutos").textContent = totalGeral;
 
-    );
+    document.getElementById("produtosAtivos").textContent = ativos.length;
 
-    document.getElementById("totalProdutos").textContent =
-        produtos.length;
+    document.getElementById("produtosInativos").textContent = inativos.length;
 
-    document.getElementById("produtosAtivos").textContent =
-        ativos.length;
-
-    document.getElementById("produtosInativos").textContent =
-        inativos.length;
-
-    document.getElementById("estoqueBaixo").textContent =
-        estoqueBaixo.length;
+    document.getElementById("estoqueBaixo").textContent = estoqueBaixo.length;
 
 }
 
@@ -223,19 +260,17 @@ function atualizarCards(produtos) {
    RESUMO
 ========================================================== */
 
-function atualizarResumo(produtos){
+function atualizarResumo(produtos, totalGeral) {
 
-    document.getElementById("qtdeRegistros").textContent =
-        produtos.length;
+    document.getElementById("qtdeRegistros").textContent = totalGeral;
 
     document.getElementById("registroInicial").textContent =
-        produtos.length > 0 ? 1 : 0;
+        totalGeral > 0 ? (paginaAtualProdutos * TAMANHO_PAGINA_PRODUTOS) + 1 : 0;
 
     document.getElementById("registroFinal").textContent =
-        produtos.length;
+        (paginaAtualProdutos * TAMANHO_PAGINA_PRODUTOS) + produtos.length;
 
-    document.getElementById("registroTotal").textContent =
-        produtos.length;
+    document.getElementById("registroTotal").textContent = totalGeral;
 
     document.getElementById("ultimaAtualizacao").textContent =
         new Date().toLocaleString("pt-BR");
@@ -246,27 +281,20 @@ function atualizarResumo(produtos){
    PREENCHER TABELA
 ========================================================== */
 
-function preencherTabela(produtos){
+function preencherTabela(produtos) {
 
-    const tbody =
-        document.getElementById("tbodyProdutos");
+    const tbody = document.getElementById("tbodyProdutos");
 
     tbody.innerHTML = "";
 
-    if(produtos.length === 0){
+    if (produtos.length === 0) {
 
         tbody.innerHTML = `
-
             <tr>
-
                 <td colspan="9" style="text-align:center">
-
                     Nenhum produto encontrado.
-
                 </td>
-
             </tr>
-
         `;
 
         return;
@@ -285,176 +313,131 @@ function preencherTabela(produtos){
    CRIAR LINHA DA TABELA
 ========================================================== */
 
-function criarLinhaProduto(produto){
+function criarLinhaProduto(produto) {
 
     let badgeSituacao = produto.ativo
         ? '<span class="badge badge-ativo">Ativo</span>'
         : '<span class="badge badge-inativo">Inativo</span>';
 
-    let estoqueClasse = "";
+    let estoqueClasse = "estoque-normal";
 
-    if(produto.estoqueAtual <= 0){
-
+    if (produto.estoqueAtual <= 0) {
         estoqueClasse = "estoque-critico";
-
-    }else if(produto.estoqueAtual <= produto.estoqueMinimo){
-
+    } else if (produto.estoqueAbaixoMinimo) {
         estoqueClasse = "estoque-baixo";
-
-    }else{
-
-        estoqueClasse = "estoque-normal";
-
     }
 
     return `
-
         <tr>
-
             <td>${produto.id}</td>
-
             <td>${produto.codigo}</td>
-
             <td>${produto.descricao}</td>
-
-            <td>${produto.categoria}</td>
-
-            <td>${produto.unidade}</td>
-
-            <td class="${estoqueClasse}">
-
-                ${produto.estoqueAtual}
-
-            </td>
-
-            <td>
-
-                ${formatarMoeda(produto.valorVenda)}
-
-            </td>
-
-            <td>
-
-                ${badgeSituacao}
-
-            </td>
-
+            <td>${produto.categoria ?? ""}</td>
+            <td>${produto.unidade ?? ""}</td>
+            <td class="${estoqueClasse}">${produto.estoqueAtual}</td>
+            <td>${formatarMoeda(produto.precoVenda)}</td>
+            <td>${badgeSituacao}</td>
             <td style="text-align:center;">
-
-                <button
-                    class="btn-action btn-view"
-                    title="Visualizar"
-                    onclick="visualizarProduto(${produto.id})">
-
+                <button class="btn-action btn-view" title="Visualizar" onclick="visualizarProduto(${produto.id})">
                     <i class="bi bi-eye-fill"></i>
-
                 </button>
-
-                <button
-                    class="btn-action btn-edit"
-                    title="Editar"
-                    onclick="editarProduto(${produto.id})">
-
+                <button class="btn-action btn-edit" title="Editar" onclick="editarProduto(${produto.id})">
                     <i class="bi bi-pencil-square"></i>
-
                 </button>
-
-                <button
-                    class="btn-action btn-delete"
-                    title="Excluir"
-                    onclick="excluirProduto(${produto.id})">
-
-                    <i class="bi bi-trash-fill"></i>
-
-                </button>
-
+                ${produto.ativo
+                    ? `<button class="btn-action btn-delete" title="Desativar" onclick="excluirProduto(${produto.id})">
+                           <i class="bi bi-trash-fill"></i>
+                       </button>`
+                    : `<button class="btn-action btn-reativar" title="Reativar" onclick="reativarProduto(${produto.id})">
+                           <i class="bi bi-arrow-counterclockwise"></i>
+                       </button>`
+                }
             </td>
-
         </tr>
-
     `;
 
 }
 
-/* ==========================================================
-   FORMATAR MOEDA
-========================================================== */
+function formatarMoeda(valor) {
 
-function formatarMoeda(valor){
-
-    return Number(valor).toLocaleString("pt-BR",{
-
-        style:"currency",
-
-        currency:"BRL"
-
+    return Number(valor || 0).toLocaleString("pt-BR", {
+        style: "currency",
+        currency: "BRL"
     });
 
 }
 
 /* ==========================================================
-   NOVO PRODUTO
+   NOVO / VISUALIZAR / EDITAR
 ========================================================== */
 
-function abrirModalNovoProduto(){
-
+function abrirModalNovoProduto() {
     abrirModalProduto();
-
 }
 
-/* ==========================================================
-   VISUALIZAR
-========================================================== */
-
-function visualizarProduto(id){
-
+function visualizarProduto(id) {
     abrirModalVisualizarProduto(id);
-
 }
 
-/* ==========================================================
-   EDITAR
-========================================================== */
-
-function editarProduto(id){
-
+function editarProduto(id) {
     abrirModalEditarProduto(id);
-
 }
 
 /* ==========================================================
-   EXCLUIR PRODUTO
+   DESATIVAR / REATIVAR
+   (o back-end não tem DELETE de produto — só desativar/reativar,
+   pra manter o histórico de vendas/estoque íntegro)
 ========================================================== */
 
-async function excluirProduto(id){
+async function excluirProduto(id) {
 
-    const confirmar = confirm(
-        "Deseja realmente excluir este produto?"
-    );
+    const confirmar = confirm("Deseja desativar este produto?");
 
-    if(!confirmar){
+    if (!confirmar) return;
 
-        return;
-
-    }
-
-    try{
+    try {
 
         mostrarLoading();
 
-        await api.delete(`/produtos/${id}`);
+        await api.patch(`/produtos/${id}/desativar`);
 
-        Toast.sucesso("Produto excluído com sucesso.");
+        Toast.sucesso("Produto desativado com sucesso.");
 
         carregarProdutos();
 
-    }catch(erro){
+    } catch (erro) {
 
         console.error(erro);
 
-        Toast.erro("Erro ao excluir produto.");
+        Toast.erro("Erro ao desativar produto.");
 
-    }finally{
+    } finally {
+
+        ocultarLoading();
+
+    }
+
+}
+
+async function reativarProduto(id) {
+
+    try {
+
+        mostrarLoading();
+
+        await api.patch(`/produtos/${id}/reativar`);
+
+        Toast.sucesso("Produto reativado com sucesso.");
+
+        carregarProdutos();
+
+    } catch (erro) {
+
+        console.error(erro);
+
+        Toast.erro("Erro ao reativar produto.");
+
+    } finally {
 
         ocultarLoading();
 
@@ -463,144 +446,49 @@ async function excluirProduto(id){
 }
 
 /* ==========================================================
-   EXPORTAR EXCEL
+   EXPORTAR / IMPRIMIR
 ========================================================== */
 
-function exportarExcel(){
-
-    Toast.info("Exportação para Excel será implementada.");
-
+function exportarExcel() {
+    Toast.info("Exportação para Excel ainda não disponível nesta tela.");
 }
 
-/* ==========================================================
-   EXPORTAR PDF
-========================================================== */
-
-function exportarPDF(){
-
-    Toast.info("Exportação para PDF será implementada.");
-
+function exportarPDF() {
+    Toast.info("Exportação para PDF ainda não disponível nesta tela.");
 }
 
-/* ==========================================================
-   IMPRIMIR
-========================================================== */
-
-function imprimirProdutos(){
-
+function imprimirProdutos() {
     window.print();
-
 }
 
 /* ==========================================================
-   PAGINAÇÃO
+   PAGINAÇÃO (exibição — a navegação real está em configurarEventos())
 ========================================================== */
 
-let paginaAtual = 1;
+function atualizarPaginacao() {
 
-let totalPaginas = 1;
+    const elemento = document.getElementById("paginaAtual");
 
-function atualizarPaginacao(){
-
-    document.getElementById("paginaAtual").innerHTML =
-
-        `Página ${paginaAtual} de ${totalPaginas}`;
-
-}
-
-document
-.getElementById("btnPrimeiraPagina")
-.addEventListener("click",()=>{
-
-    paginaAtual=1;
-
-    atualizarPaginacao();
-
-});
-
-document
-.getElementById("btnPaginaAnterior")
-.addEventListener("click",()=>{
-
-    if(paginaAtual>1){
-
-        paginaAtual--;
-
-        atualizarPaginacao();
-
+    if (elemento) {
+        elemento.innerHTML = `Página ${paginaAtualProdutos + 1} de ${totalPaginasProdutos}`;
     }
 
-});
-
-document
-.getElementById("btnProximaPagina")
-.addEventListener("click",()=>{
-
-    if(paginaAtual<totalPaginas){
-
-        paginaAtual++;
-
-        atualizarPaginacao();
-
-    }
-
-});
-
-document
-.getElementById("btnUltimaPagina")
-.addEventListener("click",()=>{
-
-    paginaAtual=totalPaginas;
-
-    atualizarPaginacao();
-
-});
-
-/* ==========================================================
-   REFRESH
-========================================================== */
-
-function atualizarTelaProdutos(){
-
-    carregarProdutos();
-
 }
 
 /* ==========================================================
-   CALLBACK APÓS SALVAR
+   CALLBACKS APÓS SALVAR / EDITAR / EXCLUIR
 ========================================================== */
 
-function produtoSalvo(){
-
+function produtoSalvo() {
     fecharModalProduto();
-
     carregarProdutos();
-
 }
 
-/* ==========================================================
-   CALLBACK APÓS EDITAR
-========================================================== */
-
-function produtoAtualizado(){
-
+function produtoAtualizado() {
     fecharModalProduto();
-
     carregarProdutos();
-
 }
 
-/* ==========================================================
-   CALLBACK APÓS EXCLUIR
-========================================================== */
-
-function produtoExcluido(){
-
+function produtoExcluido() {
     carregarProdutos();
-
 }
-
-/* ==========================================================
-   FIM DO ARQUIVO
-========================================================== */
-

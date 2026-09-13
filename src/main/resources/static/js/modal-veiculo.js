@@ -3,27 +3,42 @@
  * Projeto.......: OficinaPRO
  * Arquivo.......: modal-veiculo.js
  * Descrição.....: Modal de Veículos
+ *
+ * CORRIGIDO: as referências ao DOM e o addEventListener aqui embaixo
+ * rodavam direto no topo do arquivo, no momento em que o script era
+ * carregado — só que o HTML deste modal (#modalVeiculo) nunca era
+ * injetado na página (veiculos.html não tinha fetch nem container pra
+ * ele), então modalVeiculo/btnSalvarVeiculo etc. eram sempre null e
+ * "Novo Veículo" nunca funcionava. Agora tudo fica dentro de
+ * configurarEventosModalVeiculo(), chamada pelo veiculos.html só depois
+ * de injetar modal-veiculo.html no DOM.
  * ==========================================================
  */
 
-const modalVeiculo = document.getElementById("modalVeiculo");
-const formVeiculo = document.getElementById("formVeiculo");
-
-const btnSalvarVeiculo = document.getElementById("btnSalvarVeiculo");
-const btnCancelarVeiculo = document.getElementById("btnCancelarVeiculo");
-const btnFecharModalVeiculo = document.getElementById("btnFecharModalVeiculo");
+let modalVeiculo;
+let formVeiculo;
+let btnSalvarVeiculo;
+let btnCancelarVeiculo;
+let btnFecharModalVeiculo;
 
 let veiculoEditando = null;
 
-/* ==========================================================
-   EVENTOS
-========================================================== */
+function configurarEventosModalVeiculo() {
 
-btnSalvarVeiculo.addEventListener("click", salvarVeiculo);
+    modalVeiculo = document.getElementById("modalVeiculo");
+    formVeiculo = document.getElementById("formVeiculo");
 
-btnCancelarVeiculo.addEventListener("click", fecharModalVeiculo);
+    btnSalvarVeiculo = document.getElementById("btnSalvarVeiculo");
+    btnCancelarVeiculo = document.getElementById("btnCancelarVeiculo");
+    btnFecharModalVeiculo = document.getElementById("btnFecharModalVeiculo");
 
-btnFecharModalVeiculo.addEventListener("click", fecharModalVeiculo);
+    btnSalvarVeiculo.addEventListener("click", salvarVeiculo);
+
+    btnCancelarVeiculo.addEventListener("click", fecharModalVeiculo);
+
+    btnFecharModalVeiculo.addEventListener("click", fecharModalVeiculo);
+
+}
 
 /* ==========================================================
    NOVO

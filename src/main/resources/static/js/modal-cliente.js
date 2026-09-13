@@ -3,38 +3,52 @@
  * Projeto.......: OficinaPRO
  * Arquivo.......: modal-cliente.js
  * Descrição.....: Controle do Modal de Clientes
+ *
+ * REESCRITO: (1) o arquivo anterior acessava o DOM (getElementById,
+ * addEventListener) direto no topo do arquivo, no momento em que o
+ * script era carregado — mas clientes.html só injeta modal-cliente.html
+ * bem depois, dentro do DOMContentLoaded, então modalCliente/formCliente
+ * etc. eram sempre null e "Novo Cliente" nunca funcionava. Agora tudo
+ * fica em configurarEventosModalCliente(), chamada pelo clientes.html
+ * só depois da injeção. (2) os campos enviados/lidos usavam nomes que
+ * não existem na API (cliente.cpf, cliente.cidade soltos) — o back-end
+ * espera cpfCnpj e um objeto aninhado "endereco" (logradouro/numero/
+ * complemento/bairro/cidade/uf/cep). Não existe campo "rg" na API —
+ * o campo do formulário continua existindo mas não é mais enviado.
  * ==========================================================
  */
 
-const modalCliente = document.getElementById("modalCliente");
-
-const formCliente = document.getElementById("formCliente");
-
-const tituloModal = document.getElementById("tituloModal");
-
-const btnSalvarCliente = document.getElementById("btnSalvarCliente");
-
-const btnCancelar = document.getElementById("btnCancelar");
-
-const btnFecharModal = document.getElementById("btnFecharModal");
+let modalCliente;
+let formCliente;
+let tituloModal;
+let btnSalvarCliente;
+let btnCancelar;
+let btnFecharModal;
 
 let clienteEditando = null;
 
+function configurarEventosModalCliente() {
+
+    modalCliente = document.getElementById("modalCliente");
+    formCliente = document.getElementById("formCliente");
+    tituloModal = document.getElementById("tituloModal");
+    btnSalvarCliente = document.getElementById("btnSalvarCliente");
+    btnCancelar = document.getElementById("btnCancelar");
+    btnFecharModal = document.getElementById("btnFecharModal");
+
+    btnCancelar.addEventListener("click", fecharModal);
+
+    btnFecharModal.addEventListener("click", fecharModal);
+
+    btnSalvarCliente.addEventListener("click", salvarCliente);
+
+}
+
 /* ==========================================================
-   EVENTOS
+   ABRIR MODAL — NOVO
 ========================================================== */
 
-btnCancelar.addEventListener("click", fecharModal);
-
-btnFecharModal.addEventListener("click", fecharModal);
-
-btnSalvarCliente.addEventListener("click", salvarCliente);
-
-/* ==========================================================
-   ABRIR MODAL
-========================================================== */
-
-function abrirModalNovoCliente(){
+function abrirModalNovoCliente() {
 
     clienteEditando = null;
 
@@ -52,9 +66,9 @@ function abrirModalNovoCliente(){
    EDITAR
 ========================================================== */
 
-async function abrirModalEditar(id){
+async function abrirModalEditar(id) {
 
-    try{
+    try {
 
         mostrarLoading();
 
@@ -70,11 +84,13 @@ async function abrirModalEditar(id){
 
         modalCliente.classList.add("show");
 
-    }catch(error){
+    } catch (error) {
+
+        console.error(error);
 
         Toast.erro("Erro ao carregar cliente.");
 
-    }finally{
+    } finally {
 
         ocultarLoading();
 
@@ -86,13 +102,15 @@ async function abrirModalEditar(id){
    VISUALIZAR
 ========================================================== */
 
-async function abrirModalVisualizar(id){
+async function abrirModalVisualizar(id) {
 
-    try{
+    try {
 
         mostrarLoading();
 
         const cliente = await api.get(`/clientes/${id}`);
+
+        clienteEditando = null;
 
         preencherFormulario(cliente);
 
@@ -102,11 +120,13 @@ async function abrirModalVisualizar(id){
 
         modalCliente.classList.add("show");
 
-    }catch(error){
+    } catch (error) {
+
+        console.error(error);
 
         Toast.erro("Erro ao carregar cliente.");
 
-    }finally{
+    } finally {
 
         ocultarLoading();
 
@@ -118,7 +138,7 @@ async function abrirModalVisualizar(id){
    FECHAR
 ========================================================== */
 
-function fecharModal(){
+function fecharModal() {
 
     modalCliente.classList.remove("show");
 
@@ -128,7 +148,7 @@ function fecharModal(){
    LIMPAR
 ========================================================== */
 
-function limparFormulario(){
+function limparFormulario() {
 
     formCliente.reset();
 
@@ -137,18 +157,18 @@ function limparFormulario(){
 }
 
 /* ==========================================================
-   PREENCHER
+   PREENCHER (a partir de ClienteResponseDTO real)
 ========================================================== */
 
-function preencherFormulario(cliente){
+function preencherFormulario(cliente) {
+
+    const endereco = cliente.endereco || {};
 
     document.getElementById("clienteId").value = cliente.id || "";
 
-    document.getElementById("nome").value = cliente.nome || "";
+    document.getElementById("nome").value = cliente.nome || cliente.razaoSocial || "";
 
-    document.getElementById("cpf").value = cliente.cpf || "";
-
-    document.getElementById("rg").value = cliente.rg || "";
+    document.getElementById("cpf").value = cliente.cpfCnpj || "";
 
     document.getElementById("telefone").value = cliente.telefone || "";
 
@@ -156,59 +176,56 @@ function preencherFormulario(cliente){
 
     document.getElementById("email").value = cliente.email || "";
 
-    document.getElementById("cep").value = cliente.cep || "";
+    document.getElementById("cep").value = endereco.cep || "";
 
-    document.getElementById("numero").value = cliente.numero || "";
+    document.getElementById("numero").value = endereco.numero || "";
 
-    document.getElementById("rua").value = cliente.rua || "";
+    document.getElementById("rua").value = endereco.logradouro || "";
 
-    document.getElementById("bairro").value = cliente.bairro || "";
+    document.getElementById("bairro").value = endereco.bairro || "";
 
-    document.getElementById("cidade").value = cliente.cidade || "";
+    document.getElementById("cidade").value = endereco.cidade || "";
 
-    document.getElementById("estado").value = cliente.estado || "";
+    document.getElementById("estado").value = endereco.uf || "";
 
-    document.getElementById("complemento").value = cliente.complemento || "";
+    document.getElementById("complemento").value = endereco.complemento || "";
 
     document.getElementById("observacoes").value = cliente.observacoes || "";
 
 }
 
 /* ==========================================================
-   DADOS DO FORMULÁRIO
+   DADOS DO FORMULÁRIO → formato real da API
+   (CriarClienteRequestDTO / AtualizarClienteRequestDTO)
 ========================================================== */
 
-function obterDadosFormulario(){
+function obterDadosFormulario() {
 
-    return{
+    return {
 
-        nome:document.getElementById("nome").value,
+        nome: document.getElementById("nome").value,
 
-        cpf:document.getElementById("cpf").value,
+        cpfCnpj: document.getElementById("cpf").value,
 
-        rg:document.getElementById("rg").value,
+        tipo: "PF",
 
-        telefone:document.getElementById("telefone").value,
+        telefone: document.getElementById("telefone").value,
 
-        celular:document.getElementById("celular").value,
+        celular: document.getElementById("celular").value,
 
-        email:document.getElementById("email").value,
+        email: document.getElementById("email").value,
 
-        cep:document.getElementById("cep").value,
+        endereco: {
+            cep: document.getElementById("cep").value,
+            numero: document.getElementById("numero").value,
+            logradouro: document.getElementById("rua").value,
+            bairro: document.getElementById("bairro").value,
+            cidade: document.getElementById("cidade").value,
+            uf: document.getElementById("estado").value,
+            complemento: document.getElementById("complemento").value
+        },
 
-        numero:document.getElementById("numero").value,
-
-        rua:document.getElementById("rua").value,
-
-        bairro:document.getElementById("bairro").value,
-
-        cidade:document.getElementById("cidade").value,
-
-        estado:document.getElementById("estado").value,
-
-        complemento:document.getElementById("complemento").value,
-
-        observacoes:document.getElementById("observacoes").value
+        observacoes: document.getElementById("observacoes").value
 
     };
 
@@ -218,23 +235,23 @@ function obterDadosFormulario(){
    SALVAR
 ========================================================== */
 
-async function salvarCliente(){
+async function salvarCliente() {
 
     const cliente = obterDadosFormulario();
 
-    try{
+    try {
 
         mostrarLoading();
 
-        if(clienteEditando==null){
+        if (clienteEditando == null) {
 
-            await api.post("/clientes",cliente);
+            await api.post("/clientes", cliente);
 
             Toast.sucesso("Cliente cadastrado com sucesso.");
 
-        }else{
+        } else {
 
-            await api.put(`/clientes/${clienteEditando}`,cliente);
+            await api.put(`/clientes/${clienteEditando}`, cliente);
 
             Toast.sucesso("Cliente atualizado com sucesso.");
 
@@ -244,11 +261,13 @@ async function salvarCliente(){
 
         carregarClientes();
 
-    }catch(error){
+    } catch (error) {
+
+        console.error(error);
 
         Toast.erro("Erro ao salvar cliente.");
 
-    }finally{
+    } finally {
 
         ocultarLoading();
 
@@ -257,29 +276,25 @@ async function salvarCliente(){
 }
 
 /* ==========================================================
-   HABILITAR
+   HABILITAR / DESABILITAR (modo visualização)
 ========================================================== */
 
-function habilitarFormulario(){
+function habilitarFormulario() {
 
     formCliente
         .querySelectorAll("input, textarea, select")
-        .forEach(campo=>campo.disabled=false);
+        .forEach(campo => campo.disabled = false);
 
-    btnSalvarCliente.style.display="inline-block";
+    btnSalvarCliente.style.display = "inline-block";
 
 }
 
-/* ==========================================================
-   DESABILITAR
-========================================================== */
-
-function desabilitarFormulario(){
+function desabilitarFormulario() {
 
     formCliente
         .querySelectorAll("input, textarea, select")
-        .forEach(campo=>campo.disabled=true);
+        .forEach(campo => campo.disabled = true);
 
-    btnSalvarCliente.style.display="none";
+    btnSalvarCliente.style.display = "none";
 
 }

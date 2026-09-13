@@ -22,4 +22,9 @@ public interface ContaPagarRepository
             Long fornecedorId
     );
 
+    List<ContaPagar> findByDataVencimentoBeforeAndStatusNot(
+            java.time.LocalDate data,
+            StatusContaPagar status
+    );
+
 }

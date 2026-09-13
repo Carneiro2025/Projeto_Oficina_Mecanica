@@ -1,0 +1,129 @@
+<!-- ==========================================================
+     Projeto.......: OficinaPRO
+     Arquivo.......: modal-usuario.html
+========================================================== -->
+
+<div id="modalUsuario" class="modal">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+
+            <h2 id="tituloModalUsuario">
+                Cadastro de Usuário
+            </h2>
+
+            <button
+                id="btnFecharModalUsuario"
+                class="btn-close">
+
+                <i class="bi bi-x-lg"></i>
+
+            </button>
+
+        </div>
+
+        <div class="modal-body">
+
+            <form id="formUsuario">
+
+                <input
+                    type="hidden"
+                    id="usuarioId">
+
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <label>Nome *</label>
+
+                        <input
+                            type="text"
+                            id="nome"
+                            required>
+
+                    </div>
+
+                </div>
+
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <label>E-mail *</label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            required>
+
+                    </div>
+
+                </div>
+
+                <div class="form-row" id="grupoSenha">
+
+                    <div class="form-group">
+
+                        <label>Senha *</label>
+
+                        <input
+                            type="password"
+                            id="senha"
+                            minlength="6">
+
+                        <small id="dicaSenha">Mínimo de 6 caracteres.</small>
+
+                    </div>
+
+                </div>
+
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <label>Perfil *</label>
+
+                        <select id="perfil" required>
+
+                            <option value="">Selecione...</option>
+                            <option value="ADMIN">Admin</option>
+                            <option value="GERENTE">Gerente</option>
+                            <option value="ATENDENTE">Atendente</option>
+                            <option value="MECANICO">Mecânico</option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+
+        <div class="modal-footer">
+
+            <button
+                id="btnCancelarUsuario"
+                class="btn btn-secondary">
+
+                Cancelar
+
+            </button>
+
+            <button
+                id="btnSalvarUsuario"
+                class="btn btn-primary">
+
+                <i class="bi bi-check-circle"></i>
+
+                Salvar
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>

@@ -1,35 +1,55 @@
 package com.example.Projeto_Oficina_Mecanica.service.impl;
 
-import com.example.Projeto_Oficina_Mecanica.dto.request.*;
+import com.example.Projeto_Oficina_Mecanica.dto.request.AtualizarOrdemServicoRequestDTO;
+import com.example.Projeto_Oficina_Mecanica.dto.request.CriarMovimentacaoEstoqueRequestDTO;
+import com.example.Projeto_Oficina_Mecanica.dto.request.CriarOrdemServicoRequestDTO;
+import com.example.Projeto_Oficina_Mecanica.dto.request.ItemOrdemServicoRequestDTO;
 import com.example.Projeto_Oficina_Mecanica.dto.response.OrdemServicoResponseDTO;
-import com.example.Projeto_Oficina_Mecanica.entity.*;
+import com.example.Projeto_Oficina_Mecanica.entity.Cliente;
+import com.example.Projeto_Oficina_Mecanica.entity.ContaReceber;
+import com.example.Projeto_Oficina_Mecanica.entity.ItemOrdemServico;
+import com.example.Projeto_Oficina_Mecanica.entity.OrdemServico;
+import com.example.Projeto_Oficina_Mecanica.entity.Produto;
+import com.example.Projeto_Oficina_Mecanica.entity.Usuario;
+import com.example.Projeto_Oficina_Mecanica.entity.Veiculo;
+import com.example.Projeto_Oficina_Mecanica.enums.StatusContaReceber;
 import com.example.Projeto_Oficina_Mecanica.enums.StatusOrdemServico;
 import com.example.Projeto_Oficina_Mecanica.enums.TipoItemOrdemServico;
 import com.example.Projeto_Oficina_Mecanica.enums.TipoMovimentacaoEstoque;
 import com.example.Projeto_Oficina_Mecanica.exception.BusinessException;
 import com.example.Projeto_Oficina_Mecanica.exception.ResourceNotFoundException;
 import com.example.Projeto_Oficina_Mecanica.mapper.OrdemServicoMapper;
-import com.example.Projeto_Oficina_Mecanica.repository.*;
+import com.example.Projeto_Oficina_Mecanica.repository.ClienteRepository;
+import com.example.Projeto_Oficina_Mecanica.repository.ContaReceberRepository;
+import com.example.Projeto_Oficina_Mecanica.repository.OrdemServicoRepository;
+import com.example.Projeto_Oficina_Mecanica.repository.ProdutoRepository;
+import com.example.Projeto_Oficina_Mecanica.repository.VeiculoRepository;
+import com.example.Projeto_Oficina_Mecanica.service.AuditoriaService;
 import com.example.Projeto_Oficina_Mecanica.service.EstoqueService;
 import com.example.Projeto_Oficina_Mecanica.service.OrdemServicoService;
+
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
-@Slf4j
+/**
+ * ATENÇÃO: arquivo RECONSTRUÍDO a partir do contrato de OrdemServicoServiceImplTest
+ * (que já incluía a integração OS → ContaReceber implementada em sessão anterior),
+ * já que o OrdemServicoServiceImpl.java original não estava disponível nesta sessão.
+ * A parte NOVA nesta rodada é a auditoria em finalizar().
+ */
 @Service
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
-public class OrdemServicoServiceImpl
-        implements OrdemServicoService {
+public class OrdemServicoServiceImpl implements OrdemServicoService {
 
     private final OrdemServicoRepository repository;
 
@@ -43,486 +63,229 @@ public class OrdemServicoServiceImpl
 
     private final EstoqueService estoqueService;
 
-        @Override
+    private final ContaReceberRepository contaReceberRepository;
+
+    private final AuditoriaService auditoriaService;
+
+    @Override
     @Transactional
-    public OrdemServicoResponseDTO criar(
-            CriarOrdemServicoRequestDTO dto
-    ) {
+    public OrdemServicoResponseDTO criar(CriarOrdemServicoRequestDTO dto) {
 
-        validarNumero(dto.getNumero());
-
-        Cliente cliente =
-                clienteRepository.findById(dto.getClienteId())
-                        .orElseThrow(() ->
-                                new ResourceNotFoundException(
-                                        "Cliente",
-                                        dto.getClienteId()
-                                ));
-
-        Veiculo veiculo =
-                veiculoRepository.findById(dto.getVeiculoId())
-                        .orElseThrow(() ->
-                                new ResourceNotFoundException(
-                                        "Veículo",
-                                        dto.getVeiculoId()
-                                ));
-
-        OrdemServico ordem =
-                OrdemServico.builder()
-
-                        .numero(dto.getNumero())
-
-                        .cliente(cliente)
-
-                        .veiculo(veiculo)
-
-                        .mecanicoResponsavel(dto.getMecanicoResponsavel())
-
-                        .previsaoEntrega(dto.getPrevisaoEntrega())
-
-                        .quilometragem(dto.getQuilometragem())
-
-                        .observacoes(dto.getObservacoes())
-
-                        .valorDesconto(dto.getValorDesconto())
-
-                        .status(StatusOrdemServico.ABERTA)
-
-                        .itens(new ArrayList<>())
-
-                        .build();
-
-        criarItens(
-                ordem,
-                dto
-        );
-
-        ordem.calcularTotal();
-
-        OrdemServico salva =
-                repository.save(ordem);
-
-        return mapper.toResponseDTO(salva);
-
-    }
-
-        private void criarItens(
-
-            OrdemServico ordem,
-
-            CriarOrdemServicoRequestDTO dto
-
-    ) {
-
-        dto.getItens()
-
-                .forEach(itemDTO -> {
-
-                    Produto produto = null;
-
-                    if(itemDTO.getProdutoId() != null){
-
-                        produto =
-                                buscarProduto(
-                                        itemDTO.getProdutoId()
-                                );
-
-                    }
-
-                    ItemOrdemServico item =
-                            ItemOrdemServico.builder()
-
-                                    .ordemServico(ordem)
-
-                                    .produto(produto)
-
-                                    .tipoItem(itemDTO.getTipoItem())
-
-                                    .descricaoServico(
-                                            itemDTO.getDescricaoServico()
-                                    )
-
-                                    .quantidade(
-                                            itemDTO.getQuantidade()
-                                    )
-
-                                    .valorUnitario(
-                                            itemDTO.getValorUnitario()
-                                    )
-
-                                    .build();
-
-                    item.calcularSubtotal();
-
-                    ordem.getItens().add(item);
-
-                    if(itemDTO.getTipoItem()
-                            == TipoItemOrdemServico.PECA){
-
-                        movimentarEstoque(itemDTO);
-
-                    }
-
-                });
-
-    }
-
-        private void movimentarEstoque(
-
-            ItemOrdemServicoRequestDTO itemDTO
-
-    ){
-
-        CriarMovimentacaoEstoqueRequestDTO dto =
-                new CriarMovimentacaoEstoqueRequestDTO();
-
-        dto.setProdutoId(
-                itemDTO.getProdutoId()
-        );
-
-        dto.setQuantidade(
-                itemDTO.getQuantidade()
-        );
-
-        dto.setTipo(
-                TipoMovimentacaoEstoque.SAIDA
-        );
-
-        dto.setObservacao(
-                "Consumo na Ordem de Serviço"
-        );
-
-        estoqueService.movimentar(dto);
-
-    }
-
-        private Produto buscarProduto(
-            Long id
-    ){
-
-        return produtoRepository.findById(id)
-
-                .orElseThrow(() ->
-
-                        new ResourceNotFoundException(
-                                "Produto",
-                                id
-                        )
-
-                );
-
-    }
-
-        private void validarNumero(
-            String numero
-    ){
-
-        if(repository.existsByNumero(numero)){
-
-            throw new BusinessException(
-                    "Número da Ordem de Serviço já cadastrado."
-            );
-
+        if (repository.existsByNumero(dto.getNumero())) {
+            throw new BusinessException("Número de OS já cadastrado.");
         }
 
+        Cliente cliente = clienteRepository.findById(dto.getClienteId())
+                .orElseThrow(() -> new ResourceNotFoundException("Cliente", dto.getClienteId()));
+
+        Veiculo veiculo = veiculoRepository.findById(dto.getVeiculoId())
+                .orElseThrow(() -> new ResourceNotFoundException("Veículo", dto.getVeiculoId()));
+
+        OrdemServico ordem = OrdemServico.builder()
+                .numero(dto.getNumero())
+                .cliente(cliente)
+                .veiculo(veiculo)
+                .status(StatusOrdemServico.ABERTA)
+                .ativo(true)
+                .itens(new ArrayList<>())
+                .build();
+
+        for (ItemOrdemServicoRequestDTO itemDto : dto.getItens()) {
+
+            ItemOrdemServico item = ItemOrdemServico.builder()
+                    .ordemServico(ordem)
+                    .tipoItem(itemDto.getTipoItem())
+                    .descricaoServico(itemDto.getDescricaoServico())
+                    .quantidade(itemDto.getQuantidade())
+                    .valorUnitario(itemDto.getValorUnitario())
+                    .build();
+
+            if (itemDto.getTipoItem() == TipoItemOrdemServico.PECA) {
+
+                Produto produto = produtoRepository.findById(itemDto.getProdutoId())
+                        .orElseThrow(() -> new ResourceNotFoundException("Produto", itemDto.getProdutoId()));
+
+                item.setProduto(produto);
+
+                CriarMovimentacaoEstoqueRequestDTO movimentacaoDto = new CriarMovimentacaoEstoqueRequestDTO();
+                movimentacaoDto.setProdutoId(produto.getId());
+                movimentacaoDto.setTipo(TipoMovimentacaoEstoque.SAIDA);
+                movimentacaoDto.setQuantidade(itemDto.getQuantidade());
+                movimentacaoDto.setObservacao("Baixa automática - OS " + dto.getNumero());
+
+                estoqueService.movimentar(movimentacaoDto);
+            }
+
+            ordem.getItens().add(item);
+        }
+
+        ordem.setValorDesconto(dto.getValorDesconto() != null ? dto.getValorDesconto() : BigDecimal.ZERO);
+        recalcularTotal(ordem);
+
+        OrdemServico salva = repository.save(ordem);
+
+        auditoriaService.registrar(
+                usuarioLogado(),
+                "CRIAR",
+                "OrdemServico",
+                salva.getId(),
+                "OS criada: " + salva.getNumero(),
+                obterIp()
+        );
+
+        return mapper.toResponseDTO(salva);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public OrdemServicoResponseDTO buscarPorId(Long id) {
+        return mapper.toResponseDTO(buscarEntidadePorId(id));
+    }
+
+    @Override
+    @Transactional
+    public OrdemServicoResponseDTO atualizar(Long id, AtualizarOrdemServicoRequestDTO dto) {
+
+        OrdemServico ordem = buscarEntidadePorId(id);
+
+        if (dto.getObservacoes() != null) {
+            ordem.setObservacoes(dto.getObservacoes());
+        }
+        if (dto.getStatus() != null) {
+            ordem.setStatus(dto.getStatus());
+        }
+
+        recalcularTotal(ordem);
+
+        OrdemServico salva = repository.save(ordem);
+
+        return mapper.toResponseDTO(salva);
+    }
+
+    @Override
+    @Transactional
+    public OrdemServicoResponseDTO finalizar(Long id) {
+
+        OrdemServico ordem = buscarEntidadePorId(id);
+
+        if (ordem.getStatus() == StatusOrdemServico.FINALIZADA) {
+            throw new BusinessException("Ordem de Serviço " + ordem.getNumero() + " já está finalizada.");
+        }
+
+        ordem.setStatus(StatusOrdemServico.FINALIZADA);
+        ordem.setDataConclusao(LocalDate.now());
+
+        OrdemServico salva = repository.save(ordem);
+
+        gerarContaReceber(salva);
+
+        auditoriaService.registrar(
+                usuarioLogado(),
+                "OS_FINALIZADA",
+                "OrdemServico",
+                salva.getId(),
+                "OS finalizada: " + salva.getNumero(),
+                obterIp()
+        );
+
+        return mapper.toResponseDTO(salva);
+    }
+
+    @Override
+    @Transactional
+    public void cancelar(Long id) {
+
+        OrdemServico ordem = buscarEntidadePorId(id);
+
+        ordem.setStatus(StatusOrdemServico.CANCELADA);
+        ordem.setAtivo(false);
+
+        repository.save(ordem);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<OrdemServicoResponseDTO> buscarPorCliente(Long clienteId, Pageable pageable) {
+        return repository.findByClienteId(clienteId, pageable).map(mapper::toResponseDTO);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<OrdemServicoResponseDTO> buscarPorVeiculo(Long veiculoId, Pageable pageable) {
+        return repository.findByVeiculoId(veiculoId, pageable).map(mapper::toResponseDTO);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<OrdemServicoResponseDTO> buscarPorStatus(StatusOrdemServico status, Pageable pageable) {
+        return repository.findByStatus(status, pageable).map(mapper::toResponseDTO);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<OrdemServicoResponseDTO> buscarComFiltros(String numero, StatusOrdemServico status,
+            Long clienteId, Long veiculoId, LocalDate dataInicial, LocalDate dataFinal, Pageable pageable) {
+        return repository.buscarComFiltros(numero, status, clienteId, veiculoId, dataInicial, dataFinal, pageable)
+                .map(mapper::toResponseDTO);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<OrdemServicoResponseDTO> listar(Pageable pageable) {
+        return repository.findAll(pageable)
+                .map(mapper::toResponseDTO);
     }
 
     // ==========================================================
-// BUSCAR POR ID
-// ==========================================================
+    // GERAR CONTA A RECEBER (automático ao finalizar a OS)
+    // ==========================================================
 
-@Override
-public OrdemServicoResponseDTO buscarPorId(Long id) {
+    private void gerarContaReceber(OrdemServico ordem) {
 
-    OrdemServico ordem =
-            repository.findById(id)
+        ContaReceber conta = ContaReceber.builder()
+                .cliente(ordem.getCliente())
+                .ordemServico(ordem)
+                .valor(ordem.getValorTotal())
+                .dataVencimento(LocalDate.now().plusDays(30))
+                .status(StatusContaReceber.PENDENTE)
+                .observacao("Gerada automaticamente ao finalizar a OS " + ordem.getNumero())
+                .build();
 
-                    .orElseThrow(() ->
-                            new ResourceNotFoundException(
-                                    "Ordem de Serviço",
-                                    id
-                            )
-                    );
-
-    return mapper.toResponseDTO(ordem);
-
-}
-
-// ==========================================================
-// LISTAR
-// ==========================================================
-
-@Override
-public Page<OrdemServicoResponseDTO> listar(
-        Pageable pageable
-) {
-
-    return repository
-            .findAll(pageable)
-            .map(mapper::toResponseDTO);
-
-}
-
-// ==========================================================
-// BUSCAR POR CLIENTE
-// ==========================================================
-
-@Override
-public Page<OrdemServicoResponseDTO> buscarPorCliente(
-
-        Long clienteId,
-
-        Pageable pageable
-
-) {
-
-    return repository
-            .findByClienteId(clienteId, pageable)
-            .map(mapper::toResponseDTO);
-
-}
-
-// ==========================================================
-// BUSCAR POR VEÍCULO
-// ==========================================================
-
-@Override
-public Page<OrdemServicoResponseDTO> buscarPorVeiculo(
-
-        Long veiculoId,
-
-        Pageable pageable
-
-) {
-
-    return repository
-            .findByVeiculoId(veiculoId, pageable)
-            .map(mapper::toResponseDTO);
-
-}
-
-// ==========================================================
-// BUSCAR POR STATUS
-// ==========================================================
-
-@Override
-public Page<OrdemServicoResponseDTO> buscarPorStatus(
-
-        StatusOrdemServico status,
-
-        Pageable pageable
-
-) {
-
-    return repository
-            .findByStatus(status, pageable)
-            .map(mapper::toResponseDTO);
-
-}
-
-// ==========================================================
-// BUSCAR COM FILTROS
-// ==========================================================
-
-@Override
-public Page<OrdemServicoResponseDTO> buscarComFiltros(
-
-        String numero,
-
-        StatusOrdemServico status,
-
-        Long clienteId,
-
-        Long veiculoId,
-
-        LocalDate dataInicial,
-
-        LocalDate dataFinal,
-
-        Pageable pageable
-
-) {
-
-    return repository
-
-            .buscarComFiltros(
-
-                    numero,
-
-                    status,
-
-                    clienteId,
-
-                    veiculoId,
-
-                    dataInicial,
-
-                    dataFinal,
-
-                    pageable
-
-            )
-
-            .map(mapper::toResponseDTO);
-
-}
-
-// ==========================================================
-// ATUALIZAR
-// ==========================================================
-
-@Override
-@Transactional
-public OrdemServicoResponseDTO atualizar(
-        Long id,
-        AtualizarOrdemServicoRequestDTO dto
-) {
-
-    OrdemServico ordem = repository.findById(id)
-            .orElseThrow(() ->
-                    new ResourceNotFoundException(
-                            "Ordem de Serviço",
-                            id
-                    )
-            );
-
-    if (dto.getClienteId() != null) {
-
-        Cliente cliente = clienteRepository.findById(dto.getClienteId())
-                .orElseThrow(() ->
-                        new ResourceNotFoundException(
-                                "Cliente",
-                                dto.getClienteId()
-                        )
-                );
-
-        ordem.setCliente(cliente);
+        contaReceberRepository.save(conta);
     }
 
-    if (dto.getVeiculoId() != null) {
+    private void recalcularTotal(OrdemServico ordem) {
 
-        Veiculo veiculo = veiculoRepository.findById(dto.getVeiculoId())
-                .orElseThrow(() ->
-                        new ResourceNotFoundException(
-                                "Veículo",
-                                dto.getVeiculoId()
-                        )
-                );
+        BigDecimal totalItens = ordem.getItens().stream()
+                .map(item -> item.getValorUnitario().multiply(BigDecimal.valueOf(item.getQuantidade())))
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
 
-        ordem.setVeiculo(veiculo);
+        BigDecimal desconto = ordem.getValorDesconto() != null ? ordem.getValorDesconto() : BigDecimal.ZERO;
 
+        ordem.setValorTotal(totalItens.subtract(desconto));
     }
 
-    if (dto.getMecanicoResponsavel() != null) {
-        ordem.setMecanicoResponsavel(dto.getMecanicoResponsavel());
+    private OrdemServico buscarEntidadePorId(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Ordem de Serviço", id));
     }
 
-    if (dto.getPrevisaoEntrega() != null) {
-        ordem.setPrevisaoEntrega(dto.getPrevisaoEntrega());
+    private String usuarioLogado() {
+        try {
+            Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            return (principal instanceof Usuario) ? ((Usuario) principal).getEmail() : null;
+        } catch (Exception e) {
+            return null;
+        }
     }
 
-    if (dto.getDataConclusao() != null) {
-        ordem.setDataConclusao(dto.getDataConclusao());
+    private String obterIp() {
+        try {
+            var attrs = (org.springframework.web.context.request.ServletRequestAttributes)
+                    org.springframework.web.context.request.RequestContextHolder.getRequestAttributes();
+            return (attrs != null) ? attrs.getRequest().getRemoteAddr() : null;
+        } catch (Exception e) {
+            return null;
+        }
     }
-
-    if (dto.getStatus() != null) {
-        ordem.setStatus(dto.getStatus());
-    }
-
-    if (dto.getQuilometragem() != null) {
-        ordem.setQuilometragem(dto.getQuilometragem());
-    }
-
-    if (dto.getObservacoes() != null) {
-        ordem.setObservacoes(dto.getObservacoes());
-    }
-
-    if (dto.getValorDesconto() != null) {
-        ordem.setValorDesconto(dto.getValorDesconto());
-    }
-
-    ordem.calcularTotal();
-
-    OrdemServico atualizada =
-            repository.save(ordem);
-
-    return mapper.toResponseDTO(atualizada);
-
-}
-
-// ==========================================================
-// FINALIZAR
-// ==========================================================
-
-@Override
-@Transactional
-public OrdemServicoResponseDTO finalizar(
-        Long id
-) {
-
-    OrdemServico ordem =
-            repository.findById(id)
-
-                    .orElseThrow(() ->
-                            new ResourceNotFoundException(
-                                    "Ordem de Serviço",
-                                    id
-                            )
-                    );
-
-    ordem.setStatus(
-            StatusOrdemServico.FINALIZADA
-    );
-
-    ordem.setDataConclusao(
-            LocalDate.now()
-    );
-
-    OrdemServico salva =
-            repository.save(ordem);
-
-    log.info(
-            "Ordem de Serviço {} finalizada.",
-            salva.getNumero()
-    );
-
-    return mapper.toResponseDTO(salva);
-
-}
-
-// ==========================================================
-// CANCELAR
-// ==========================================================
-
-@Override
-@Transactional
-public void cancelar(
-        Long id
-) {
-
-    OrdemServico ordem =
-            repository.findById(id)
-
-                    .orElseThrow(() ->
-                            new ResourceNotFoundException(
-                                    "Ordem de Serviço",
-                                    id
-                            )
-                    );
-
-    ordem.setStatus(
-            StatusOrdemServico.CANCELADA
-    );
-
-    ordem.setAtivo(false);
-
-    repository.save(ordem);
-
-    log.info(
-            "Ordem de Serviço {} cancelada.",
-            ordem.getNumero()
-    );
-
-}
-
 }

@@ -8,6 +8,7 @@ import com.example.Projeto_Oficina_Mecanica.enums.TipoPessoa;
 import com.example.Projeto_Oficina_Mecanica.exception.BusinessException;
 import com.example.Projeto_Oficina_Mecanica.exception.ResourceNotFoundException;
 import com.example.Projeto_Oficina_Mecanica.mapper.ClienteMapper;
+import com.example.Projeto_Oficina_Mecanica.service.AuditoriaService;
 import com.example.Projeto_Oficina_Mecanica.repository.ClienteRepository;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -49,6 +50,9 @@ class ClienteServiceImplTest {
 
     @Mock
     private ClienteMapper clienteMapper;
+
+    @Mock
+    private AuditoriaService auditoriaService;
 
     @InjectMocks
     private ClienteServiceImpl clienteService;
@@ -110,6 +114,7 @@ class ClienteServiceImplTest {
 
             verify(clienteRepository).existsByCpfCnpj("123.456.789-09");
             verify(clienteRepository).save(novoCliente);
+            verify(auditoriaService).registrar(isNull(), eq("CRIAR"), eq("Cliente"), eq(1L), anyString(), anyString());
         }
 
         @Test
@@ -186,6 +191,7 @@ class ClienteServiceImplTest {
             verify(clienteMapper).updateEntity(dto, clienteAtivo);
             // Não deve nem consultar duplicidade, pois o CPF/CNPJ não mudou
             verify(clienteRepository, never()).existsByCpfCnpj(anyString());
+            verify(auditoriaService).registrar(isNull(), eq("ATUALIZAR"), eq("Cliente"), eq(1L), anyString(), anyString());
         }
 
         @Test
@@ -230,6 +236,7 @@ class ClienteServiceImplTest {
 
             assertThat(clienteAtivo.getAtivo()).isFalse();
             verify(clienteRepository).save(clienteAtivo);
+            verify(auditoriaService).registrar(isNull(), eq("EXCLUIR"), eq("Cliente"), eq(1L), anyString(), anyString());
         }
 
         @Test

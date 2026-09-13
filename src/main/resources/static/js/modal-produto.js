@@ -10,13 +10,11 @@ let produtoEditando = null;
 
 /* ==========================================================
    INICIALIZAÇÃO
+   Observação: configurarEventosModal() é chamada explicitamente
+   por produtos.html, logo depois que o HTML do modal (buscado via
+   fetch de modal-produto.html) é injetado no DOM — não aqui no
+   DOMContentLoaded, porque nesse momento o modal ainda não existe.
 ========================================================== */
-
-document.addEventListener("DOMContentLoaded", () => {
-
-    configurarEventosModal();
-
-});
 
 /* ==========================================================
    EVENTOS
@@ -226,7 +224,7 @@ function preencherFormulario(produto){
         produto.descricao ?? "";
 
     document.getElementById("categoriaId").value =
-        produto.categoriaId ?? "";
+        produto.categoria ?? "";
 
     document.getElementById("marca").value =
         produto.marca ?? "";
@@ -250,10 +248,10 @@ function preencherFormulario(produto){
         produto.localizacao ?? "";
 
     document.getElementById("valorCompra").value =
-        produto.valorCompra ?? 0;
+        produto.precoCusto ?? 0;
 
     document.getElementById("valorVenda").value =
-        produto.valorVenda ?? 0;
+        produto.precoVenda ?? 0;
 
     document.getElementById("fornecedorId").value =
         produto.fornecedorId ?? "";
@@ -489,7 +487,7 @@ function montarDTOProduto(){
         descricao:
             document.getElementById("descricao").value,
 
-        categoriaId:
+        categoria:
             document.getElementById("categoriaId").value,
 
         marca:
@@ -513,10 +511,10 @@ function montarDTOProduto(){
         localizacao:
             document.getElementById("localizacao").value,
 
-        valorCompra:
+        precoCusto:
             Number(document.getElementById("valorCompra").value),
 
-        valorVenda:
+        precoVenda:
             Number(document.getElementById("valorVenda").value),
 
         fornecedorId:
@@ -588,7 +586,7 @@ async function carregarCategoriasModal() {
 
     try {
 
-        const categorias = await api.get("/categorias");
+        const categorias = await api.get("/produtos/categorias");
 
         const select = document.getElementById("categoriaId");
 
@@ -704,16 +702,6 @@ function fecharModalProduto() {
     resetFormularioProduto();
 
 }
-
-/* ==========================================================
-   INICIALIZAÇÃO
-========================================================== */
-
-document.addEventListener("DOMContentLoaded", () => {
-
-    configurarEventosModal();
-
-});
 
 /* ==========================================================
    FIM DO ARQUIVO

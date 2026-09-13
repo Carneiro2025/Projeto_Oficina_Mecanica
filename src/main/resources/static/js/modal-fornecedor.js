@@ -10,15 +10,18 @@ let modalFornecedor = null;
 
 let fornecedorEditando = null;
 
-document.addEventListener("DOMContentLoaded", () => {
+function configurarEventosModalFornecedor(){
 
-    modalFornecedor = new bootstrap.Modal(
-        document.getElementById("modalFornecedor")
-    );
+    // Igual às outras telas do projeto (Cliente/Veículo/Produto/Usuário/
+    // Estoque), este modal usa a classe CSS "show" pra abrir/fechar, não
+    // a API JS do Bootstrap — que nunca foi carregada em fornecedores.html
+    // e teria quebrado "Novo Fornecedor" mesmo depois de corrigir a
+    // injeção do HTML.
+    modalFornecedor = document.getElementById("modalFornecedor");
 
     configurarEventosFornecedor();
 
-});
+}
 
 /* ==========================================================
    EVENTOS
@@ -69,7 +72,7 @@ function abrirModalFornecedor(){
 
     `;
 
-    modalFornecedor.show();
+    modalFornecedor.classList.add("show");
 
 }
 
@@ -109,7 +112,7 @@ async function abrirModalEditarFornecedor(id){
 
         `;
 
-        modalFornecedor.show();
+        modalFornecedor.classList.add("show");
 
     }catch(erro){
 
@@ -210,7 +213,7 @@ function preencherFormularioFornecedor(fornecedor){
         fornecedor.categoriaFornecedor ?? "";
 
     document.getElementById("responsavel").value =
-        fornecedor.responsavel ?? "";
+        fornecedor.nomeContato ?? "";
 
     document.getElementById("cargo").value =
         fornecedor.cargo ?? "";
@@ -236,26 +239,28 @@ function preencherFormularioFornecedor(fornecedor){
     document.getElementById("horarioContato").value =
         fornecedor.horarioContato ?? "";
 
+    const endereco = fornecedor.endereco || {};
+
     document.getElementById("cep").value =
-        fornecedor.cep ?? "";
+        endereco.cep ?? "";
 
     document.getElementById("logradouro").value =
-        fornecedor.logradouro ?? "";
+        endereco.logradouro ?? "";
 
     document.getElementById("numero").value =
-        fornecedor.numero ?? "";
+        endereco.numero ?? "";
 
     document.getElementById("complemento").value =
-        fornecedor.complemento ?? "";
+        endereco.complemento ?? "";
 
     document.getElementById("bairro").value =
-        fornecedor.bairro ?? "";
+        endereco.bairro ?? "";
 
     document.getElementById("cidade").value =
-        fornecedor.cidade ?? "";
+        endereco.cidade ?? "";
 
     document.getElementById("estado").value =
-        fornecedor.estado ?? "";
+        endereco.uf ?? "";
 
     document.getElementById("referencia").value =
         fornecedor.referencia ?? "";
@@ -359,7 +364,7 @@ async function salvarFornecedor(){
 
         }
 
-        modalFornecedor.hide();
+        modalFornecedor.classList.remove("show");
 
         document.dispatchEvent(
 
@@ -391,7 +396,7 @@ async function salvarFornecedor(){
 
 function fecharModalFornecedor(){
 
-    modalFornecedor.hide();
+    modalFornecedor.classList.remove("show");
 
 }
 
@@ -697,9 +702,6 @@ function obterFornecedorFormulario(){
 
     return{
 
-        ativo:
-            document.getElementById("ativoFornecedor").value === "true",
-
         razaoSocial:
             document.getElementById("razaoSocial").value.trim(),
 
@@ -712,23 +714,11 @@ function obterFornecedorFormulario(){
         inscricaoEstadual:
             document.getElementById("inscricaoEstadual").value.trim(),
 
-        inscricaoMunicipal:
-            document.getElementById("inscricaoMunicipal").value.trim(),
-
-        cnae:
-            document.getElementById("cnae").value.trim(),
-
-        dataCadastro:
-            document.getElementById("dataCadastro").value,
-
-        categoriaFornecedor:
-            document.getElementById("categoriaFornecedor").value,
-
-        responsavel:
+        // "responsavel" no formulário corresponde a "nomeContato" na API
+        // (não existem colunas para cargo/departamento/whatsapp/dados
+        // bancários/PIX — esses campos do formulário não são enviados)
+        nomeContato:
             document.getElementById("responsavel").value.trim(),
-
-        cargo:
-            document.getElementById("cargo").value.trim(),
 
         telefone:
             document.getElementById("telefone").value.trim(),
@@ -736,68 +726,39 @@ function obterFornecedorFormulario(){
         celular:
             document.getElementById("celular").value.trim(),
 
-        whatsapp:
-            document.getElementById("whatsapp").value.trim(),
-
         email:
             document.getElementById("email").value.trim(),
 
         site:
             document.getElementById("site").value.trim(),
 
-        departamento:
-            document.getElementById("departamento").value,
+        // A API espera o endereço como objeto aninhado — antes esses
+        // campos eram enviados soltos e o back-end simplesmente
+        // descartava tudo, deixando o endereço sempre em branco.
+        endereco: {
 
-        horarioContato:
-            document.getElementById("horarioContato").value.trim(),
+            cep:
+                document.getElementById("cep").value.trim(),
 
-        cep:
-            document.getElementById("cep").value.trim(),
+            logradouro:
+                document.getElementById("logradouro").value.trim(),
 
-        logradouro:
-            document.getElementById("logradouro").value.trim(),
+            numero:
+                document.getElementById("numero").value.trim(),
 
-        numero:
-            document.getElementById("numero").value.trim(),
+            complemento:
+                document.getElementById("complemento").value.trim(),
 
-        complemento:
-            document.getElementById("complemento").value.trim(),
+            bairro:
+                document.getElementById("bairro").value.trim(),
 
-        bairro:
-            document.getElementById("bairro").value.trim(),
+            cidade:
+                document.getElementById("cidade").value.trim(),
 
-        cidade:
-            document.getElementById("cidade").value.trim(),
+            uf:
+                document.getElementById("estado").value.trim()
 
-        estado:
-            document.getElementById("estado").value.trim(),
-
-        referencia:
-            document.getElementById("referencia").value.trim(),
-
-        pais:
-            document.getElementById("pais").value.trim(),
-
-        regiao:
-            document.getElementById("regiao").value,
-
-        codigoIbge:
-            document.getElementById("codigoIbge").value.trim(),
-
-        banco:
-            document.getElementById("banco").value.trim(),
-
-        agencia:
-            document.getElementById("agencia").value.trim(),
-
-        conta:
-            document.getElementById("conta").value.trim(),
-
-        tipoPix:
-            document.getElementById("tipoPix").value,
-
-        chavePix:
-            document.getElementById("chavePix").value.trim(),
+        },
 
         observacoes:
             document.getElementById("observacoes").value.trim()
@@ -1151,9 +1112,7 @@ document
 
                 formularioAlterado = false;
 
-                bootstrap.Modal
-                    .getInstance(this)
-                    .hide();
+                modalFornecedor.classList.remove("show");
 
             }
 
@@ -1173,7 +1132,7 @@ function resetarControleFornecedor(){
 
 }
 
-modalFornecedor.hide();
+modalFornecedor.classList.remove("show");
 
 resetarControleFornecedor();
 

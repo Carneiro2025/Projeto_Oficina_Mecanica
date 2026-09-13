@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Relatórios | OficinaPRO</title>
+
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/sidebar.css">
+    <link rel="stylesheet" href="css/relatorios.css">
+    <link rel="stylesheet" href="css/toast.css">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div id="sidebar"></div>
+
+<main class="main">
+
+    <header class="header">
+
+        <h1>Relatórios</h1>
+
+    </header>
+
+    <nav class="abas">
+
+        <button class="aba-btn ativa" data-aba="financeiro" onclick="trocarAbaRelatorio('financeiro')">
+            Financeiro
+        </button>
+
+        <button class="aba-btn" data-aba="estoque" onclick="trocarAbaRelatorio('estoque')">
+            Estoque
+        </button>
+
+        <button class="aba-btn" data-aba="os" onclick="trocarAbaRelatorio('os')">
+            Ordens de Serviço
+        </button>
+
+        <button class="aba-btn" data-aba="clientes" onclick="trocarAbaRelatorio('clientes')">
+            Clientes
+        </button>
+
+    </nav>
+
+    <!-- ===================== FINANCEIRO ===================== -->
+    <section id="painelRelatorioFinanceiro" class="painel-aba ativa">
+
+        <div class="resumo-financeiro">
+
+            <div class="card-resumo">
+                <h3>Total de Receitas</h3>
+                <p id="totalReceitas">--</p>
+            </div>
+
+            <div class="card-resumo">
+                <h3>Total de Despesas</h3>
+                <p id="totalDespesas">--</p>
+            </div>
+
+            <div class="card-resumo">
+                <h3>Lucro</h3>
+                <p id="totalLucro">--</p>
+            </div>
+
+            <div class="card-resumo">
+                <h3>Recebimentos / Pagamentos</h3>
+                <p id="qtdMovimentacoes">--</p>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- ===================== ESTOQUE ===================== -->
+    <section id="painelRelatorioEstoque" class="painel-aba">
+
+        <section class="tabela">
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Descrição</th>
+                        <th>Estoque Atual</th>
+                        <th>Estoque Mínimo</th>
+                        <th>Situação</th>
+                    </tr>
+                </thead>
+                <tbody id="tbodyRelatorioEstoque"></tbody>
+            </table>
+
+        </section>
+
+    </section>
+
+    <!-- ===================== ORDENS DE SERVIÇO ===================== -->
+    <section id="painelRelatorioOS" class="painel-aba">
+
+        <section class="tabela">
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Número</th>
+                        <th>Cliente</th>
+                        <th>Veículo</th>
+                        <th>Mecânico</th>
+                        <th>Status</th>
+                        <th>Abertura</th>
+                        <th>Conclusão</th>
+                        <th>Valor</th>
+                    </tr>
+                </thead>
+                <tbody id="tbodyRelatorioOS"></tbody>
+            </table>
+
+        </section>
+
+    </section>
+
+    <!-- ===================== CLIENTES ===================== -->
+    <section id="painelRelatorioClientes" class="painel-aba">
+
+        <section class="tabela">
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Telefone</th>
+                        <th>E-mail</th>
+                        <th>Veículos</th>
+                        <th>Ordens de Serviço</th>
+                    </tr>
+                </thead>
+                <tbody id="tbodyRelatorioClientes"></tbody>
+            </table>
+
+        </section>
+
+    </section>
+
+</main>
+
+<script src="js/config.js"></script>
+<script src="js/util.js"></script>
+<script src="js/api.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/sidebar.js"></script>
+<script src="js/loading.js"></script>
+<script src="js/toast.js"></script>
+<script src="js/relatorios.js"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+
+        auth.checkAuthentication();
+
+        if (typeof inicializarRelatorios === "function") {
+            inicializarRelatorios();
+        }
+
+    });
+</script>
+
+</body>
+
+</html>

@@ -92,7 +92,9 @@ async function carregarFornecedores(){
 
         mostrarLoadingTabela();
 
-        fornecedores = await api.get("/fornecedores");
+        const pagina = await api.get("/fornecedores?size=1000");
+
+        fornecedores = pagina.content ?? (Array.isArray(pagina) ? pagina : []);
 
         calcularPaginacao();
 
@@ -138,7 +140,7 @@ function atualizarCardsFornecedores(){
 
         const cadastro = new Date(
 
-            fornecedor.dataCadastro
+            fornecedor.createdAt
 
         );
 
@@ -304,7 +306,7 @@ function montarLinhaFornecedor(fornecedor){
 
             <td>${fornecedor.cnpj}</td>
 
-            <td>${fornecedor.cidade ?? "-"}</td>
+            <td>${fornecedor.endereco?.cidade ?? "-"}</td>
 
             <td>${fornecedor.telefone ?? "-"}</td>
 
@@ -462,7 +464,7 @@ function aplicarFiltro(){
 
             ||
 
-            (fornecedor.cidade ?? "")
+            (fornecedor.endereco?.cidade ?? "")
                 .toLowerCase()
                 .includes(pesquisa)
 
@@ -654,11 +656,17 @@ document.getElementById("btnLimparPesquisa")
 
 async function excluirFornecedor(id){
 
+    const fornecedor = obterFornecedor(id);
+
+    const acao = fornecedor?.ativo ? "desativar" : "reativar";
+
     const resposta = await Swal.fire({
 
-        title: "Excluir fornecedor?",
+        title: fornecedor?.ativo ? "Desativar fornecedor?" : "Reativar fornecedor?",
 
-        text: "Esta operação não poderá ser desfeita.",
+        text: fornecedor?.ativo
+            ? "O fornecedor ficará inativo, mas os dados são mantidos."
+            : "O fornecedor voltará a ficar ativo.",
 
         icon: "warning",
 
@@ -668,7 +676,7 @@ async function excluirFornecedor(id){
 
         cancelButtonColor: "#64748B",
 
-        confirmButtonText: "Excluir",
+        confirmButtonText: fornecedor?.ativo ? "Desativar" : "Reativar",
 
         cancelButtonText: "Cancelar"
 
@@ -684,12 +692,10 @@ async function excluirFornecedor(id){
 
         mostrarLoading();
 
-        await api.delete(`/fornecedores/${id}`);
+        await api.patch(`/fornecedores/${id}/${acao}`);
 
         Toast.sucesso(
-
-            "Fornecedor excluído com sucesso."
-
+            fornecedor?.ativo ? "Fornecedor desativado com sucesso." : "Fornecedor reativado com sucesso."
         );
 
         await carregarFornecedores();
@@ -699,8 +705,7 @@ async function excluirFornecedor(id){
         console.error(erro);
 
         Toast.erro(
-
-            "Erro ao excluir fornecedor."
+            `Erro ao ${acao} fornecedor.`
 
         );
 
@@ -728,7 +733,7 @@ function exportarExcelFornecedores(){
 
         CNPJ: fornecedor.cnpj,
 
-        Cidade: fornecedor.cidade,
+        Cidade: fornecedor.endereco?.cidade ?? "",
 
         Telefone: fornecedor.telefone,
 
@@ -792,7 +797,7 @@ function exportarPdfFornecedores(){
 
         fornecedor.cnpj,
 
-        fornecedor.cidade,
+        fornecedor.endereco?.cidade ?? "",
 
         fornecedor.telefone,
 
