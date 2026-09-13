@@ -92,9 +92,15 @@ async function carregarProdutos() {
 
         mostrarLoading();
 
+<<<<<<< HEAD
         const params = new URLSearchParams();
         params.append("page", paginaAtualProdutos);
         params.append("size", TAMANHO_PAGINA_PRODUTOS);
+=======
+        const resposta = await api.get("/produtos");
+
+        const produtos = Array.isArray(resposta) ? resposta : (resposta.content ?? []);
+>>>>>>> origin/main
 
         const pagina = await api.get(`/produtos?${params.toString()}`);
 

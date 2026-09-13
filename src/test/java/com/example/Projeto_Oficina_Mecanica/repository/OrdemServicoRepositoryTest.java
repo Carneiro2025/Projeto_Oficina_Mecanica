@@ -213,5 +213,8 @@ class BuscarComFiltros {
     }
 
 }
+<<<<<<< HEAD
 
 }
+=======
+>>>>>>> origin/main

@@ -24,6 +24,7 @@ Infraestrutura pronta (`AuditoriaServiceImpl.registrar()`), só falta ser chamad
 ## Fase 2 — Sprint 2: Testes de Controller (MockMvc)
 Já prontos: `ClienteControllerTest`, `AuthControllerTest`.
 
+<<<<<<< HEAD
 - [x] UsuarioControllerTest
 - [x] VeiculoControllerTest
 - [x] FornecedorControllerTest
@@ -32,6 +33,16 @@ Já prontos: `ClienteControllerTest`, `AuthControllerTest`.
 - [x] ContaPagarControllerTest (equivalente ao "Pagamento" do plano original)
 - [x] RecebimentoControllerTest
 - [x] DashboardControllerTest
+=======
+- [ ] UsuarioControllerTest
+- [ ] VeiculoControllerTest
+- [ ] FornecedorControllerTest
+- [ ] ProdutoControllerTest
+- [ ] OrdemServicoControllerTest
+- [ ] ContaPagarControllerTest (equivalente ao "Pagamento" do plano original)
+- [ ] RecebimentoControllerTest
+- [ ] DashboardControllerTest
+>>>>>>> origin/main
 
 Fora do plano original, mas existem no projeto e ficariam sem cobertura se quiser 100%:
 - [ ] ContaReceberControllerTest

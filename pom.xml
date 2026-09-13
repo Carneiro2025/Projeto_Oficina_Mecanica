@@ -247,6 +247,7 @@
                      ================================================= -->
                 <annotationProcessorPaths>
 
+<<<<<<< HEAD
                     <!-- =================================================
                          LOMBOK
                          ================================================= -->
@@ -273,6 +274,33 @@
                         <artifactId>mapstruct-processor</artifactId>
                         <version>${mapstruct.version}</version>
                     </path>
+=======
+         <!-- XML -->
+        <dependency>
+             <groupId>com.h2database</groupId>
+             <artifactId>h2</artifactId>
+             <scope>test</scope>
+        </dependency>
+
+        <!-- FLYWAY -->
+        <dependency>
+           <groupId>org.flywaydb</groupId>
+           <artifactId>flyway-core</artifactId>
+        </dependency>
+
+        <!-- FLYWAY MYSQL SUPPORT -->
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-mysql</artifactId>
+        </dependency>
+        
+        <!-- JWT -->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-api</artifactId>
+            <version>0.12.3</version>
+        </dependency>
+>>>>>>> origin/main
 
                 </annotationProcessorPaths>
 
@@ -303,7 +331,21 @@
     </executions>
 </plugin>
 
+<<<<<<< HEAD
     </plugins>
+=======
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+
+        <!-- TESTES -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+>>>>>>> origin/main
 
 </build>
 
